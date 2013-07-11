@@ -1,0 +1,1 @@
+/data/bestpath/9606.string_000_0100_0800.tsv.gz filter=lfs diff=lfs merge=lfs -text

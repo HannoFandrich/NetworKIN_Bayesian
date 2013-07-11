@@ -1,0 +1,2 @@
+Score	Lower bound	Upper bound	Likelihood	TPR	FPR	PPV	FDR	No. positives	No. negatives
+0.14645	0.05875	0.20829	1.000	1.000	1.000	0.148	0.852	12	69
