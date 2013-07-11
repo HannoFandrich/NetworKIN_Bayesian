@@ -165,7 +165,7 @@ def readAliasFiles(organism, datadir):
 	return alias_hash, desc_hash
 
 # Run Netphorest
-def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes):
+def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes, leave_intermediates = False):
 	id_pos_tree_pred = {}
 
 	#check how many sequences we actually have
@@ -188,12 +188,15 @@ def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes):
 	# create filehandles
 	for i in range(number_of_processes):
 		file_in[i] = tempfile.NamedTemporaryFile()
-		#file_out[i] = tempfile.NamedTemporaryFile()
-		if save_diskspace:
-			file_out[i] = CDummy("%s.%s.gz" % (fn_netphorest_output, str(i)))      # jhkim
-			
+		
+		if leave_intermediates:
+			if save_diskspace:
+				file_out[i] = CDummy("%s.%s.gz" % (fn_netphorest_output, str(i)))      # jhkim
+				
+			else:
+				file_out[i] = CDummy("%s.%s.txt" % (fn_netphorest_output, str(i)))
 		else:
-			file_out[i] = CDummy("%s.%s.txt" % (fn_netphorest_output, str(i)))
+			file_out[i] = tempfile.NamedTemporaryFile()
 
 	# distribute data into different files
 	line_counter = 0;
@@ -308,7 +311,7 @@ def WriteString(fname, s):
     f.close()
     
 # Map incoming peptides to STRING sequences
-def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, number_of_processes, datadir):
+def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, number_of_processes, datadir, leave_intermediates = False):
 	sys.stderr.write("Mapping using blast\n")
 	incoming2string = {}
 	string2incoming = {}
@@ -337,15 +340,17 @@ def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, nu
 	command = "%s -a %s -p blastp -e 1e-10 -m 8 -d %s -i %s | sort -k12nr"%(blastDir, number_of_processes, blastDB, blast_tmpfile.name)
 	
 	# to save time - jhkim
-	#blast_out = myPopen(command)
-	if os.path.isfile(fn_blast_output):
-		blast_out = ReadLines(fn_blast_output)
+	if leave_intermediates:
+		if os.path.isfile(fn_blast_output):
+			blast_out = ReadLines(fn_blast_output)
+		else:
+			blast_out = myPopen(command)
+			try:
+				WriteString(fn_blast_output, "".join(blast_out))
+			except:
+				pass
 	else:
 		blast_out = myPopen(command)
-		try:
-			WriteString(fn_blast_output, "".join(blast_out))
-		except:
-			pass
 		
 	for line in blast_out:
 		tokens = line.split('\t')
@@ -674,7 +679,7 @@ def Main():
 	map_group2domain = ReadGroup2DomainMap(path_group2domain_map)
 	
 	# Default way of mapping using BLAST
-	incoming2string, string2incoming = mapPeptides2STRING(blastDir, organism, fastafile.name, id_pos_res, id_seq, options.threads, options.datadir)
+	incoming2string, string2incoming = mapPeptides2STRING(blastDir, organism, fastafile.name, id_pos_res, id_seq, options.threads, options.datadir, options.leave)
 
 	# Hack for random mapping to proteins
 	#incoming2string, string2incoming = mapRandom(id_seq)
@@ -691,7 +696,7 @@ def Main():
 
 	# Run NetPhorest
 	sys.stderr.write("Running NetPhorest")
-	netphorestTmpFiles = runNetPhorest(id_seq, id_pos_res, options.compress, options.threads)
+	netphorestTmpFiles = runNetPhorest(id_seq, id_pos_res, options.compress, options.threads, options.leave)
 	sys.stderr.write('\n')
 
 	# Writing result to STDOUT
@@ -725,6 +730,8 @@ if __name__ == '__main__':
 										help="if set to 'network', gives only one best scoring result for each site. In case of multiple candidate kinases with the same core, the selection hapens randomly. [default: %default]")
 	parser.add_option("-v", "--verbose", dest="verbose", action="store_true",
 										help="print out everything [default: %default]")
+	parser.add_option("-l", "--leave", dest="leave", default=False, action="store_true",
+										help="leave intermediate files [default: %default]")
 	parser.add_option("-t", "--threads", dest="threads", default=1, type="int",
 										help="number of available threads/CPUs. Also leads to less memory usage, as result files are read sequentially [default: %default]")
 	parser.add_option("-c", "--compress", dest="compress", default=True,
