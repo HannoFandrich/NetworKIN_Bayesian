@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 """
-NetworKIN(tm), (C) 2005,2006,2007.
-Drs Rune Linding & Lars Juhl Jensen
+NetworKIN(tm), (C) 2005,2006,2007,2013.
+Drs Rune Linding, Lars Juhl Jensen & Jinho Kim
 
 Released under stay the *#(@(#@)(%)(@!!!*$(# away license, until we published all our papers!
 I.e. its NOT released, if you did not obtain this software from any of the above you will be
@@ -30,6 +30,7 @@ in the given sequences.
 # 28.01.07: Testing autophosphorylation (self == 1 in update script)
 # 30.07.07: Working on v1.5 milestone
 # 07.05.08: Initiated 2.5 w. scaling factor
+# 11.07.13: New scoring scheme (Bayesian)
 #
 
 import sys, os, subprocess, fpformat, re, tempfile, dircache, random, operator, glob
@@ -738,7 +739,7 @@ if __name__ == '__main__':
 										help="compress temporary result files, saves discspace [default: %default]")
 	parser.add_option("-d", "--data", dest="datadir", default=sys.argv[0].rsplit("/", 1)[0]+'/data',
 										help="location for the additional files like the pre-computed STRING network, STRING sequence database etc. [default: %default]")
-	parser.add_option("--tmp", dest="tmpdir", default="/tmp",
+	parser.add_option("--tmp", dest="tmpdir", default=os.environ["TMPDIR"],
 										help="location for the temporary files [default: %default]")
 
 
@@ -746,6 +747,7 @@ if __name__ == '__main__':
 	(options, args) = parser.parse_args()
 
 	tempfile.tempdir= options.tmpdir
+	print tempfile.tempdir
 
 	#ORGANISM
 	try:
