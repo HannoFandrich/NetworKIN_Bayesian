@@ -166,7 +166,9 @@ def readAliasFiles(organism, datadir):
 	return alias_hash, desc_hash
 
 # Run Netphorest
-def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes, leave_intermediates = False):
+def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes, number_of_active_processes = 1, fast = False, leave_intermediates = False):
+	if number_of_active_processes < 2:
+		raise "Number of maximum threads is less than 2"
 	id_pos_tree_pred = {}
 
 	#check how many sequences we actually have
@@ -190,7 +192,7 @@ def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes, leave
 	for i in range(number_of_processes):
 		file_in[i] = tempfile.NamedTemporaryFile()
 		
-		if leave_intermediates:
+		if fast or leave_intermediates:
 			if save_diskspace:
 				file_out[i] = CDummy("%s.%s.gz" % (fn_netphorest_output, str(i)))      # jhkim
 				
@@ -224,17 +226,29 @@ def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes, leave
 	# run NetPhorest for each file in parallel
 	if options.verbose:
 		sys.stderr.write("\n")
+		
+	if options.verbose:
+		sys.stderr.write("Running on %s sequences\n"%line_counter)
+		
 	for i in range(number_of_processes):
+		if fast and os.path.isfile(file_out[i].name):
+			if options.verbose:
+				sys.stderr.write("%s is already exist.\n" % file_out[i].name)
+			continue
+				
+		while threading.activeCount() >= number_of_active_processes:
+			sys.stderr.write('.')
+			time.sleep(5)
+			
 		if options.verbose:
 			sys.stderr.write(netphorest_bin+' < '+file_in[i].name+ ' > '+file_out[i].name+'\n');
 		if save_diskspace:
 			arg = (netphorest_bin+' < '+file_in[i].name+ '| gzip -9 > '+file_out[i].name,)
 		else:
 			arg = (netphorest_bin+' < '+file_in[i].name+ ' > '+file_out[i].name,)
+		
 		threading.Thread(target=myPopen, args=arg).start()
-	if options.verbose:
-		sys.stderr.write("Running on %s sequences\n"%line_counter)
-
+	
 	# wait for threads to finish
 	while (threading.activeCount() > 1):
 		sys.stderr.write('.')
@@ -312,7 +326,7 @@ def WriteString(fname, s):
     f.close()
     
 # Map incoming peptides to STRING sequences
-def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, number_of_processes, datadir, leave_intermediates = False):
+def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, number_of_processes, datadir, fast = False, leave_intermediates = False):
 	sys.stderr.write("Mapping using blast\n")
 	incoming2string = {}
 	string2incoming = {}
@@ -341,17 +355,12 @@ def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, nu
 	command = "%s -a %s -p blastp -e 1e-10 -m 8 -d %s -i %s | sort -k12nr"%(blastDir, number_of_processes, blastDB, blast_tmpfile.name)
 	
 	# to save time - jhkim
-	if leave_intermediates:
-		if os.path.isfile(fn_blast_output):
-			blast_out = ReadLines(fn_blast_output)
-		else:
-			blast_out = myPopen(command)
-			try:
-				WriteString(fn_blast_output, "".join(blast_out))
-			except:
-				pass
+	if fast and os.path.isfile(fn_blast_output):
+		blast_out = ReadLines(fn_blast_output)
 	else:
 		blast_out = myPopen(command)
+		if leave_intermediates:
+			WriteString(fn_blast_output, "".join(blast_out))
 		
 	for line in blast_out:
 		tokens = line.split('\t')
@@ -680,7 +689,7 @@ def Main():
 	map_group2domain = ReadGroup2DomainMap(path_group2domain_map)
 	
 	# Default way of mapping using BLAST
-	incoming2string, string2incoming = mapPeptides2STRING(blastDir, organism, fastafile.name, id_pos_res, id_seq, options.threads, options.datadir, options.leave)
+	incoming2string, string2incoming = mapPeptides2STRING(blastDir, organism, fastafile.name, id_pos_res, id_seq, options.threads, options.datadir, options.fast, options.leave)
 
 	# Hack for random mapping to proteins
 	#incoming2string, string2incoming = mapRandom(id_seq)
@@ -697,7 +706,7 @@ def Main():
 
 	# Run NetPhorest
 	sys.stderr.write("Running NetPhorest")
-	netphorestTmpFiles = runNetPhorest(id_seq, id_pos_res, options.compress, options.threads, options.leave)
+	netphorestTmpFiles = runNetPhorest(id_seq, id_pos_res, options.compress, options.threads, options.active_threads, options.fast, options.leave)
 	sys.stderr.write('\n')
 
 	# Writing result to STDOUT
@@ -731,10 +740,15 @@ if __name__ == '__main__':
 										help="if set to 'network', gives only one best scoring result for each site. In case of multiple candidate kinases with the same core, the selection hapens randomly. [default: %default]")
 	parser.add_option("-v", "--verbose", dest="verbose", action="store_true",
 										help="print out everything [default: %default]")
+	parser.add_option("-f", "--fast", dest="fast", default=False, action="store_true",
+										help="Speed up by using the intermediate files of previous run [default: %default]")
 	parser.add_option("-l", "--leave", dest="leave", default=False, action="store_true",
 										help="leave intermediate files [default: %default]")
 	parser.add_option("-t", "--threads", dest="threads", default=1, type="int",
 										help="number of available threads/CPUs. Also leads to less memory usage, as result files are read sequentially [default: %default]")
+	parser.add_option("--nt", dest="active_threads", default=2, type="int",
+										help="number of active threads at a time")
+	
 	parser.add_option("-c", "--compress", dest="compress", default=True,
 										help="compress temporary result files, saves discspace [default: %default]")
 	parser.add_option("-d", "--data", dest="datadir", default=sys.argv[0].rsplit("/", 1)[0]+'/data',
@@ -746,6 +760,8 @@ if __name__ == '__main__':
 	global options
 	(options, args) = parser.parse_args()
 
+	if options.active_threads < 2:
+		parser.error("Number of active thread (--nt) is less than 2")
 	tempfile.tempdir= options.tmpdir
 	print tempfile.tempdir
 
