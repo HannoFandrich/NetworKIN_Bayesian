@@ -505,7 +505,12 @@ def loadSTRINGdata(string2incoming, datadir, number_of_processes):
 			else:
 				tree_pred_string_data[string2] = {string1: {"_name": name}}
 
-			tree_pred_string_data[string2][string1]["_score"] = float(stringscore_indirect)	# Use indirect path
+			if options.path == "direct":
+				tree_pred_string_data[string2][string1]["_score"] = float(stringscore)
+			elif options.path == "indirect":
+				tree_pred_string_data[string2][string1]["_score"] = float(stringscore_indirect)	# Use indirect path
+			else:
+				raise "Path information should be either direct or indirect."
 			tree_pred_string_data[string2][string1]["_path"] = path
 		else:
 			pass
@@ -525,7 +530,7 @@ def InsertValueIntoMultiLevelDict(d, keys, value):
 def ReadGroup2DomainMap(path_group2domain_map):
     map_group2domain = {}   # KIN   group   name
     
-    f = open(path_group2domain_map)
+    f = open(path_group2domain_map, "rU")
 
     for line in f.readlines():
         tokens = line.split()
@@ -548,13 +553,12 @@ def SetValueIntoMultiLevelDict(d, keys, value):
             sys.stderr.write("This operation replaces a value (%s)" % " ".join(map(lambda(x):str(x), keys)))
     d[keys[-1]] = value
     
-def printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string_alias, string_desc, organism, mode, datadir, map_group2domain):
+def printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string_alias, string_desc, organism, mode, dir_likelihood_conversion_tbl, map_group2domain):
 	ALPHA = ALPHAS[organism]
 	species = dSpeciesName[organism]
 
 	dLRConvTbl = {}
-	LR_dir = os.path.join(datadir, "likelihood_conversion_table")
-	for fname in glob.glob(os.path.join(LR_dir, "conversion_tbl_*_smooth*")):
+	for fname in glob.glob(os.path.join(dir_likelihood_conversion_tbl, "conversion_tbl_*_smooth*")):
 		netphorest_or_string, species_of_conversion_table, tree, player_name = re.findall("conversion_tbl_([a-z]+)_smooth_([a-z]+)_([A-Z0-9]+)_([a-zA-Z0-9_/-]+)", os.path.basename(os.path.splitext(fname)[0]))[0]
 		#species, tree, player_name = os.path.basename(os.path.splitext(fname)[0]).rsplit('_', 3)[1:]
 		
@@ -564,6 +568,8 @@ def printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string
 		conversion_tbl = ReadConversionTableBin(fname)
 		SetValueIntoMultiLevelDict(dLRConvTbl, [species_of_conversion_table, tree, player_name, netphorest_or_string], conversion_tbl)
     
+		if options.verbose:
+			sys.stderr.write("Conversion table %s %s %s %s\n" % (species_of_conversion_table, tree, player_name, netphorest_or_string) )
     
 	# For each ID in NetPhorest
 	for id in id_pos_tree_pred:
@@ -589,6 +595,7 @@ def printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string
 							if string1 in tree_pred_string_data:
 								(res, peptide, netphorestScore) = id_pos_tree_pred[id][pos][tree][pred]
 								for string2 in tree_pred_string_data[string1]:
+									
 									if string2 in string_alias:
 										bestName2 = string_alias[string2]
 									else:
@@ -601,8 +608,10 @@ def printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string
 									path = tree_pred_string_data[string1][string2]["_path"]
 									name = tree_pred_string_data[string1][string2]["_name"]	# string2 = kinase
 									
-									if not map_group2domain[tree].has_key(pred) or not name in map_group2domain[tree][pred]:
+									#sys.stderr.write("%s %s %s\n" % (tree, pred, name))
+									if not map_group2domain.has_key(tree) or not map_group2domain[tree].has_key(pred) or not name in map_group2domain[tree][pred]:
 										continue
+									#sys.stderr.write("%s %s\n" % (string1, string2))
 									'''
 									# Likelihood ratio
 									# conversion_tbl_netphorest_smooth_nn_human_KIN_ATM
@@ -685,7 +694,12 @@ def Main():
 	sys.stderr.write("Loading aliases and descriptions\n")
 	(string_alias, string_desc) = readAliasFiles(args[0], options.datadir);
 
-	path_group2domain_map = os.path.join(options.datadir, "group_protein_name_map.tsv")
+	if organism == "9606":
+		path_group2domain_map = os.path.join(options.datadir, "group_human_protein_name_map.tsv")
+	elif organism == "4932":
+		path_group2domain_map = os.path.join(options.datadir, "group_yeast_KIN.tsv")
+	
+
 	map_group2domain = ReadGroup2DomainMap(path_group2domain_map)
 	
 	# Default way of mapping using BLAST
@@ -714,7 +728,13 @@ def Main():
 	sys.stdout.write("#Name\tPosition\tTree\tNetPhorest Group\tKinase/Phospho-binding domain\tNetworKIN score\tNetPhorest score\tSTRING score\tTarget STRING ID\tPhospho writer/reader/eraser STRING ID\tTarget description\tPhospho writer/reader/eraser description\tTarget Name\tPhospho writer/reader/eraser Name\tPeptide sequence window\tIntermediate nodes\n")
 	for i in range(len(netphorestTmpFiles)):
 		id_pos_tree_pred = parseNetphorestFile(netphorestTmpFiles[i].name, id_pos_res, options.compress)
-		printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string_alias, string_desc, args[0], options.mode, options.datadir, map_group2domain)
+		if options.path == "direct":
+			dir_likelihood_conversion_tbl = os.path.join(options.datadir, "likelihood_conversion_table_direct")
+		elif options.path == "indirect":
+			dir_likelihood_conversion_tbl = os.path.join(options.datadir, "likelihood_conversion_table_indirect")
+		else:
+			raise "Path information should be either direct or indirect."
+		printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string_alias, string_desc, args[0], options.mode, dir_likelihood_conversion_tbl, map_group2domain)
 
 	return
 
@@ -738,6 +758,8 @@ if __name__ == '__main__':
 										help="set the directory for the BLAST binaries (formatdb and blastall), overwrites the 'BLAST_PATH' environmental variable. [ENV: %default]")
 	parser.add_option("-m", "--mode", dest="mode", default=False,
 										help="if set to 'network', gives only one best scoring result for each site. In case of multiple candidate kinases with the same core, the selection hapens randomly. [default: %default]")
+	parser.add_option("-p", "--path", dest="path", default="direct",
+										help="if set to True, NetworKIN uses both direct and indirect paths. Otherwise, it uses only indirect paths. [default: %default]")
 	parser.add_option("-v", "--verbose", dest="verbose", action="store_true",
 										help="print out everything [default: %default]")
 	parser.add_option("-f", "--fast", dest="fast", default=False, action="store_true",
@@ -763,7 +785,6 @@ if __name__ == '__main__':
 	if options.active_threads < 2:
 		parser.error("Number of active thread (--nt) is less than 2")
 	tempfile.tempdir= options.tmpdir
-	print tempfile.tempdir
 
 	#ORGANISM
 	try:
