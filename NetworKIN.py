@@ -82,6 +82,9 @@ global options
 #                                                                              #
 ################################################################################
 
+class CSheet(list):
+    pass
+
 # Run system binary
 def myPopen(cmd):
 	try:
@@ -114,8 +117,8 @@ def readFasta(fastafile):
 			pass
 	return id_seq
 
-def CheckInputType(sitefile):
-	f = open(sitefile, 'rU')
+def CheckInputType(sitesfile):
+	f = open(sitesfile, 'rU')
 	line = f.readline()
 	f.close()
 	
@@ -124,7 +127,7 @@ def CheckInputType(sitefile):
 		return NETWORKIN_SITE_FILE
 	elif len(tokens) == 2:
 		return PROTEOME_DISCOVERER_SITE_FILE
-	elif tokens[0] == "Proteins" and tokens[1] == "Positions within proteins":
+	elif tokens[0] == "Proteins" and tokens[4] == "Leading":
 		return MAX_QUANT_DIRECT_OUTPUT_FILE
 	else:
 		sys.stderr("Unknown format of site file")
@@ -132,9 +135,9 @@ def CheckInputType(sitefile):
 
 # Read phosphorylation sites from tsv file
 # id -> position -> residue
-def readPhosphoSites(sitefile):
+def readPhosphoSites(sitesfile):
 	id_pos_res = {}
-	f = open(sitefile, 'rU')
+	f = open(sitesfile, 'rU')
 	if f:
 		data = f.readlines()
 		f.close()
@@ -155,13 +158,13 @@ def readPhosphoSites(sitefile):
 			else:
 				id_pos_res[id] = {pos: res}
 	else:
-		sys.stderr.write("Could not open site file: %s" % sitefile)
+		sys.stderr.write("Could not open site file: %s" % sitesfile)
 		sys.exit()
 		
 	return id_pos_res
 
 
-def readPhosphoSitesProteomeDiscoverer(fastafile, sitefile):
+def readPhosphoSitesProteomeDiscoverer(fastafile, sitesfile):
 	# This function takes a tab-separated list of ProteinID \t Peptide, in ProteomeDiscoverer format (i.e. phosphosites listed as
 	# lowercase), maps the peptide to the full-length protein sequence and conducts the NetworKIN search.
 	#
@@ -180,7 +183,7 @@ def readPhosphoSitesProteomeDiscoverer(fastafile, sitefile):
 		fastadict[ensp]=seq
 		
 	# store all peptides in dictionary, with parent protein as key
-	peptides = open(sitefile).readlines()
+	peptides = open(sitesfile).readlines()
 	peptidedict = {}
 	for line in peptides:
 	    line = line.strip()
@@ -235,14 +238,16 @@ def readPhosphoSitesProteomeDiscoverer(fastafile, sitefile):
 
 # return a list of dictionaries
 # Usage l[index][column name]
-def ReadSheet(f, offset = 0):
+def ReadSheet(fname, offset = 0):
     l = CSheet()
+
+    f = open(fname, 'rU')
     
-    logging.debug("Read file")
     for i in range(offset):
         f.readline()
+
     columns = f.readline().strip().split('\t')
-    logging.debug(columns)
+
     l.columns = columns
     for line in f.readlines():
         instance = {}
@@ -250,9 +255,9 @@ def ReadSheet(f, offset = 0):
         fields = line.strip().split('\t')
         
         if len(fields) > len(columns):
-            logging.debug("Error in data file")
-            logging.debug(columns)
-            logging.debug(fields)
+            sys.stderr.write("Error in data file")
+            sys.stderr.write(columns)
+            sys.stderr.write(fields)
             raise
         
         for i in range(len(columns)):
@@ -261,7 +266,9 @@ def ReadSheet(f, offset = 0):
             except IndexError:
                 instance[columns[i]] = ''
     
-    logging.debug("No. of entries in file input: %d" % len(l))
+    #sys.stderr.write("No. of entries in file input: %d" % len(l))
+    f.close()
+    
     return l
 
 def readPhosphoSitesMaxQuant(fname, only_leading = False):
@@ -847,13 +854,13 @@ def Main():
 
 	if sitesfile:
 		sys.stderr.write("Reading phosphosite file\n")
-		input_type = CheckInputType(sitefile)
+		input_type = CheckInputType(sitesfile)
 		if input_type == NETWORKIN_SITE_FILE:
 			id_pos_res = readPhosphoSites(sitesfile)
 		elif input_type == PROTEOME_DISCOVERER_SITE_FILE:
-			id_pos_res = readPhosphoSitesProteomeDiscoverer(fn_fasta, sitefile)
+			id_pos_res = readPhosphoSitesProteomeDiscoverer(fn_fasta, sitesfile)
 		elif input_type == MAX_QUANT_DIRECT_OUTPUT_FILE:
-			id_pos_res = readPhosphoSitesMaxQuant(sitefile)
+			id_pos_res = readPhosphoSitesMaxQuant(sitesfile)
 	else:
 		id_pos_res = {}
 

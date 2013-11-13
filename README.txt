@@ -32,8 +32,11 @@ The NetworKIN algorithm takes taxon code as organism (human: 9606, yeast: 4932).
 Input format:
 
 	* FastaFile: This file is a standard fasta format file (for more information about fasta format, see http://en.wikipedia.org/wiki/FASTA_format), which contains protein names and sequences. Note that proteins names in this fasta file should correspond to protein names in the SitesFile.
-	* SitesFile: This is a simple tab-delimited text file that contains phosphorylated residue information as the following format.
+	* SitesFile: NetworKIN takes three formats of SiteFile, which is automatically detected in the script.
+	i) NetworKIN site file: This is a simple tab-delimited text file that contains phosphorylated residue information as the following format.
 	protein name(tab)position(tab)amino acid
+	ii) Direct output file from MaxQuant
+	iii) Protein IDs and peptides information extracted from the output file of ProteomeDiscoverer.
 	Protein names should correspond to the names in the FastaFile, and positions and amino acid are positions and amino acids of a phosphorylated residue in the corresponding sequence in the FastaFile.
 
 
