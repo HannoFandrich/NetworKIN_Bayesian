@@ -218,8 +218,8 @@ def readPhosphoSitesProteomeDiscoverer(fastafile, sitesfile):
 		    if letter.islower():
 			if letter == "s" or letter =="t" or letter == "y":
 			    
-			    phoslocation = peptideindex + x
-			    phosresidue = sequence[phoslocation]
+			    phoslocation = peptideindex + x + 1
+			    phosresidue = sequence[phoslocation - 1]
 			    
 			    if protID in id_pos_res.iterkeys():
 				id_pos_res[protID][phoslocation] = phosresidue
