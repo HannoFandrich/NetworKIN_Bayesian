@@ -948,7 +948,7 @@ if __name__ == '__main__':
 	
 	parser.add_option("-c", "--compress", dest="compress", default=True,
 										help="compress temporary result files, saves discspace [default: %default]")
-	parser.add_option("-d", "--data", dest="datadir", default=sys.argv[0].rsplit("/", 1)[0]+'/data',
+	parser.add_option("-d", "--data", dest="datadir", default=os.path.realpath(sys.argv[0]).rsplit("/", 1)[0]+'/data',
 										help="location for the additional files like the pre-computed STRING network, STRING sequence database etc. [default: %default]")
 	parser.add_option("--tmp", dest="tmpdir", default=os.environ["TMPDIR"],
 										help="location for the temporary files [default: %default]")
