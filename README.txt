@@ -9,6 +9,7 @@ Installation:
 
 	1) Compile netphorest
 		cc -O3 -o netphorest netphorest.c -lm
+	Please avoid using gcc version 4, because it makes the netphorest binary crashes without error message while running.
 	2) Install blast (ftp://ftp.ncbi.nih.gov/blast/executables/release/2.2.17/)
 	NetworKIN currently supports blast version 2.2.17 or earlier. To use later versions which was named blast plus, NetworKIN.py needs to be modified accoring to the changes in blast plus.
 	3) Install python (version 2.6 or 2.7)
