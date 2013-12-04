@@ -2,7 +2,7 @@
 
 """
 NetworKIN(tm), (C) 2005,2006,2007,2013.
-Drs Rune Linding, Lars Juhl Jensen & Jinho Kim
+Drs Rune Linding, Lars Juhl Jensen, Heiko Horn & Jinho Kim
 
 Usage: ./networkin.py Organism FastaFile SitesFile
 
