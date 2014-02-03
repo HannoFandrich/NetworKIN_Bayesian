@@ -27,6 +27,7 @@ in the given sequences.
 # 30.07.07: Working on v1.5 milestone
 # 07.05.08: Initiated 2.5 w. scaling factor
 # 11.07.13: New scoring scheme (Bayesian)
+# 03.02.14: Several minor bug fixes. blast sorting bug fix (k12nr -> k12gr)
 #
 
 import sys, os, subprocess, fpformat, re, tempfile, dircache, random, operator, glob
@@ -102,6 +103,7 @@ def readFasta(fastafile):
 	aminoacids = re.compile('[^ACDEFGHIKLMNPQRSTVWYXB]')
 	data = fastafile.readlines()
 	fastafile.close()
+	seq = ''
 	for line in data:
 		if line[0] <> ';':
 			if line[0] == '>':
@@ -502,7 +504,7 @@ def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, nu
 				sys.stderr.write("No sequence available for '%s'\n"%id)
 	blast_tmpfile.flush()
 
-	blastDB = "%s/%s.protein.sequences.fa"%(datadir,organism)
+	blastDB = os.path.join(datadir, "%s.protein.sequences.fa"%(organism)).replace(' ', '\\ ')
 
 	# Check if blast database is actually initialized, if not: do it
 	if not os.path.isfile(blastDB+'.pin'):
@@ -510,7 +512,7 @@ def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, nu
 		sys.stderr.write("Looks like blast database is not initialized, trying to run:\n%s\n"%command)
 		myPopen(command)
 
-	command = "%s -a %s -p blastp -e 1e-10 -m 8 -d %s -i %s | sort -k12nr"%(blastDir, number_of_processes, blastDB, blast_tmpfile.name)
+	command = "%s -a %s -p blastp -e 1e-10 -m 8 -d %s -i %s | sort -k12gr"%(blastDir, number_of_processes, blastDB, blast_tmpfile.name)
 	
 	# to save time - jhkim
 	if fast and os.path.isfile(fn_blast_output):
@@ -632,6 +634,7 @@ def loadSTRINGdata(string2incoming, datadir, number_of_processes):
 	if not os.path.isfile(fn_bestpath):
 		sys.stderr.write("Best path file does not exist: %s" % fn_bestpath)
 				 
+	'''	    
 	command = "gzip -cd %s" % fn_bestpath
 	
 	try:
@@ -639,10 +642,19 @@ def loadSTRINGdata(string2incoming, datadir, number_of_processes):
 	except:
 		sys.stderr.write("Error loading STRING data using '%s', sleeping fo 1h.\n"%command)
 		time.sleep(3600)
+	'''	    
 
 	tree_pred_string_data = {}
 
-	for line in data:
+		
+	# for memory efficiency
+	import gzip
+	f = gzip.open(fn_bestpath)
+	#for line in data:
+	while (True):
+		line = f.readline()
+		if line == '':
+			break
 		line = line.strip()
 		tokens = line.split('\t')
 		if len(tokens) == 8:
@@ -673,6 +685,7 @@ def loadSTRINGdata(string2incoming, datadir, number_of_processes):
 		else:
 			pass
 
+	f.close()
 	return tree_pred_string_data
 
 def InsertValueIntoMultiLevelDict(d, keys, value):
@@ -948,10 +961,14 @@ if __name__ == '__main__':
 	
 	parser.add_option("-c", "--compress", dest="compress", default=True,
 										help="compress temporary result files, saves discspace [default: %default]")
-	parser.add_option("-d", "--data", dest="datadir", default=os.path.realpath(sys.argv[0]).rsplit("/", 1)[0]+'/data',
+	parser.add_option("-d", "--data", dest="datadir", default=os.path.join(os.path.split(os.path.realpath(sys.argv[0]))[0], 'data'),
 										help="location for the additional files like the pre-computed STRING network, STRING sequence database etc. [default: %default]")
-	parser.add_option("--tmp", dest="tmpdir", default=os.environ["TMPDIR"],
+	if os.environ.has_key("TMPDIR"):
+		parser.add_option("--tmp", dest="tmpdir", default=os.environ["TMPDIR"],
 										help="location for the temporary files [default: %default]")
+	else:
+		print >> sys.stderr, "TMPDIR environmental variable is not defined. Please define this variable or specify tmp directory by using --tmp command line option"
+		sys.exit()
 
 
 	global options
