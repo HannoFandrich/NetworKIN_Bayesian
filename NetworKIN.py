@@ -512,7 +512,7 @@ def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, nu
 		sys.stderr.write("Looks like blast database is not initialized, trying to run:\n%s\n"%command)
 		myPopen(command)
 
-	command = "%s -a %s -p blastp -e 1e-10 -m 8 -d %s -i %s | sort -k12gr"%(blastDir, number_of_processes, blastDB, blast_tmpfile.name)
+	command = "%s -F F -a %s -p blastp -e 1e-10 -m 8 -d %s -i %s | sort -k12gr"%(blastDir, number_of_processes, blastDB, blast_tmpfile.name)
 	
 	# to save time - jhkim
 	if fast and os.path.isfile(fn_blast_output):
@@ -976,6 +976,11 @@ if __name__ == '__main__':
 
 	if options.active_threads < 2:
 		parser.error("Number of active thread (--nt) is less than 2")
+		
+	if not os.path.isdir(options.tmpdir):
+		sys.stderr.write('%s is not exist.\n' % options.tmpdir)
+		sys.exit()
+		
 	tempfile.tempdir= options.tmpdir
 
 	#ORGANISM
@@ -1003,10 +1008,18 @@ if __name__ == '__main__':
 	#BLAST
 	if options.blast:
 		blastDir = options.blast
+		
+		if not os.path.isfile(blastDir):
+				sys.stderr.write("Incorrect path to the blastall program. Please make sure you have blast package and the path is correct.\n")
+				sys.exit()
 	
 	#NETPHOREST
 	if options.netphorest_bin:
 		netphorest_bin = options.netphorest_bin
+		
+		if not os.path.isfile(netphorest_bin):
+				sys.stderr.write("Incorrect path to the NetPhorest program. Plstease make sure you have compiled the NetPhorest source code and the path to the executable is correct.\n")
+				sys.exit()
 		
 	# Show runtime parameters
 	if(options.verbose):
