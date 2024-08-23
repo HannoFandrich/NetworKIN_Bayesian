@@ -1,0 +1,6 @@
+sys:1: DtypeWarning: Columns (12) have mixed types.Specify dtype option on import or set low_memory=False.
+/usr/lib/python3/dist-packages/pandas/core/frame.py:5039: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  return super().rename(

@@ -1,12 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
-NetworKIN(tm), (C) 2005,2006,2007.
-Drs Rune Linding & Lars Juhl Jensen
-
-Released under stay the *#(@(#@)(%)(@!!!*$(# away license, until we published all our papers!
-I.e. its NOT released, if you did not obtain this software from any of the above you will be
-legally prosecuted.
+NetworKIN(tm), (C) 2005,2006,2007,2013.
+Drs Rune Linding, Lars Juhl Jensen, Heiko Horn & Jinho Kim
 
 Usage: ./networkin.py Organism FastaFile SitesFile
 
@@ -15,7 +11,12 @@ in the given sequences.
 """
 
 ### Coding strategy & TODO
-# columns: 1-5, 10: substrate, position, id, networkin score, tree,...,substrate name
+# FIX: filtering when no sites given
+# 2) add code for prediction of downstream recognition site (14-3-3 first)
+# 3) add code for predicting downstream binding module (14-3-3 first)
+# 4) finnish up output format and CLI options
+# 5) add code for doing 'pathway' analysis
+# 6) predict phenotypes
 ###
 
 # Changelog
@@ -25,14 +26,26 @@ in the given sequences.
 # 28.01.07: Testing autophosphorylation (self == 1 in update script)
 # 30.07.07: Working on v1.5 milestone
 # 07.05.08: Initiated 2.5 w. scaling factor
+# 11.07.13: New scoring scheme (Bayesian)
+# 03.02.14: Several minor bug fixes. blast sorting bug fix (k12nr -> k12gr)
 #
+
+###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 test.fas test.tsv
+###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 cured_morpho_seqs_v2.fa MS_Gaussian_updated_09032023.tsv
+###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 test1.fas test1.tsv
+###   mv /home/fandrich/projekte/networkin_bayesian/results/KinomeXplorer_all_predictions_v2.csv /home/basar/Signaling_Group/
+###   mv /home/fandrich/projekte/networkin_bayesian/results/cured_morpho_seqs_v2.fa.result.csv /home/basar/Signaling_Group/
+
 
 import sys, os, subprocess, re, tempfile, random, operator
 import threading
 from optparse import OptionParser
 import multiprocessing
+import glob
 import csv
 from string import *
+from likelihood import ReadConversionTableBin
+from likelihood import ConvertScore2L
 
 #debugging
 import time
@@ -40,7 +53,14 @@ import time
 # Weighting parameter, 0=only motif, 1=only STRING
 # estimated while benchmarking an then hardcoded here
 # feel free to play with it, but it is your own responsibility
-ALPHAS = {"9606": 0.85, "4932": 0.65} # 4932 Saccharomyces cerevisiae
+ALPHAS = {"9606": 0.85, "4932": 0.65}
+dSpeciesName = {"9606": "human", "4932": "yeast"}
+dPenalty = {"9606": {"hub penalty": 100, "length penalty": 800}, "4932": {"hub penalty": 170, "length penalty": 1000}}
+
+NETWORKIN_SITE_FILE = 1
+PROTEOME_DISCOVERER_SITE_FILE = 2
+MAX_QUANT_DIRECT_OUTPUT_FILE = 3
+	
 
 global options
 # Temporary directory to store the files
@@ -66,27 +86,29 @@ global options
 # Should the analysis be limited to specific trees?
 # just comment it out if you want to predict on all
 #limitTrees = ['SH2']
+#limitTrees = ['KIN', "SH2", "PTP"]
 #limitTrees = ['KIN']
-
+ 
 ################################################################################
 #                                                                              #
 #                             the code starts here                             #
 #                                                                              #
 ################################################################################
 
-# Run system binary
+class CSheet(list):
+    pass
 '''
+# Run system binary
 def myPopen(cmd):
 	try:
 		pipe = subprocess.Popen(cmd, shell=True, close_fds=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		stdout = pipe.stdout.readlines()
 	except:
-		sys.stderr.write('ERROR executing: '+repr(cmd)+'\n')
+		sys.stderr.write('ERROR executing: '+`cmd`+'\n')
 		sys.exit()
 	else:
-		print(stdout)
 		return stdout 
-'''	
+'''
 ### chat-gpt's myPopen:
 def myPopen(cmd):
     try:
@@ -119,11 +141,13 @@ def readFasta(fastafile):
 	aminoacids = re.compile('[^ACDEFGHIKLMNPQRSTVWYXB]')
 	data = fastafile.readlines()
 	fastafile.close()
+	seq = ''
 	for line in data:
 		if line[0] != ';':
 			if line[0] == '>':
 				line = line.strip()
-				id = line[1:].split(' ', 1)[0]
+				#id = line[1:].split(' ', 1)[0]
+				id = line[1:].split('_', 1)[0]
 #				id = line[1:-1].split(' ', 1)[0]
 				seq = ''
 			else:
@@ -131,21 +155,41 @@ def readFasta(fastafile):
 				if len(seq) > 0:
 					id_seq[id] = seq
 		else:
-			pass
-	#print(id_seq)
+			continue
 	return id_seq
+
+def CheckInputType(sitesfile):
+	f = open(sitesfile, 'rU')
+	line = f.readline()
+	f.close()
+	
+	tokens = line.split()
+	if len(tokens) == 3:
+		return NETWORKIN_SITE_FILE
+	elif len(tokens) == 2:
+		return PROTEOME_DISCOVERER_SITE_FILE
+	elif tokens[0] == "Proteins" and tokens[4] == "Leading":
+		return MAX_QUANT_DIRECT_OUTPUT_FILE
+	else:
+		sys.stderr("Unknown format of site file")
+		sys.exit()
 
 # Read phosphorylation sites from tsv file
 # id -> position -> residue
-def readPhosphoSites(sitefile):
+def readPhosphoSites(sitesfile):
 	id_pos_res = {}
-	if sitefile:
-		data = sitefile.readlines()
-		sitefile.close()
+	f = open(sitesfile, 'rU')
+	if f:
+		data = f.readlines()
+		f.close()
 		for line in data:
 			tokens = line.split('\t')
 			id = tokens[0]
-			pos = int(tokens[1])
+			try:
+				pos = int(tokens[1])
+			except:
+				sys.stderr.write(line)
+				raise
 			try:
 				res = tokens[2][:-1]
 			except:
@@ -154,9 +198,173 @@ def readPhosphoSites(sitefile):
 				id_pos_res[id][pos] = res
 			else:
 				id_pos_res[id] = {pos: res}
+	else:
+		sys.stderr.write("Could not open site file: %s" % sitesfile)
+		sys.exit()
+		
 	return id_pos_res
 
+
+def readPhosphoSitesProteomeDiscoverer(fastafile, sitesfile):
+	# This function takes a tab-separated list of ProteinID \t Peptide, in ProteomeDiscoverer format (i.e. phosphosites listed as
+	# lowercase), maps the peptide to the full-length protein sequence and conducts the NetworKIN search.
+	#
+
+	# store all fasta sequences
+	fasta = open(fastafile).readlines()
+	fastadict = {}
+	for line in fasta:
+		if line[0]==">":                                         #use this as each new entry in FASTA file starts with '>'
+			ensp=line.split()[0].strip(">")[0:15]                     #strip the '>' symbol from the line before copying value into dictionary
+			#print ensp
+			fastadict[ensp]=""
+			#retrieve the AA sequence belonging to individual ESPN identifiers and store as value for ESPN key       
+		else:
+			seq=line.strip()
+			fastadict[ensp]=seq
+		
+	# store all peptides in dictionary, with parent protein as key
+	peptides = open(sitesfile).readlines()
+	peptidedict = {}
+	for line in peptides:
+		line = line.strip()
+		tokens = line.split("\t")
+		protID = tokens[0]
+		peptide = tokens[1]
+		if protID in peptidedict.iterkeys():
+			if peptide in peptidedict[protID]:
+				pass
+			else:
+				peptidedict[protID][peptide] = ""
+		else:
+			peptidedict[protID] = { peptide : "" }
+
+
+	# now map peptide onto full length sequence, then get absolute phosphosite locations
+	id_pos_res = {}
+	for protID in peptidedict.iterkeys():
+		for peptide in peptidedict[protID]:
+		
+			# first make peptide upper case to match to FASTA sequence
+			UPPERpeptide = peptide.upper()
+			#print UPPERpeptide
+			
+			# get parent protein sequence
+			sequence = fastadict[protID]
+			peptideindex = sequence.index(UPPERpeptide)
+			#print peptideindex
+			
+			x = 0
+			for letter in peptide:
+				if letter.islower():
+					if letter == "s" or letter =="t" or letter == "y":
+						
+						phoslocation = peptideindex + x + 1
+						phosresidue = sequence[phoslocation - 1]
+						
+						if protID in id_pos_res.iterkeys():
+							id_pos_res[protID][phoslocation] = phosresidue
+						else:
+							id_pos_res[protID] = { phoslocation : phosresidue }
+					
+					else:
+						# non phosho modification
+						pass
+				else:
+					pass
+				
+				x += 1
+	return id_pos_res
+	    
+
+# return a list of dictionaries
+# Usage l[index][column name]
+def ReadSheet(fname, offset = 0):
+    l = CSheet()
+
+    f = open(fname, 'rU')
+    
+    for i in range(offset):
+        f.readline()
+
+    columns = f.readline().strip().split('\t')
+
+    l.columns = columns
+    for line in f.readlines():
+        instance = {}
+        l.append(instance)
+        fields = line.strip().split('\t')
+        
+        if len(fields) > len(columns):
+            sys.stderr.write("Error in data file")
+            sys.stderr.write(columns)
+            sys.stderr.write(fields)
+            raise
+        
+        for i in range(len(columns)):
+            try:
+                instance[columns[i]] = fields[i]
+            except IndexError:
+                instance[columns[i]] = ''
+    
+    #sys.stderr.write("No. of entries in file input: %d" % len(l))
+    f.close()
+    
+    return l
+
+def readPhosphoSitesMaxQuant(fname, only_leading = False):
+    id_pos_res = {}
+    
+    phosphosites = ReadSheet(fname)
+    
+    for site in phosphosites:
+        Ids = site["Proteins"].split(';')
+        positions = [int(x) for x in site["Positions within proteins"].split(';')]
+        aa = site["Amino acid"]
+    
+        leading_protein_ids = site["Leading proteins"].split(';')
+    
+        for i in range(len(Ids)):
+            Id = Ids[i]
+            pos = positions[i]
+
+            if only_leading and not Id in leading_protein_ids:
+                continue
+
+            if Id in id_pos_res:
+                id_pos_res[Id][pos] = aa
+            else:
+                id_pos_res[Id] = {pos: aa}
+
+    return id_pos_res
+
+'''
 #Alias hashes
+def readAliasFiles(organism, datadir):
+	alias_hash = {}
+	desc_hash = {}
+
+	# Read alias db
+	try:
+		alias_db = myPopen('gzip -cd %s/%s.alias_best.tsv.gz'%(datadir, organism))
+		for line in alias_db:
+			(taxID, seqID, alias) = line.strip().split('\t')[:3]
+			alias_hash[seqID] = alias
+	except:
+		sys.stderr.write("No aliases available for organism: '%s'\n"%organism)
+
+	# Read desc db
+	try:
+		desc_db = myPopen('gzip -cd %s/%s.text_best.tsv.gz'%(datadir, organism))
+		for line in desc_db:
+			(taxID, seqID, desc) = line.split('\t')[:3]
+			desc_hash[seqID] = desc
+	except:
+		sys.stderr.write("No descriptions available for organism: '%s'\n"%organism)
+
+	return alias_hash, desc_hash
+'''
+###  my Alias hashes
 def readAliasFiles(organism, datadir):
 	alias_hash = {}
 	desc_hash = {}
@@ -212,9 +420,12 @@ def readAliasFiles(organism, datadir):
 
 	#print(alias_hash)
 	return alias_hash, desc_hash , name_hash
-'''
+
+
 # Run Netphorest
-def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes):
+def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes, number_of_active_processes = 3, fast = False, leave_intermediates = False):
+	if number_of_active_processes < 2:
+		raise ValueError("Number of maximum threads is less than 2")
 	id_pos_tree_pred = {}
 
 	#check how many sequences we actually have
@@ -226,15 +437,26 @@ def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes):
 
 	if number_of_sequences < number_of_processes:
 		number_of_processes = number_of_sequences
-	#print(number_of_sequences)
+
 	# use multiple instances of netphorest
 	file_in = list(range(number_of_processes))
 	file_out = list(range(number_of_processes))
-
+	class CDummy:
+		def __init__(self, name):
+			self.name = name
+			
 	# create filehandles
 	for i in range(number_of_processes):
-		file_in[i] = tempfile.NamedTemporaryFile(mode='w+t')
-		file_out[i] = tempfile.NamedTemporaryFile(mode='w+t')
+		file_in[i] = tempfile.NamedTemporaryFile()
+		
+		if fast or leave_intermediates:
+			if save_diskspace:
+				file_out[i] = CDummy("%s.%s.gz" % (fn_netphorest_output, str(i)))      # jhkim
+				
+			else:
+				file_out[i] = CDummy("%s.%s.txt" % (fn_netphorest_output, str(i)))
+		else:
+			file_out[i] = tempfile.NamedTemporaryFile()
 
 	# distribute data into different files
 	line_counter = 0;
@@ -242,7 +464,7 @@ def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes):
 		for id in id_seq:
 			line_counter = line_counter + 1
 			number = line_counter % number_of_processes
-			file_in[number].write(">%s\n%s\n"%(id, id_seq[id]))
+			file_in[number].write((">%s\n%s\n"%(id, id_seq[id])).encode('utf-8'))
 		#file = open(args[1], 'r')
 		#for line in file:
 		#	if( re.search('^>',line) ):
@@ -254,28 +476,56 @@ def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes):
 			if id in id_pos_res:
 				line_counter = line_counter + 1
 				number = line_counter % number_of_processes
-				file_in[number].write(">%s\n%s\n"%(id, id_seq[id]))
+				file_in[number].write((">%s\n%s\n"%(id, id_seq[id])).encode('utf-8'))
 	for i in range(number_of_processes):
 		file_in[i].flush()
 
 	# run NetPhorest for each file in parallel
 	if options.verbose:
 		sys.stderr.write("\n")
+		
+	if options.verbose:
+		sys.stderr.write("Running on %s sequences\n"%line_counter)
+		
 	for i in range(number_of_processes):
+		if fast and os.path.isfile(file_out[i].name):
+			if options.verbose:
+				sys.stderr.write("%s is already exist.\n" % file_out[i].name)
+			continue
+				
+		while threading.active_count() >= number_of_active_processes:
+			sys.stderr.write('a')
+			#time.sleep(5)
+			
 		if options.verbose:
 			sys.stderr.write(netphorest_bin+' < '+file_in[i].name+ ' > '+file_out[i].name+'\n');
 		if save_diskspace:
 			arg = (netphorest_bin+' < '+file_in[i].name+ '| gzip -9 > '+file_out[i].name,)
 		else:
 			arg = (netphorest_bin+' < '+file_in[i].name+ ' > '+file_out[i].name,)
-		threading.Thread(target=myPopen, args=arg).start()
-	if options.verbose:
-		sys.stderr.write("Running on %s sequences\n"%line_counter)
+		#print(arg)
+		#####
+		process = subprocess.Popen([netphorest_bin], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		output, error = process.communicate(input=open(file_in[i].name, 'rb').read())
 
+		# Decode the output from bytes to string (assuming it's in UTF-8 encoding)
+		output_str = output.decode('utf-8')
+
+		# Print the output
+		'''
+		print("Output:")
+		print(output_str)
+		print(len(output_str.split('\n')))
+		'''
+		#####
+		
+		threading.Thread(target=myPopen, args=arg).start()
+	
 	# wait for threads to finish
 	while (threading.active_count() > 1):
-		sys.stderr.write('.')
-		time.sleep(5)
+		pass
+		#sys.stderr.write('.')
+		#time.sleep(5)
 
 	return file_out
 '''
@@ -325,6 +575,7 @@ def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes):
 		p.join()
 
 	return file_out
+'''
 
 
 # Parse the NetPhorest output
@@ -332,7 +583,6 @@ def runNetPhorest(id_seq, id_pos_res, save_diskspace, number_of_processes):
 # Name  Position        Residue Peptide Method    Orgnism    Tree    Classifier      Posterior       Prior
 # O00151  2       T       ----MtTQQID     nn    human    KIN     CDK2_CDK3_group    0.040050    0.028284
 def parseNetphorestFile(filename, id_pos_res, save_diskspace):
-
 	if save_diskspace:
 		command = "gzip -cd %s"%(filename)
 	else:
@@ -344,19 +594,24 @@ def parseNetphorestFile(filename, id_pos_res, save_diskspace):
 		netphorest_results = myPopen(command)
 	except:
 		sys.stderr.write("Going to sleep for 1 hour to give you time to debug:\nCrashed with '%s'\n"%command)
-		#time.sleep(3600)
+		time.sleep(3600)
 
 	id_pos_tree_pred = {}
+
+	#print(netphorest_results)
 	netphorest_results=netphorest_results.split('\n')
-	netphorest_results.pop(-1)
 	for line in netphorest_results:
-		if(re.match('^#',line)):
+		if(re.match('^#',line)) or (line == ''):
 			continue
 		tokens = line.split('\t')
 		id = tokens[0]
 		pos = int(tokens[1])
 		# NetPhorest2 introduces organism column
-		(res, peptide, method, organism, tree, pred) = tokens[2:8]
+		try:
+			(res, peptide, method, organism, tree, pred) = tokens[2:8]
+		except ValueError:
+			sys.stderr.write(tokens)
+			raise
 		try:
 			if tree not in limitTrees:
 				continue
@@ -383,7 +638,87 @@ def parseNetphorestFile(filename, id_pos_res, save_diskspace):
 		pass
 	return id_pos_tree_pred
 
+
+
+def ReadLines(fname):
+	f = open(fname)
+	lines = f.readlines()
+	f.close()
+	return lines
+
+def WriteString(fname, s):
+    f = open(fname, 'w')
+    f.write(s)
+    f.close()
+    
 # Map incoming peptides to STRING sequences
+'''
+def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, number_of_processes, datadir, fast = False, leave_intermediates = False):
+	sys.stderr.write("Mapping using blast\n")
+	incoming2string = {}
+	string2incoming = {}
+
+	# Speedup, only blast sequences with site specified
+	blast_tmpfile = tempfile.NamedTemporaryFile()
+	if id_pos_res == {}:
+		for id in id_seq:
+			blast_tmpfile.write('>'+id+'\n'+id_seq[id]+'\n')
+	else:
+		for id in id_pos_res:
+			try:
+				blast_tmpfile.write('>'+id+'\n'+id_seq[id]+'\n')
+			except:
+				sys.stderr.write("No sequence available for '%s'\n"%id)
+	blast_tmpfile.flush()
+
+	blastDB = os.path.join(datadir, "%s.protein.sequences.fa"%(organism)).replace(' ', '\\ ')
+
+	# Check if blast database is actually initialized, if not: do it
+	if not os.path.isfile(blastDB+'.pin'):
+		command = "%s/formatdb -i %s"%(blastDir.rsplit("/", 1)[0], blastDB)
+		sys.stderr.write("Looks like blast database is not initialized, trying to run:\n%s\n"%command)
+		myPopen(command)
+
+	command = "%s -F F -a %s -p blastp -e 1e-10 -m 8 -d %s -i %s | sort -k12gr"%(blastDir, number_of_processes, blastDB, blast_tmpfile.name)
+	
+	# to save time - jhkim
+	if fast and os.path.isfile(fn_blast_output):
+		blast_out = ReadLines(fn_blast_output)
+	else:
+		blast_out = myPopen(command)
+		if leave_intermediates:
+			WriteString(fn_blast_output, "".join(blast_out))
+		
+	for line in blast_out:
+		tokens = line.split('\t')
+		incoming = tokens[0]
+		if incoming not in incoming2string:
+			# get rid of organism prefix
+			string = tokens[1].replace("%s."%organism, "")
+			identity = float(tokens[2])
+			evalue = float(tokens[-2])
+
+			if string in string2incoming:
+				sys.stderr.write('Best hit for '+incoming+' is not reciprocal\n')
+			if identity < 90:
+				sys.stderr.write('Best hit for '+incoming+' has only '+format(identity, '.2f')+' %identity\n')
+			if evalue > 1e-40:
+				sys.stderr.write('Best hit for '+incoming+' has high E-value '+format(evalue, '.2e')+' \n')
+			if incoming in incoming2string:
+				incoming2string[incoming][string] = True
+			else:
+				incoming2string[incoming] = { string: True }
+			if string in string2incoming:
+				string2incoming[string][incoming] = True
+			else:
+				string2incoming[string] = { incoming: True }
+		else:
+			pass
+	return incoming2string, string2incoming
+'''
+
+### my mapPeptidestoString:
+
 def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, number_of_processes, datadir):
 	sys.stderr.write("Mapping using blast\n")
 	incoming2string = {}
@@ -505,7 +840,7 @@ def mapFromFile(filename):
 		mappingFile = myPopen(command)
 	except:
 		sys.stderr.write("Going to sleep, crashed with '%s'\n"%command)
-		#time.sleep(3600)
+		time.sleep(3600)
 
 	for line in mappingFile:
 		if(re.match('^#',line)):
@@ -524,199 +859,308 @@ def mapFromFile(filename):
 		if string in string2incoming:
 			string2incoming[string][incoming] = True
 		else:
-			string2incoming[string] = { incoming: True }
+			string2incoming[string] = {incoming: True }
 
 	return incoming2string, string2incoming
 
 # Load the precalculated STRING network file
 def loadSTRINGdata(string2incoming, datadir, number_of_processes):
-	# bestpath ( <= v9.0):
-	command = 'gzip -cd %s/%s.bestpath.tsv.gz'%(datadir, organism)
-	# protein.links.txt:
-	#command = 'gzip -cd %s/%s.protein.links.v12.0.txt.gz'%(datadir, organism)
+	#command = 'gzip -cd %s/%s.string_data.tsv.gz'%(datadir, organism)
+	
+	#fn_bestpath = "%s/%s.string_000_%04d_%04d.tsv.gz" % (os.path.join(datadir, "string_data"), organism, dPenalty[organism]["hub penalty"], dPenalty[organism]["length penalty"])
+	fn_bestpath = "%s/%s.links.v12.0.tsv.gz" % (os.path.join(datadir, "string_data"), organism)
+	
+	if not os.path.isfile(fn_bestpath):
+		sys.stderr.write("Best path file does not exist: %s" % fn_bestpath)
+				 
+	'''	    
+	command = "gzip -cd %s" % fn_bestpath
+	
 	try:
 		data = myPopen(command)
 	except:
 		sys.stderr.write("Error loading STRING data using '%s', sleeping fo 1h.\n"%command)
-		#time.sleep(3600)
+		time.sleep(3600)
+	'''	    
 
 	tree_pred_string_data = {}
-	data=data.split('\n')
-	data.pop(-1)
 
-	for line in data:
+		
+	# for memory efficiency
+	import gzip
+	f = gzip.open(fn_bestpath)
+	f = f.read().decode('utf-8')
+	f=f.split('\n')
+	for line in f:
 		#print(line)
-		#
-		# for bestpath :
-		
-		try:
-			(tree, pred, name, string1, string2, stringscore, null, path) = line.split('\t')
-		# path to itself,  we will miss the path information
-		except:
-			(tree, pred, name, string1, string2, stringscore, null) = line.split('\t')
-			path = ""
-		
-		'''
-		# for protein.links.txt:
-		line = line.split()
-		if line[0].startswith('protein'):
+		if line == '':
 			continue
-		#(string1, string2, stringscore) = line.split('\t')
-		string1=line[0]
-		string2=line[1]
-		stringscore=line[2]
-		#print((string1, string2, stringscore))
-		string1=string1.replace(f'{organism}.','')#[len(str(organism)+'.'):]
-		string2=string2.replace(f'{organism}.','')#[len(str(organism)+'.'):]
-		stringscore=float(stringscore)/1000
-		tree='notdef'
-		pred='notdef'
-		name='notdef'
-		path='notdef'
+		#line = line.strip()
+		tokens = line.split('\t')
+		#print(tokens)
+		if len(tokens) == 9:
+			(tree, group, name, string1, string2, stringscore, stringscore_indirect, path) = tokens
+		elif len(tokens) == 6:
+			(tree, group, name, string1, string2, stringscore) = tokens
+			stringscore=float(stringscore)/1000
+			string1=string1.replace(f'{organism}.','')
+			string2=string2.replace(f'{organism}.','')
 		'''
+		if len(tokens) == 8:
+			(tree, group, name, string1, string2, stringscore, stringscore_indirect, path) = tokens
+		elif len(tokens) == 7:
+			(tree, group, name, string1, string2, stringscore, stringscore_indirect) = tokens
+			path = ""	# path to itself,  we will miss the path information
+		elif len(tokens) == 6:
+			(name, string1, string2, stringscore, stringscore_indirect, path) = tokens
+		elif len(tokens) == 5:
+			(name, string1, string2, stringscore, stringscore_indirect) = tokens
+			path = ""	# path to itself,  we will miss the path information
 		'''
-		try:
-			if tree not in limitTrees:
-				continue
-		except:
-			pass
-		'''
-
-		if string2 in string2incoming.keys():
-			#print(string2)
-			if tree in tree_pred_string_data:
-				if pred in tree_pred_string_data[tree]:
-					if string2 in tree_pred_string_data[tree][pred]:
-						tree_pred_string_data[tree][pred][string2][string1] = {"_name": name}
-					else:
-						tree_pred_string_data[tree][pred][string2] = {string1: {"_name": name}}
-				else:
-					tree_pred_string_data[tree][pred] = {string2: {string1: {"_name": name}}}
+		
+		if string2 in string2incoming:
+			if string2 in tree_pred_string_data:
+				tree_pred_string_data[string2][string1] = {"_name": name}
 			else:
-				tree_pred_string_data[tree] = {pred: {string2: {string1: {"_name": name}}}}
-			tree_pred_string_data[tree][pred][string2][string1]["_score"] = float(stringscore)
-			tree_pred_string_data[tree][pred][string2][string1]["_path"] = path
+				tree_pred_string_data[string2] = {string1: {"_name": name}}
+
+			if options.path == "direct":
+				tree_pred_string_data[string2][string1]["_score"] = float(stringscore)
+			elif options.path == "indirect":
+				tree_pred_string_data[string2][string1]["_score"] = float(stringscore_indirect)	# Use indirect path
+			else:
+				raise "Path information should be either direct or indirect."
+			if len(tokens) == 9:
+				tree_pred_string_data[string2][string1]["_path"] = path
+			elif len(tokens) == 6:
+				tree_pred_string_data[string2][string1]["_path"] = 'notdef'
 		else:
 			pass
-	#print(tree_pred_string_data)
+
+	#f.close()
 	return tree_pred_string_data
 
-def printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string_alias, string_desc,string_name, organism, mode,res_dir, fasta_file):
+def InsertValueIntoMultiLevelDict(d, keys, value):
+	for i in range(len(keys)-1):
+		#if not d.has_key(keys[i]):
+		if not (keys[i] in d.keys()):
+			d[keys[i]] = {}
+		d = d[keys[i]]
+
+	if not (keys[-1] in d.keys()):
+		d[keys[-1]] = []
+	d[keys[-1]].append(value)
+    
+def ReadGroup2DomainMap(path_group2domain_map):
+    map_group2domain = {}   # KIN   group   name
+    
+    f = open(path_group2domain_map, "rU")
+	#	KinomeXplorer_all_predictions_v2.csv
+    for line in f.readlines():
+        tokens = line.split()
+        InsertValueIntoMultiLevelDict(map_group2domain, tokens[:2], tokens[2])
+
+    f.close()
+    
+    return map_group2domain
+
+def SetValueIntoMultiLevelDict(d, keys, value):
+	for i in range(len(keys)-1):
+		#if not d.has_key(keys[i]):
+		if keys[i] not in d:
+			d[keys[i]] = {}
+		d = d[keys[i]]
+	if (keys[-1] in d) and type(d[keys[-1]]) != type(value):
+		sys.stderr.write("Causion: multi-dict already has value and try to assign a value of different type")
+		pass
+	if (keys[-1] in d):
+		if d[keys[-1]] != value:
+			#sys.stderr.write("This operation replaces a value (%s)" % " ".join(map(lambda(x):str(x), keys)))
+			sys.stderr.write("This operation replaces a value ({})".format(' '.join(map(str, keys))))
+	d[keys[-1]] = value
+    
+def printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string_alias, string_desc,string_names, organism, mode, dir_likelihood_conversion_tbl, map_group2domain, res_dir, fasta_file):
 	ALPHA = ALPHAS[organism]
-	csv_filename = os.path.join(res_dir, f'{fasta_file}.result.csv')
+	species = dSpeciesName[organism]
+
+	fas = open(fasta_file, 'r')
+	csv_filename = os.path.join(res_dir, f'{fas.name}.result.csv')
 	with open(csv_filename, 'w', newline='') as csvfile:
 		writer = csv.writer(csvfile, delimiter=',')
-		'''
-		writer.writerow(
-			['Name', 'Position',  'id', 'NetworKIN score','Tree','NetPhorest Group',
-			 'NetPhorest score', 'STRING score', 'Input STRING ID', 'Substrate STRING ID', 'Input description',
-			 'Substrate description', 'Input Name', 'Substrate Name', 'Sequence window', 'Nodes'])
-		'''
-		writer.writerow(
-			['substrate',	'position',	'id',	'networkin_score',	'tree',
-			 'netphorest_group',	'netphorest_score',	'string_identifier',	'string_score',
-			 'substrate_name',	'sequence',	'string_path'])
+		writer.writerow(['Name'
+						,'Position'
+						,'Tree'
+						,'NetPhorest Group'
+						,'Kinase/Phosphatase/Phospho-KinomeXplorer_all_predictions_v2.csvbinding domain'
+						,'NetworKIN score'
+						,'NetPhorest probability'
+						,'STRING score'
+						,'Target STRING ID'
+						,'Kinase/Phosphatase/Phospho-binding domain STRING ID'
+						,'Target description'
+						,'Kinase/Phosphatase/Phospho-binding domain description'
+						,'Target Name'
+						,'Kinase/Phosphatase/Phospho-binding domain Name'
+						,'Peptide sequence window'
+						,'Intermediate nodes'])
 
-	# For each ID in NetPhorest
-	for id in id_pos_tree_pred:
-		# We have a mapping to STRING
-		if id in incoming2string:
-			# For each predicted position
-			for pos in id_pos_tree_pred[id]:
 
-				# For each of the trees (KIN, SH@ etc.)
-				for tree in id_pos_tree_pred[id][pos]:
-					#print(tree)
-					score_results = {}
-					# For each single classifier
-					for pred in id_pos_tree_pred[id][pos][tree]:
-						#print(pred)
-						# For each mapped sequence
-						for string1 in incoming2string[id]:
-							if string1 in string_alias:
-								bestName1 = string_alias[string1]
+		dLRConvTbl = {}
+		for fname in glob.glob(os.path.join(dir_likelihood_conversion_tbl, "conversion_tbl_*_smooth*")):
+			netphorest_or_string, species_of_conversion_table, tree, player_name = re.findall("conversion_tbl_([a-z]+)_smooth_([a-z]+)_([A-Z0-9]+)_([a-zA-Z0-9_/-]+)", os.path.basename(os.path.splitext(fname)[0]))[0]
+			#species, tree, player_name = os.path.basename(os.path.splitext(fname)[0]).rsplit('_', 3)[1:]
+			
+			if species_of_conversion_table != species:
+				continue
+			
+			conversion_tbl = ReadConversionTableBin(fname)
+			SetValueIntoMultiLevelDict(dLRConvTbl, [species_of_conversion_table, tree, player_name, netphorest_or_string], conversion_tbl)
+		
+			if options.verbose:
+				sys.stderr.write("Conversion table %s %s %s %s\n" % (species_of_conversion_table, tree, player_name, netphorest_or_string) )
+		
+		# For each ID in NetPhorest
+		for id in id_pos_tree_pred:
+			# We have a mapping to STRING
+			if id in incoming2string:
+				# For each predicted position
+				for pos in id_pos_tree_pred[id]:
+					# For each of the trees (KIN, SH@ etc.)
+					for tree in id_pos_tree_pred[id][pos]:
+						score_results = {}
+						# For each single classifier
+						for pred in id_pos_tree_pred[id][pos][tree]:
+							# For each mapped sequence
+							for string1 in incoming2string[id]:
+								if string1 in string_alias:
+									bestName1 = string_alias[string1]
+								else:
+									bestName1 = ''
+								if string1 in string_desc:
+									desc1 = string_desc[string1]
+								else:
+									desc1 = ''
+								#print(tree_pred_string_data)
+								if string1 in tree_pred_string_data:
+									(res, peptide, netphorestScore) = id_pos_tree_pred[id][pos][tree][pred]
+									for string2 in tree_pred_string_data[string1]:
+
+										if string2 in string_alias:
+											bestName2 = string_alias[string2]
+										else:
+											bestName2 = ''
+										if string2 in string_desc:
+											desc2 = string_desc[string2]
+										else:
+											desc2 = ''
+										stringScore = tree_pred_string_data[string1][string2]["_score"]
+										path = tree_pred_string_data[string1][string2]["_path"]
+										name = tree_pred_string_data[string1][string2]["_name"]	# string2 = kinase
+
+										#sys.stderr.write("%s %s %s\n" % (tree, pred, name))
+										if (tree not  in map_group2domain) or (pred not in map_group2domain[tree]) or (name not in map_group2domain[tree][pred]):
+											if options.string_for_uncovered:
+												if species == "human":
+													if tree in ["1433", "BRCT", "WW", "PTB", "WD40", "FHA"]:
+														conversion_tbl_string = dLRConvTbl[species]["SH2"]["general"]["string"]
+													else:
+														conversion_tbl_string = dLRConvTbl[species][tree]["general"]["string"]
+												elif species == "yeast":
+													conversion_tbl_string = dLRConvTbl[species][tree]["general"]["string"]
+												else:
+													raise "This species is not supported"
+												
+												likelihood_netphorest = 1
+												likelihood_string = ConvertScore2L(stringScore, conversion_tbl_string)
+												unified_likelihood = likelihood_netphorest * likelihood_string
+												networkinScore = unified_likelihood
+			
+												# NetworKIN result
+												result = id+'\t'+res+str(pos)+'\t'+tree+'\t'+pred+'\t'+name+'\t'+ \
+												format(networkinScore,'.4f')+'\t'+"N/A"+'\t'+format(stringScore,'.4f')+'\t'+ \
+												string1+'\t'+string2+'\t'+bestName1+'\t'+bestName2+'\t'+desc1+'\t'+desc2+'\t'+peptide+'\t'+path+'\n'
+
+												with open(csv_filename, 'a', newline='') as csvfile:
+													writer = csv.writer(csvfile, delimiter=',')
+													writer.writerow(result.split('\t'))
+											else:
+												continue
+										else:
+											#sys.stderr.write("%s %s\n" % (string1, string2))
+		
+											if species == "human":
+												if tree in ["1433", "BRCT", "WW", "PTB", "WD40", "FHA"]:
+													conversion_tbl_netphorest = dLRConvTbl[species]["SH2"]["general"]["netphorest"]
+													conversion_tbl_string = dLRConvTbl[species]["SH2"]["general"]["string"]
+												else:
+													if (name in dLRConvTbl[species][tree]):
+														conversion_tbl_netphorest = dLRConvTbl[species][tree][name]["netphorest"]
+														conversion_tbl_string = dLRConvTbl[species][tree][name]["string"]
+													else:
+														conversion_tbl_netphorest = dLRConvTbl[species][tree]["general"]["netphorest"]
+														conversion_tbl_string = dLRConvTbl[species][tree]["general"]["string"]
+											elif species == "yeast":
+												if (name in dLRConvTbl[species][tree]):
+													conversion_tbl_netphorest = dLRConvTbl[species][tree][name]["netphorest"]
+													conversion_tbl_string = dLRConvTbl[species][tree][name]["string"]
+												else:
+													conversion_tbl_netphorest = dLRConvTbl[species][tree]["general"]["netphorest"]
+													conversion_tbl_string = dLRConvTbl[species][tree]["general"]["string"]
+											else:
+												raise "This species is not supported"
+											
+											likelihood_netphorest = ConvertScore2L(netphorestScore, conversion_tbl_netphorest)
+											likelihood_string = ConvertScore2L(stringScore, conversion_tbl_string)
+											unified_likelihood = likelihood_netphorest * likelihood_string
+											networkinScore = unified_likelihood
+											#networkinScore = pow(stringScore, ALPHA)*pow(netphorestScore, 1-ALPHA)
+		
+											# NetworKIN result
+											
+											try:
+												result = string_names[organism+'.'+id]+'\t'+res+str(pos)+'\t'+tree+'\t'+pred+'\t'+name+'\t'+ \
+												format(networkinScore,'.4f')+'\t'+format(netphorestScore,'.4f')+'\t'+format(stringScore,'.4f')+'\t'+ \
+												string1+'\t'+string2+'\t'+bestName1+'\t'+bestName2+'\t'+desc1+'\t'+desc2+'\t'+peptide+'\t'+path+'\n'
+											except: 
+												result = id+'\t'+res+str(pos)+'\t'+tree+'\t'+pred+'\t'+name+'\t'+ \
+												format(networkinScore,'.4f')+'\t'+format(netphorestScore,'.4f')+'\t'+format(stringScore,'.4f')+'\t'+ \
+												string1+'\t'+string2+'\t'+bestName1+'\t'+bestName2+'\t'+desc1+'\t'+desc2+'\t'+peptide+'\t'+path+'\n'
+											
+											
+											with open(csv_filename, 'a', newline='') as csvfile:
+												writer = csv.writer(csvfile, delimiter=',')
+												writer.writerow(result.split('\t'))
+
+										if networkinScore not in score_results:
+											score_results[networkinScore] = []
+
+										score_results[networkinScore].append(result)
+						if mode == 'network':
+							highestScore = sorted(score_results.keys(), reverse=True)[0]
+
+							if len(score_results[highestScore]) > 1:
+								index = random.randint(0,len(score_results[highestScore])-1)
+								#sys.stdout.write((score_results[highestScore][index]))
 							else:
-								bestName1 = ''
-							if string1 in string_desc:
-								desc1 = string_desc[string1]
-							else:
-								desc1 = ''
-
-							if tree in tree_pred_string_data and pred in tree_pred_string_data[tree] and string1 in tree_pred_string_data[tree][pred]:
-
-							#if string1 in tree_pred_string_data['notdef']['notdef']:
-								(res, peptide, netphorestScore) = id_pos_tree_pred[id][pos][tree][pred]
-								for string2 in tree_pred_string_data[tree][pred][string1]:
-								#for string2 in tree_pred_string_data['notdef']['notdef'][string1]:
-									if string2 in string_alias:
-										bestName2 = string_alias[string2]
-									else:
-										bestName2 = ''
-									if string2 in string_desc:
-										desc2 = string_desc[string2]
-									else:
-										desc2 = ''
-									stringScore = tree_pred_string_data[tree][pred][string1][string2]["_score"]
-									path = tree_pred_string_data[tree][pred][string1][string2]["_path"]
-									name = tree_pred_string_data[tree][pred][string1][string2]["_name"]
-									#stringScore = tree_pred_string_data['notdef']['notdef'][string1][string2]["_score"]
-									#path = tree_pred_string_data['notdef']['notdef'][string1][string2]["_path"]
-									#name = tree_pred_string_data['notdef']['notdef'][string1][string2]["_name"]
-									networkinScore = pow(stringScore, ALPHA)*pow(netphorestScore, 1-ALPHA)
-
-									# NetworKIN result
-									'''
-									result = id+'\t'+res+str(pos)+'\t'+tree+'\t'+pred+'\t'+name+'\t'+ \
-									str(round(networkinScore,4))+'\t'+str(round(netphorestScore,4))+'\t'+str(round(stringScore,4))+'\t'+ \
-									string1+'\t'+string2+'\t'+bestName1+'\t'+bestName2+'\t'+desc1+'\t'+desc2+'\t'+peptide+'\t'+path+'\n'
-									'''
-									try:
-										result = string1+'\t'+str(pos)+'\t'+string_name[organism+'.'+string2]+'\t'+str(round(networkinScore,4))+'\t'+tree+'\t'+ \
-										pred+'\t'+str(round(netphorestScore,4))+'\t'+string2+'\t'+str(round(stringScore,4))+'\t'+string_name[organism+'.'+string1]+'\t'+ \
-										peptide+'\t'+path+'\n'
-									except:
-										result = string1 + '\t' + str(pos) + '\t' + name + '\t' + str(round(networkinScore, 4)) + '\t' + tree + '\t' + \
-										pred + '\t' + str(round(netphorestScore, 4)) + '\t' + string2 + '\t' + str(round(stringScore, 4)) + '\t' + bestName2 + '\t' + \
-										peptide + '\t' + path + '\n'
-									
-
-									'''
-									result = id+'\t'+str(pos)+str(round(networkinScore,4))+'\t'+tree+'\t'+pred+'\t'+name+'\t'+ \
-									'\t'+str(round(netphorestScore,4))+'\t'+str(round(stringScore,4))+'\t'+ \
-									string1+'\t'+string2+'\t'+bestName1+'\t'+bestName2+'\t'+desc1+'\t'+desc2+'\t'+peptide+'\t'+path+'\n'
-									'''
-
-									with open(csv_filename, 'a', newline='') as csvfile:
-										writer = csv.writer(csvfile, delimiter=',')
-										writer.writerow(result.split('\t'))
-
-									if networkinScore not in score_results:
-										score_results[networkinScore] = []
-
-									score_results[networkinScore].append(result)
-					'''
-					if mode == 'network':
-						highestScore = sorted(score_results.keys(), reverse=True)[0]
-
-						if len(score_results[highestScore]) > 1:
-							index = random.randint(0,len(score_results[highestScore])-1)
-							sys.stdout.write((score_results[highestScore][index]))
+								#sys.stdout.write((score_results[highestScore][0]))
+								pass
 						else:
-							sys.stdout.write((score_results[highestScore][0]))
-						pass
-					else:
-						for score in sorted(score_results.keys(), reverse=True):
-							sys.stdout.write("".join(score_results[score]))
-					'''
-		else:
-			pass
+							for score in sorted(score_results.keys(), reverse=True):
+								#sys.stdout.write("".join(score_results[score]))
+								pass
+			else:
+				pass
 	return
 
 #MAIN
 def Main():
+	res_dir='results'
+	if not os.path.exists(res_dir):
+		os.makedirs(res_dir)
 
-	#for key, value in os.environ.items():
-	#	print(f"{key}: {value}")
+	tmpdir='tmp'
+	if not os.path.exists(tmpdir):
+		os.makedirs(tmpdir)
 
 	sys.stderr.write("Reading fasta input file\n")
 	id_seq = readFasta(fastafile)
@@ -725,16 +1169,31 @@ def Main():
 
 	if sitesfile:
 		sys.stderr.write("Reading phosphosite file\n")
-		id_pos_res = readPhosphoSites(sitesfile)
+		input_type = CheckInputType(sitesfile)
+		if input_type == NETWORKIN_SITE_FILE:
+			id_pos_res = readPhosphoSites(sitesfile)
+		elif input_type == PROTEOME_DISCOVERER_SITE_FILE:
+			id_pos_res = readPhosphoSitesProteomeDiscoverer(fn_fasta, sitesfile)
+		elif input_type == MAX_QUANT_DIRECT_OUTPUT_FILE:
+			id_pos_res = readPhosphoSitesMaxQuant(sitesfile)
 	else:
 		id_pos_res = {}
 
 	sys.stderr.write("Loading aliases and descriptions\n")
-	(string_alias, string_desc, string_name) = readAliasFiles(args[0], options.datadir);
+	(string_alias, string_desc, string_names) = readAliasFiles(args[0], options.datadir);
 
+	if organism == "9606":
+		path_group2domain_map = os.path.join(options.datadir, "group_human_protein_name_map.tsv")
+	elif organism == "4932":
+		path_group2domain_map = os.path.join(options.datadir, "group_yeast_KIN.tsv")
+	
+
+	map_group2domain = ReadGroup2DomainMap(path_group2domain_map)
+	
 	# Default way of mapping using BLAST
+	#incoming2string, string2incoming = mapPeptides2STRING(blastDir, organism, fastafile.name, id_pos_res, id_seq, options.threads, options.datadir, options.fast, options.leave)
 	incoming2string, string2incoming = mapPeptides2STRING(blastDir, organism, fastafile.name, id_pos_res, id_seq, options.threads, options.datadir)
-
+	
 	# Hack for random mapping to proteins
 	#incoming2string, string2incoming = mapRandom(id_seq)
 
@@ -747,42 +1206,39 @@ def Main():
 	# Load the STRING network data
 	sys.stderr.write("Loading STRING network\n")
 	tree_pred_string_data = loadSTRINGdata(string2incoming, options.datadir, options.threads)
-
-
+	print('STRING HITS:')
+	#print(len(list(tree_pred_string_data['ENSP00000263026'].keys())))
 	# Run NetPhorest
-	sys.stderr.write("Running NetPhorest")
+	sys.stderr.write("Running NetPhorest\n")
+	#netphorestTmpFiles = runNetPhorest(id_seq, id_pos_res, options.compress, options.threads, options.active_threads, options.fast, options.leave)
 	netphorestTmpFiles = runNetPhorest(id_seq, id_pos_res, options.compress, options.threads)
-	sys.stderr.write('\n')
+	#sys.stderr.write('\n')
 
 	# Writing result to STDOUT
 	sys.stderr.write("Writing results\n")
-	sys.stdout.write("#Name\tPosition\tTree\tNetPhorest Group\tKinase/Phospho-binding domain\t\
-									 NetworKIN score\tNetPhorest score\tSTRING score\t\
-									 Input STRING ID\tSubstrate STRING ID\tInput description\tSubstrate description\tInput Name\tSubstrate Name\tSequence window\tNodes\n")
-
-	res_dir='results'
-	if not os.path.exists(res_dir):
-		os.makedirs(res_dir)
-
-	#print(string_name)
+	sys.stdout.write("#Name\tPosition\tTree\tNetPhorest Group\tKinase/Phosphatase/Phospho-binding domain\tNetworKIN score\tNetPhorest probability\tSTRING score\tTarget STRING ID\tKinase/Phosphatase/Phospho-binding domain STRING ID\tTarget description\tKinase/Phosphatase/Phospho-binding domain description\tTarget Name\tKinase/Phosphatase/Phospho-binding domain Name\tPeptide sequence window\tIntermediate nodes\n")
 	for i in range(len(netphorestTmpFiles)):
 		id_pos_tree_pred = parseNetphorestFile(netphorestTmpFiles[i].name, id_pos_res, options.compress)
-		#tree_pred_string_data['notdef']={'notdef':'notdef'}
-  		
-		printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string_alias, string_desc, string_name, args[0], options.mode,res_dir,args[1])
- 
+		if options.path == "direct":
+			dir_likelihood_conversion_tbl = os.path.join(options.datadir, "likelihood_conversion_table_direct")
+		elif options.path == "indirect":
+			dir_likelihood_conversion_tbl = os.path.join(options.datadir, "likelihood_conversion_table_indirect")
+		else:
+			raise "Path information should be either direct or indirect."
+		#print(tree_pred_string_data)
+		printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string_alias, string_desc,string_names, args[0], options.mode, dir_likelihood_conversion_tbl, map_group2domain, res_dir, fn_fasta)
+
 	return
 
 if __name__ == '__main__':
 	#BLAST
 	try:
 		blastDir = os.environ['BLAST_PATH']
-		
 	except:
 		blastDir=""
 	#NETPHOREST
 	try:
-		netphorest_bin = "" #os.environ['NETPHOREST_PATH']
+		netphorest_bin = os.environ['NETPHOREST_PATH']
 	except:
 		netphorest_bin=""
 
@@ -794,40 +1250,59 @@ if __name__ == '__main__':
 										help="set the directory for the BLAST binaries (formatdb and blastall), overwrites the 'BLAST_PATH' environmental variable. [ENV: %default]")
 	parser.add_option("-m", "--mode", dest="mode", default=False,
 										help="if set to 'network', gives only one best scoring result for each site. In case of multiple candidate kinases with the same core, the selection hapens randomly. [default: %default]")
+	parser.add_option("-p", "--path", dest="path", default="direct",
+										help="NetworKIN uses both direct and indirect paths. Otherwise, it uses only indirect paths. [default: %default]")
 	parser.add_option("-v", "--verbose", dest="verbose", action="store_true",
 										help="print out everything [default: %default]")
+	parser.add_option("-f", "--fast", dest="fast", default=False, action="store_true",
+										help="Speed up by using the intermediate files of previous run [default: %default]")
+	parser.add_option("-l", "--leave", dest="leave", default=False, action="store_true",
+										help="leave intermediate files [default: %default]")
+	parser.add_option("-u", "--uncovered", dest="string_for_uncovered", default=False, action="store_true",
+										help="Use STRING likelihood for uncovered Kinases [default: %default]")
 	parser.add_option("-t", "--threads", dest="threads", default=1, type="int",
 										help="number of available threads/CPUs. Also leads to less memory usage, as result files are read sequentially [default: %default]")
+	parser.add_option("--nt", dest="active_threads", default=2, type="int",
+										help="number of active threads at a time")
+	
 	parser.add_option("-c", "--compress", dest="compress", default=True,
 										help="compress temporary result files, saves discspace [default: %default]")
-	parser.add_option("-d", "--data", dest="datadir", default=sys.argv[0].rsplit("/", 1)[0]+'/data',
+	parser.add_option("-d", "--data", dest="datadir", default=os.path.join(os.path.split(os.path.realpath(sys.argv[0]))[0], 'data'),
 										help="location for the additional files like the pre-computed STRING network, STRING sequence database etc. [default: %default]")
-	parser.add_option("--tmp", dest="tmpdir", default="/tmp",
-										help="location for the temporary files [default: %default]")
-	#python3 NetworKIN_CODE_v3.0/NetworKIN.py -n /netphorest -b /ncbi-blast-2.15.0+/bin -d NetworKIN_CODE_v3.0/data 9606 test.fas
-	#python3 NetworKIN_CODE_v3.0/NetworKIN.py -n netphorest/netphorest -d NetworKIN_CODE_v3.0/data 9606 test1.fas
-	#python3 NetworKIN_CODE_v3.0/NetworKIN.py -n netphorest/netphorest -d NetworKIN_CODE_v3.0/data 9606 cured_morpho_seqs_v2.fa
+	#if os.environ.has_key("TMPDIR"):
+	#	parser.add_option("--tmp", dest="tmpdir", default=os.environ["TMPDIR"],
+	#									help="location for the temporary files [default: %default]")
+	#else:
+	#	print >> sys.stderr, "TMPDIR environmental variable is not defined. Please define this variable or specify tmp directory by using --tmp command line option"
+	#	sys.exit()
+
+
 	global options
 	(options, args) = parser.parse_args()
 
-	tempfile.tempdir= options.tmpdir
+	if options.active_threads < 2:
+		parser.error("Number of active thread (--nt) is less than 2")
+	#tempfile.tempdir= options.tmpdir
 
 	#ORGANISM
 	try:
-		organism = int(args[0])
+		organism = args[0]
 	except:
 		parser.error("Organism not defined!")
 
 	#SEQUENCE FILE
 	try:
-		fastafile = open(args[1], 'r')
+		fn_fasta = args[1]
+		fn_blast_output = "%s.%s.blast.out" % (fn_fasta, organism)
+		fn_netphorest_output = "%s.%s.netphorest.out" % (fn_fasta, organism)
+		fastafile = open(fn_fasta, 'rU')
 	except:
 		sys.stderr.write("%s"%args)
 		parser.error("FASTA-file not defined!")
 
 	#SITES FILE
 	try:
-		sitesfile = open(args[2], 'r')
+		sitesfile = args[2]
 	except:
 		sitesfile = False
 
@@ -841,8 +1316,10 @@ if __name__ == '__main__':
 		
 	# Show runtime parameters
 	if(options.verbose):
-		sys.stderr.write('\nPredicting using parameters as follows:\nOrganism:\t%s\nFastaFile:\t%s\n'%(organism, args[1]))
+		sys.stderr.write('\nPredicting using parameters as follows:\nOrganism:\t%s\nFastaFile:\t%s\n'%(organism, fn_fasta))
 		sys.stderr.write('Threads:\t%s\nCompress:\t%s\n'%(options.threads, options.compress))
+		if options.string_for_uncovered:
+			sys.stderr.write("Use STRING likelihood when the kinases is not covered NetPhorest.\n")
 		if sitesfile:
 			sys.stderr.write('Sitesfile:\t%s\n'%sitesfile)
 		else:
