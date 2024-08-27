@@ -40,10 +40,13 @@ def IsDownPeak(conv_tbl, i):
 def Smooth3(conv_tbl, i, num_pos, num_neg, func_score, VAZD):
     num_predictions = num_pos + num_neg
     predictions_bin = list(set(conv_tbl[i].predictions_bin).union(set(conv_tbl[i+1].predictions_bin)).union(set(conv_tbl[i+2].predictions_bin)))
-    predictions_bin.sort(key = lambda(x):x.kz)
+    #predictions_bin.sort(key = lambda(x):x.kz)
+    predictions_bin.sort(key=lambda x: x.kz)
     predictions_bin.sort(key = func_score, reverse = True)
-    num_pos_bin = Count(lambda(x):x.kz == 'k', predictions_bin)
-    num_neg_bin = Count(lambda(x):x.kz == 'z', predictions_bin)
+    #num_pos_bin = Count(lambda(x):x.kz == 'k', predictions_bin)
+    num_pos_bin = len([x for x in predictions_bin if x.kz == 'k'])
+    #num_neg_bin = Count(lambda(x):x.kz == 'z', predictions_bin)
+    num_neg_bin = len([x for x in predictions_bin if x.kz == 'z'])
 
     conv_entry = CConvEntry()
     conv_entry.predictions_bin = predictions_bin
@@ -67,10 +70,13 @@ def Smooth3(conv_tbl, i, num_pos, num_neg, func_score, VAZD):
 def MergePoints(conv_tbl, i, num_pos, num_neg, func_score, VAZD):
     num_predictions = num_pos + num_neg
     predictions_bin = list(set(conv_tbl[i].predictions_bin).union(set(conv_tbl[i+1].predictions_bin)))
-    predictions_bin.sort(key = lambda(x):x.kz)
+    #predictions_bin.sort(key = lambda(x):x.kz)
+    predictions_bin.sort(key=lambda x: x.kz)
     predictions_bin.sort(key = func_score, reverse = True)
-    num_pos_bin = Count(lambda(x):x.kz == 'k', predictions_bin)
-    num_neg_bin = Count(lambda(x):x.kz == 'z', predictions_bin)
+    #num_pos_bin = Count(lambda(x):x.kz == 'k', predictions_bin)
+    num_pos_bin = len([x for x in predictions_bin if x.kz == 'k'])
+    #num_neg_bin = Count(lambda(x):x.kz == 'z', predictions_bin)
+    num_neg_bin = len([x for x in predictions_bin if x.kz == 'z'])
 
     conv_entry = CConvEntry()
     conv_entry.predictions_bin = predictions_bin
@@ -200,7 +206,8 @@ def LocalSmooth(conv_tbl, num_pos, num_neg, func_score, VAZD):
     has_up_peak = True
     has_down_peak = True
 
-    conv_tbl.sort(key=lambda(x):x.score, reverse = True)
+    #conv_tbl.sort(key=lambda(x):x.score, reverse = True)
+    conv_tbl.sort(key=lambda x: x.score, reverse=True)
     
     while True:
         has_up_peak = SmoothUpPeak(conv_tbl, num_pos, num_neg, func_score, VAZD)
@@ -260,7 +267,8 @@ def ReadConversionTableBin(path_conversion_table):
         
     f.close()
     
-    conv_tbl.sort(key=lambda(x):x.score, reverse=True)
+    #conv_tbl.sort(key=lambda(x):x.score, reverse=True)
+    conv_tbl.sort(key=lambda x: x.score, reverse=True)
     
     return conv_tbl
 
@@ -279,15 +287,17 @@ def GenerateLikelihoodConversionTbl(predictions, num_pos, num_neg, func_score, V
     
     conv_tbl = []
 
-    predictions.sort(key = lambda(x):x.kz)
+    predictions.sort(key = lambda x :x.kz)
     predictions.sort(key = func_score, reverse = True)
     
     for i in range(0, len(predictions)-bin_size+1):
         #predictions_bin = predictions[i:i+bin_size]
         predictions_bin = ExtendBin(predictions, func_score, func_score(predictions[i+bin_size-1])-0.0001, func_score(predictions[i])+0.0001)
         score = mean(map(func_score, predictions_bin))
-        num_pos_bin = Count(lambda(x):x.kz == 'k', predictions_bin)
-        num_neg_bin = Count(lambda(x):x.kz == 'z', predictions_bin)
+        #num_pos_bin = Count(lambda(x):x.kz == 'k', predictions_bin)
+        num_pos_bin = len([x for x in predictions_bin if x.kz == 'k'])
+        #num_neg_bin = Count(lambda x :x.kz == 'z', predictions_bin)
+        num_neg_bin = len([x for x in predictions_bin if x.kz == 'z'])
         conv_entry = CConvEntry()
         conv_entry.predictions_bin = predictions_bin
         conv_entry.score = score
@@ -328,14 +338,16 @@ def ReadConversionTableBin(path_conversion_table):
         
     f.close()
     
-    conv_tbl.sort(key=lambda(x):x.score, reverse=True)
+    #conv_tbl.sort(key=lambda(x):x.score, reverse=True)
+    conv_tbl.sort(key=lambda x: x.score, reverse=True)
     
     return conv_tbl
 
 
 def ConvertScore2L(score, conv_tbl):
     lower_limit  = 0.0001
-    conv_tbl.sort(key=lambda(x):x.score, reverse=True)
+    #conv_tbl.sort(key=lambda(x):x.score, reverse=True)
+    conv_tbl.sort(key=lambda x: x.score, reverse=True)
     
     # extrapolation
     if score >= conv_tbl[0].score:
