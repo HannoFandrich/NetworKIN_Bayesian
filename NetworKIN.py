@@ -31,13 +31,13 @@ in the given sequences.
 #
 
 ###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 test.fas test.tsv
-###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 cured_morpho_seqs_v2.fa MS_Gaussian_updated_09032023.tsv
+###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 cured_morpho_seqs_v2.fa phospho.tsv
 ###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 test1.fas test1.tsv
 ###   mv /home/fandrich/projekte/networkin_bayesian/results/KinomeXplorer_all_predictions_v2.csv /home/basar/Signaling_Group/
 ###   mv /home/fandrich/projekte/networkin_bayesian/results/cured_morpho_seqs_v2.fa.result.csv /home/basar/Signaling_Group/
 
 
-import sys, os, subprocess, re, tempfile, random, operator
+import sys, os, subprocess, re, tempfile, random, operator, platform
 import threading
 from optparse import OptionParser
 import multiprocessing
@@ -60,6 +60,7 @@ dPenalty = {"9606": {"hub penalty": 100, "length penalty": 800}, "4932": {"hub p
 NETWORKIN_SITE_FILE = 1
 PROTEOME_DISCOVERER_SITE_FILE = 2
 MAX_QUANT_DIRECT_OUTPUT_FILE = 3
+RUNES_SITE_FILE = 4
 	
 
 global options
@@ -111,29 +112,35 @@ def myPopen(cmd):
 '''
 ### chat-gpt's myPopen:
 def myPopen(cmd):
-    try:
-        pipe = subprocess.Popen(cmd, shell=True, close_fds=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        stdout, stderr = pipe.communicate()
-        # Decode the byte strings to utf-8
-        stdout = stdout.decode('utf-8')
-        stderr = stderr.decode('utf-8')
-        if pipe.returncode != 0:
-            # If the command failed, print the stderr and raise an exception
-            error_message = 'ERROR executing: ' + repr(cmd) + '\n' + stderr
-            sys.stderr.write(error_message + '\n')
-            raise subprocess.CalledProcessError(pipe.returncode, cmd, output=error_message)
-        else:
-            # If the command succeeded, return the stdout
-            return stdout
-    except subprocess.CalledProcessError as e:
-        # Handle the subprocess.CalledProcessError exception
-        print("Error: Command '{}' returned non-zero exit status {}".format(e.cmd, e.returncode))
-        return e.output  # Return the error message
-    except Exception as e:
-        # Handle other exceptions
-        error_message = 'ERROR executing: ' + repr(cmd) + '\n' + str(e) + '\n'
-        sys.stderr.write(error_message)
-        return error_message
+	if platform.system() == 'Windows':
+		sys.stderr.write('WINDOWS\n')
+		# Wrap the command to run in a Unix-like shell using WSL
+		command = f'wsl bash -c "{cmd}"'
+	else:
+		command = cmd
+	try:
+		pipe = subprocess.Popen(command, shell=True, close_fds=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		stdout, stderr = pipe.communicate()
+		# Decode the byte strings to utf-8
+		stdout = stdout.decode('utf-8')
+		stderr = stderr.decode('utf-8')
+		if pipe.returncode != 0:
+			# If the command failed, print the stderr and raise an exception
+			error_message = 'ERROR executing: ' + repr(command) + '\n' + stderr
+			sys.stderr.write(error_message + '\n')
+			raise subprocess.CalledProcessError(pipe.returncode, command, output=error_message)
+		else:
+			# If the command succeeded, return the stdout
+			return stdout
+	except subprocess.CalledProcessError as e:
+		# Handle the subprocess.CalledProcessError exception
+		print("Error: Command '{}' returned non-zero exit status {}".format(e.cmd, e.returncode))
+		return e.output  # Return the error message
+	except Exception as e:
+		# Handle other exceptions
+		error_message = 'ERROR executing: ' + repr(command) + '\n' + str(e) + '\n'
+		sys.stderr.write(error_message)
+		return error_message
 
 # Read sequences from fasta file
 def readFasta(fastafile):
@@ -170,6 +177,8 @@ def CheckInputType(sitesfile):
 		return PROTEOME_DISCOVERER_SITE_FILE
 	elif tokens[0] == "Proteins" and tokens[4] == "Leading":
 		return MAX_QUANT_DIRECT_OUTPUT_FILE
+	elif tokens[1]=='phospho':
+		return RUNES_SITE_FILE
 	else:
 		sys.stderr("Unknown format of site file")
 		sys.exit()
@@ -338,6 +347,35 @@ def readPhosphoSitesMaxQuant(fname, only_leading = False):
 
     return id_pos_res
 
+def readRunesSiteFile(sitesfile):
+	id_pos_res = {}
+	f = open(sitesfile, 'rU')
+	if f:
+		data = f.readlines()
+		f.close()
+		for line in data:
+			tokens = line.split(' ')
+			id = tokens[3]
+			try:
+				res_pos = tokens[2]
+				res = res_pos[0]
+				pos = int(res_pos[2:])
+			except:
+				sys.stderr.write(line)
+				raise
+			try:
+				res = tokens[2][:-1]
+			except:
+				res = ""
+			if id in id_pos_res:
+				id_pos_res[id][pos] = res
+			else:
+				id_pos_res[id] = {pos: res}
+	else:
+		sys.stderr.write("Could not open site file: %s" % sitesfile)
+		sys.exit()
+
+	return id_pos_res
 '''
 #Alias hashes
 def readAliasFiles(organism, datadir):
@@ -1176,6 +1214,8 @@ def Main():
 			id_pos_res = readPhosphoSitesProteomeDiscoverer(fn_fasta, sitesfile)
 		elif input_type == MAX_QUANT_DIRECT_OUTPUT_FILE:
 			id_pos_res = readPhosphoSitesMaxQuant(sitesfile)
+		elif input_type == RUNES_SITE_FILE:
+			id_pos_res = readRunesSiteFile(sitesfile)
 	else:
 		id_pos_res = {}
 

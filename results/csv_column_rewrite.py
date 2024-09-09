@@ -2,7 +2,7 @@ import pandas as pd
 
 # Read the CSV file
 old_csv="cured_morpho_seqs_v2.fa.result.csv"
-new_csv='KinomeXplorer_all_predictions_v2.csv'
+new_csv='KinomeXplorer_all_predictions_v3.csv'
 df = pd.read_csv(old_csv)
 
 new_df = df[['Target STRING ID',
