@@ -531,9 +531,9 @@ def mapFromFile(filename):
 # Load the precalculated STRING network file
 def loadSTRINGdata(string2incoming, datadir, number_of_processes):
 	# bestpath ( <= v9.0):
-	command = 'gzip -cd %s/%s.bestpath.tsv.gz'%(datadir, organism)
+	#command = 'gzip -cd %s/%s.bestpath.tsv.gz'%(datadir, organism)
 	# protein.links.txt:
-	#command = 'gzip -cd %s/%s.protein.links.v12.0.txt.gz'%(datadir, organism)
+	command = 'gzip -cd %s/%s.protein.links.v12.0.txt.gz'%(datadir, organism)
 	try:
 		data = myPopen(command)
 	except:
