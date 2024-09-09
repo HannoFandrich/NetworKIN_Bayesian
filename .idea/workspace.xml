@@ -4,11 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="881ab2ad-4ef0-406e-a56a-bca45af5bd9f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NetworKIN.py" beforeDir="false" afterPath="$PROJECT_DIR$/NetworKIN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/results/csv_column_rewrite.py" beforeDir="false" afterPath="$PROJECT_DIR$/results/csv_column_rewrite.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/results/test.fas.result.csv" beforeDir="false" afterPath="$PROJECT_DIR$/results/test.fas.result.csv" afterDir="false" />
+=======
+    <list default="true" id="eef9023d-7d07-4b69-901c-61d5ffc6c7f8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/README_new.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetworKIN.py" beforeDir="false" afterPath="$PROJECT_DIR$/NetworKIN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetworKIN_fixes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/batch_networkin.sh" beforeDir="false" afterPath="$PROJECT_DIR$/batch_networkin.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/.nfs000000238af558d20000003d" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/.nfs000000238af558d20000003d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/.~lock.9606.links.v12.0.tsv#" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/.~lock.9606.links.v12.0.tsv#" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/.~lock.group_human_protein_name_map.tsv#" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/.~lock.group_human_protein_name_map.tsv#" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/4932.string_000_0170_1000.tsv.gz" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/4932.string_000_0170_1000.tsv.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/9606.bestpath_0340_0950.v9.tsv.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/9606.links.v12.0.tsv" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/9606.links.v12.0.tsv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/9606.links.v12.0.tsv.gz" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/9606.links.v12.0.tsv.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/9606.protein.info.v12.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/9606.protein.info.v12.0.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/9606.protein.links.v12.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/9606.protein.links.v12.0.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/9606.protein.links.v12.0.txt.gz" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/9606.protein.links.v12.0.txt.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/9606.string_000_0100_0800.tsv.gz" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/9606.string_000_0100_0800.tsv.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/batch_network.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/build_network.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/group_human_protein_name_map.tsv" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/group_human_protein_name_map.tsv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bestpath/string_network_filter.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/string_data/string_network_filter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/csv_column_rewrite.py" beforeDir="false" afterPath="$PROJECT_DIR$/results/csv_column_rewrite.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/test1.fas.result.csv" beforeDir="false" afterPath="$PROJECT_DIR$/results/test1.fas.result.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test1.fas" beforeDir="false" afterPath="$PROJECT_DIR$/test1.fas" afterDir="false" />
+>>>>>>> origin/Hanno
       <change beforePath="$PROJECT_DIR$/tmp/blast_tmpfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/blast_tmpfile.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,18 +50,33 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
+<<<<<<< HEAD
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2l3H27db1M5HTLVrTqoXw9Rs4z6" />
+=======
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2fSIjz3ltgwUZNkYcDosK20RkxC" />
+>>>>>>> origin/Hanno
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+<<<<<<< HEAD
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Hanno&quot;,
+=======
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.csv_column_rewrite.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/fandrich/projekte/networkin_bayesian&quot;,
+>>>>>>> origin/Hanno
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -51,7 +93,11 @@
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" show_stripe_button="false" />
       <window_info id="Learn" show_stripe_button="false" />
+<<<<<<< HEAD
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32982045" />
+=======
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2603435" />
+>>>>>>> origin/Hanno
       <window_info id="Commit" order="1" weight="0.25" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
@@ -60,10 +106,18 @@
       <window_info anchor="bottom" id="TODO" show_stripe_button="false" />
       <window_info anchor="bottom" id="File Transfer" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" show_stripe_button="false" />
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Find" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Problems View" order="1" />
       <window_info active="true" anchor="bottom" id="Terminal" order="2" visible="true" weight="0.20876671" />
+=======
+      <window_info anchor="bottom" id="Run" weight="0.4539376" />
+      <window_info anchor="bottom" id="Find" weight="0.3306092" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Problems View" order="1" />
+      <window_info anchor="bottom" id="Terminal" order="2" weight="0.23699851" />
+>>>>>>> origin/Hanno
       <window_info anchor="bottom" id="Services" order="3" />
       <window_info anchor="right" id="Plots" show_stripe_button="false" />
       <window_info anchor="right" id="Endpoints" show_stripe_button="false" />
@@ -72,6 +126,14 @@
       <window_info anchor="right" id="Database" order="2" weight="0.25" />
     </layout>
   </component>
+<<<<<<< HEAD
+=======
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+>>>>>>> origin/Hanno
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -82,6 +144,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
       <changelist id="881ab2ad-4ef0-406e-a56a-bca45af5bd9f" name="Changes" comment="" />
       <created>1724401632275</created>
       <option name="number" value="Default" />
@@ -90,10 +153,33 @@
       <workItem from="1724401634356" duration="599000" />
       <workItem from="1724840522676" duration="598000" />
       <workItem from="1725526823908" duration="1201000" />
+=======
+      <changelist id="eef9023d-7d07-4b69-901c-61d5ffc6c7f8" name="Changes" comment="" />
+      <created>1713788192577</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1713788192577</updated>
+      <workItem from="1713788195765" duration="1078000" />
+      <workItem from="1713968913408" duration="1202000" />
+      <workItem from="1714391125135" duration="598000" />
+      <workItem from="1714648931960" duration="187000" />
+      <workItem from="1714927414319" duration="171000" />
+      <workItem from="1715004366418" duration="1199000" />
+      <workItem from="1715761591874" duration="1244000" />
+      <workItem from="1716372372257" duration="598000" />
+      <workItem from="1716817422976" duration="598000" />
+      <workItem from="1724404744261" duration="2937000" />
+>>>>>>> origin/Hanno
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+<<<<<<< HEAD
+=======
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/networkin_bayesian$csv_column_rewrite.coverage" NAME="csv_column_rewrite Coverage Results" MODIFIED="1715082662260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
+  </component>
+>>>>>>> origin/Hanno
 </project>

@@ -2,7 +2,11 @@ import pandas as pd
 
 # Read the CSV file
 old_csv="cured_morpho_seqs_v2.fa.result.csv"
+<<<<<<< HEAD
 new_csv='KinomeXplorer_all_predictions_v3.csv'
+=======
+new_csv='KinomeXplorer_all_predictions_v2.csv'
+>>>>>>> origin/Hanno
 df = pd.read_csv(old_csv)
 
 new_df = df[['Target STRING ID',

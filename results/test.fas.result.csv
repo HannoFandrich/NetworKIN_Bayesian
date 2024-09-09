@@ -13,6 +13,7 @@ SRC,Y128,KIN,MAP2K_group,MAP2K1,0.3591,0.1611,0.2580,ENSP00000263798,ENSP0000030
 "
 SRC,Y128,KIN,EGFR_group,EGFR,0.1562,0.0197,0.2520,ENSP00000263798,ENSP00000275493,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",TFVALyDYESR,"notdef
 "
+<<<<<<< HEAD
 SRC,Y128,PTP,NT2_group,PTPN6,0.0001,0.0319,0.1700,ENSP00000263798,ENSP00000391592,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, non-receptor type 6",TFVALyDYESR,"notdef
 "
 SRC,Y128,PTP,NT2_group,PTPN11,0.2084,0.0319,0.2330,ENSP00000263798,ENSP00000489597,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,,TFVALyDYESR,"notdef
@@ -37,6 +38,8 @@ SRC,Y128,SH2,VAV1_VAV3_group,VAV1,0.4234,0.0066,0.2060,ENSP00000263798,ENSP00000
 "
 SRC,Y128,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4234,0.0009,0.1940,ENSP00000263798,ENSP00000401303,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,TFVALyDYESR,"notdef
 "
+=======
+>>>>>>> origin/Hanno
 SRC,Y130,KIN,FLT3_CSF1R_Kit_PDGFR_group,FLT3,0.0813,0.0165,0.2210,ENSP00000263798,ENSP00000241453,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,fms-related tyrosine kinase 3,VALYDyESRTE,"notdef
 "
 SRC,Y130,KIN,FLT3_CSF1R_Kit_PDGFR_group,CSF1R,0.0001,0.0165,0.1870,ENSP00000263798,ENSP00000286301,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,colony stimulating factor 1 receptor,VALYDyESRTE,"notdef
@@ -53,6 +56,7 @@ SRC,Y130,KIN,MAP2K_group,MAP2K1,0.1444,0.0204,0.2580,ENSP00000263798,ENSP0000030
 "
 SRC,Y130,KIN,EGFR_group,EGFR,0.1562,0.0197,0.2520,ENSP00000263798,ENSP00000275493,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",VALYDyESRTE,"notdef
 "
+<<<<<<< HEAD
 SRC,Y130,PTP,NT2_group,PTPN6,0.0001,0.0291,0.1700,ENSP00000263798,ENSP00000391592,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, non-receptor type 6",VALYDyESRTE,"notdef
 "
 SRC,Y130,PTP,NT2_group,PTPN11,0.2050,0.0291,0.2330,ENSP00000263798,ENSP00000489597,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,,VALYDyESRTE,"notdef
@@ -77,6 +81,8 @@ SRC,Y130,SH2,VAV1_VAV3_group,VAV1,0.4234,0.0066,0.2060,ENSP00000263798,ENSP00000
 "
 SRC,Y130,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4348,0.0132,0.1940,ENSP00000263798,ENSP00000401303,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,VALYDyESRTE,"notdef
 "
+=======
+>>>>>>> origin/Hanno
 SRC,Y169,KIN,FLT3_CSF1R_Kit_PDGFR_group,FLT3,0.1652,0.0298,0.2210,ENSP00000263798,ENSP00000241453,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,fms-related tyrosine kinase 3,TGQTGyIPSNY,"notdef
 "
 SRC,Y169,KIN,FLT3_CSF1R_Kit_PDGFR_group,CSF1R,0.0001,0.0298,0.1870,ENSP00000263798,ENSP00000286301,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,colony stimulating factor 1 receptor,TGQTGyIPSNY,"notdef
@@ -93,6 +99,7 @@ SRC,Y169,KIN,MAP2K_group,MAP2K1,0.3140,0.1187,0.2580,ENSP00000263798,ENSP0000030
 "
 SRC,Y169,KIN,EGFR_group,EGFR,0.1562,0.0197,0.2520,ENSP00000263798,ENSP00000275493,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",TGQTGyIPSNY,"notdef
 "
+<<<<<<< HEAD
 SRC,Y169,PTP,NT2_group,PTPN6,0.0001,0.0272,0.1700,ENSP00000263798,ENSP00000391592,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, non-receptor type 6",TGQTGyIPSNY,"notdef
 "
 SRC,Y169,PTP,NT2_group,PTPN11,0.2027,0.0272,0.2330,ENSP00000263798,ENSP00000489597,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,,TGQTGyIPSNY,"notdef
@@ -117,6 +124,8 @@ SRC,Y169,SH2,VAV1_VAV3_group,VAV1,0.4234,0.0066,0.2060,ENSP00000263798,ENSP00000
 "
 SRC,Y169,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4234,0.0029,0.1940,ENSP00000263798,ENSP00000401303,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,TGQTGyIPSNY,"notdef
 "
+=======
+>>>>>>> origin/Hanno
 SRC,Y174,KIN,FLT3_CSF1R_Kit_PDGFR_group,FLT3,0.2434,0.1013,0.2210,ENSP00000263798,ENSP00000241453,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,fms-related tyrosine kinase 3,YIPSNyVAPSD,"notdef
 "
 SRC,Y174,KIN,FLT3_CSF1R_Kit_PDGFR_group,CSF1R,0.0001,0.1013,0.1870,ENSP00000263798,ENSP00000286301,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,colony stimulating factor 1 receptor,YIPSNyVAPSD,"notdef
@@ -133,6 +142,7 @@ SRC,Y174,KIN,MAP2K_group,MAP2K1,0.1696,0.0383,0.2580,ENSP00000263798,ENSP0000030
 "
 SRC,Y174,KIN,EGFR_group,EGFR,0.3113,0.0793,0.2520,ENSP00000263798,ENSP00000275493,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",YIPSNyVAPSD,"notdef
 "
+<<<<<<< HEAD
 SRC,Y174,PTP,NT2_group,PTPN6,0.0001,0.0262,0.1700,ENSP00000263798,ENSP00000391592,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, non-receptor type 6",YIPSNyVAPSD,"notdef
 "
 SRC,Y174,PTP,NT2_group,PTPN11,0.2020,0.0262,0.2330,ENSP00000263798,ENSP00000489597,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,,YIPSNyVAPSD,"notdef
@@ -157,6 +167,8 @@ SRC,Y174,SH2,VAV1_VAV3_group,VAV1,0.4234,0.0066,0.2060,ENSP00000263798,ENSP00000
 "
 SRC,Y174,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4234,0.0016,0.1940,ENSP00000263798,ENSP00000401303,Ensembl_translation,Ensembl_translation,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,YIPSNyVAPSD,"notdef
 "
+=======
+>>>>>>> origin/Hanno
 O00418,S18,KIN,ATM_ATR_group,ATM,0.0000,0.0012,0.1670,ENSP00000263026,ENSP00000278616,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,ataxia telangiectasia mutated,VDGGQsPRAGH,"notdef
 "
 O00418,S18,KIN,CDK4_CDK6_group,CDK4,0.0001,0.0445,0.2640,ENSP00000263026,ENSP00000257904,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,cyclin-dependent kinase 4,VDGGQsPRAGH,"notdef
@@ -199,6 +211,7 @@ O00418,Y236,KIN,MAP2K_group,MAP2K1,0.1635,0.0251,0.1650,ENSP00000263026,ENSP0000
 "
 O00418,Y236,KIN,EGFR_group,EGFR,0.2759,0.0694,0.2290,ENSP00000263026,ENSP00000275493,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",YIEGKyIKYNS,"notdef
 "
+<<<<<<< HEAD
 O00418,Y236,PTP,R4_group,PTPRA,0.1689,0.0244,0.1630,ENSP00000263026,ENSP00000369756,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,"protein tyrosine phosphatase, receptor type, A",YIEGKyIKYNS,"notdef
 "
 O00418,Y236,SH2,SHC1,SHC1,0.4363,0.0134,0.1620,ENSP00000263026,ENSP00000401303,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 1,YIEGKyIKYNS,"notdef
@@ -211,12 +224,15 @@ O00418,Y236,PTB,SHC1_SHC2_SHC3_group,SHC3,0.4234,0.0078,0.1640,ENSP00000263026,E
 "
 O00418,Y236,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4234,0.0078,0.1620,ENSP00000263026,ENSP00000401303,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 1,YIEGKyIKYNS,"notdef
 "
+=======
+>>>>>>> origin/Hanno
 O00418,Y641,KIN,KDR_FLT1_group,KDR,0.0001,0.0338,0.1690,ENSP00000263026,ENSP00000263923,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,kinase insert domain receptor (a type III receptor tyrosine kinase),EALHWyNTALE,"notdef
 "
 O00418,Y641,KIN,MAP2K_group,MAP2K1,0.2245,0.0752,0.1650,ENSP00000263026,ENSP00000302486,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,mitogen-activated protein kinase kinase 1,EALHWyNTALE,"notdef
 "
 O00418,Y641,KIN,EGFR_group,EGFR,0.1562,0.0197,0.2290,ENSP00000263026,ENSP00000275493,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",EALHWyNTALE,"notdef
 "
+<<<<<<< HEAD
 O00418,Y641,PTP,R4_group,PTPRA,0.1781,0.0365,0.1630,ENSP00000263026,ENSP00000369756,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,"protein tyrosine phosphatase, receptor type, A",EALHWyNTALE,"notdef
 "
 O00418,Y641,SH2,SHC1,SHC1,0.9326,0.0348,0.1620,ENSP00000263026,ENSP00000401303,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 1,EALHWyNTALE,"notdef
@@ -229,6 +245,8 @@ O00418,Y641,PTB,SHC1_SHC2_SHC3_group,SHC3,0.4234,0.0001,0.1640,ENSP00000263026,E
 "
 O00418,Y641,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4234,0.0001,0.1620,ENSP00000263026,ENSP00000401303,Ensembl_translation,Ensembl_translation,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 1,EALHWyNTALE,"notdef
 "
+=======
+>>>>>>> origin/Hanno
 P55196,S1155,KIN,JNK_group,MAPK8,0.0284,0.0060,0.2210,ENSP00000355771,ENSP00000378974,Ensembl_translation,Ensembl_translation,,,RADHRsSPNVA,"notdef
 "
 P55196,S1155,KIN,MAP2K_group,MAP2K1,0.0398,0.0131,0.1530,ENSP00000355771,ENSP00000302486,Ensembl_translation,Ensembl_translation,,mitogen-activated protein kinase kinase 1,RADHRsSPNVA,"notdef
@@ -329,6 +347,7 @@ Q9Z2K4,Y75,KIN,Src_group,HCK,0.3216,0.1225,0.5940,ENSP00000005587,ENSP0000036501
 "
 Q9Z2K4,Y75,KIN,Src_group,FRK,0.3280,0.1225,0.2680,ENSP00000005587,ENSP00000476145,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
 "
+<<<<<<< HEAD
 Q9Z2K4,Y75,PTP,NT1_group,PTPN2,0.1171,0.0187,0.2710,ENSP00000005587,ENSP00000311857,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 2",EDGDEyDDPFA,"notdef
 "
 Q9Z2K4,Y75,PTP,NT2_group,PTPN6,0.0001,0.0766,0.3100,ENSP00000005587,ENSP00000391592,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 6",EDGDEyDDPFA,"notdef
@@ -379,6 +398,8 @@ Q9Z2K4,Y75,SH2,VAV1_VAV3_group,VAV3,0.4234,0.0067,0.1770,ENSP00000005587,ENSP000
 "
 Q9Z2K4,Y75,SH2,VAV1_VAV3_group,VAV1,0.4371,0.0067,0.5810,ENSP00000005587,ENSP00000472929,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
 "
+=======
+>>>>>>> origin/Hanno
 Q9Z2K4,Y197,KIN,Syk_group,ZAP70,0.1307,0.0161,0.5180,ENSP00000005587,ENSP00000264972,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,zeta-chain (TCR) associated protein kinase 70kDa,PDKRIyQFTAA,"notdef
 "
 Q9Z2K4,Y197,KIN,Tec_group,ITK,0.1637,0.0228,0.2170,ENSP00000005587,ENSP00000398655,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,IL2-inducible T-cell kinase,PDKRIyQFTAA,"notdef
@@ -391,6 +412,7 @@ Q9Z2K4,Y197,KIN,Src_group,HCK,0.3216,0.0388,0.5940,ENSP00000005587,ENSP000003650
 "
 Q9Z2K4,Y197,KIN,Src_group,FRK,0.1738,0.0388,0.2680,ENSP00000005587,ENSP00000476145,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
 "
+<<<<<<< HEAD
 Q9Z2K4,Y197,PTP,NT1_group,PTPN2,0.3289,0.1103,0.2710,ENSP00000005587,ENSP00000311857,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 2",PDKRIyQFTAA,"notdef
 "
 Q9Z2K4,Y197,PTP,NT2_group,PTPN6,0.0001,0.0267,0.3100,ENSP00000005587,ENSP00000391592,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 6",PDKRIyQFTAA,"notdef
@@ -441,6 +463,8 @@ Q9Z2K4,Y197,SH2,VAV1_VAV3_group,VAV3,0.4234,0.0066,0.1770,ENSP00000005587,ENSP00
 "
 Q9Z2K4,Y197,SH2,VAV1_VAV3_group,VAV1,0.4371,0.0066,0.5810,ENSP00000005587,ENSP00000472929,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
 "
+=======
+>>>>>>> origin/Hanno
 Q9Z2K4,Y260,KIN,Syk_group,ZAP70,0.3677,0.0759,0.5180,ENSP00000005587,ENSP00000264972,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,zeta-chain (TCR) associated protein kinase 70kDa,IDDEIyEELPE,"notdef
 "
 Q9Z2K4,Y260,KIN,Tec_group,ITK,0.1648,0.0268,0.2170,ENSP00000005587,ENSP00000398655,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,IL2-inducible T-cell kinase,IDDEIyEELPE,"notdef
@@ -453,6 +477,7 @@ Q9Z2K4,Y260,KIN,Src_group,HCK,0.3216,0.1516,0.5940,ENSP00000005587,ENSP000003650
 "
 Q9Z2K4,Y260,KIN,Src_group,FRK,0.3673,0.1516,0.2680,ENSP00000005587,ENSP00000476145,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
 "
+<<<<<<< HEAD
 Q9Z2K4,Y260,PTP,NT1_group,PTPN2,0.1171,0.0245,0.2710,ENSP00000005587,ENSP00000311857,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 2",IDDEIyEELPE,"notdef
 "
 Q9Z2K4,Y260,PTP,NT2_group,PTPN6,0.0001,0.0788,0.3100,ENSP00000005587,ENSP00000391592,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 6",IDDEIyEELPE,"notdef
@@ -503,6 +528,8 @@ Q9Z2K4,Y260,SH2,VAV1_VAV3_group,VAV3,0.4234,0.0066,0.1770,ENSP00000005587,ENSP00
 "
 Q9Z2K4,Y260,SH2,VAV1_VAV3_group,VAV1,0.4371,0.0066,0.5810,ENSP00000005587,ENSP00000472929,Ensembl_translation,Ensembl_translation,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
 "
+=======
+>>>>>>> origin/Hanno
 Q9Z2Q6,S305,KIN,CDK4_CDK6_group,CDK6,0.4575,0.0955,0.3930,ENSP00000391311,ENSP00000265734,Ensembl_translation,Ensembl_translation,septin 5,cyclin-dependent kinase 6,DSRMEsPIPIL,"notdef
 "
 Q9Z2Q6,S305,KIN,ROCK_group,ROCK2,0.1014,0.0182,0.1720,ENSP00000391311,ENSP00000317985,Ensembl_translation,Ensembl_translation,septin 5,"Rho-associated, coiled-coil containing protein kinase 2",DSRMEsPIPIL,"notdef
