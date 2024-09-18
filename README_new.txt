@@ -40,7 +40,7 @@ Input format:
 	* SitesFile: NetworKIN takes three formats of SiteFile, which is automatically detected in the script.
 	i) NetworKIN site file: This is a simple tab-delimited text file that contains phosphorylated residue information as the following format.
 	protein name(tab)position(tab)amino acid
-	ii) Direct output file from MaxQuant
+	ii) Direct output file from MaxQuant 
 	iii) Protein IDs and peptides information extracted from the output file of ProteomeDiscoverer.
 	Protein names should correspond to the names in the FastaFile, and positions and amino acid are positions and amino acids of a phosphorylated residue in the corresponding sequence in the FastaFile.
 
