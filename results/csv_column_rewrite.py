@@ -2,13 +2,13 @@ import pandas as pd
 
 # Read the CSV file
 old_csv="cured_morpho_seqs_v2.fa.result.csv"
-<<<<<<< HEAD
 new_csv='KinomeXplorer_all_predictions_v3.csv'
-=======
-new_csv='KinomeXplorer_all_predictions_v2.csv'
->>>>>>> origin/Hanno
+#new_csv='KinomeXplorer_all_predictions_v2.csv'
 df = pd.read_csv(old_csv)
 
+
+df = df[pd.notna(df['Intermediate nodes'])].reset_index(drop=True)
+print(df.head)
 new_df = df[['Target STRING ID',
              'Position',
              'Name',
@@ -16,7 +16,7 @@ new_df = df[['Target STRING ID',
              'Tree',
              'NetPhorest Group',
              'NetPhorest probability',
-             'Kinase/Phosphatase/Phospho-binding domain STRING ID',
+             'Kinase STRING ID',
              'STRING score',
              'Target Name',
              'Peptide sequence window',
@@ -34,9 +34,10 @@ new_df.rename(columns={'STRING score': 'string_score'}, inplace=True)
 new_df.rename(columns={'Target Name': 'substrate_name'}, inplace=True)
 new_df.rename(columns={'Peptide sequence window': 'sequence'}, inplace=True)
 new_df.rename(columns={'Intermediate nodes': 'string_path'}, inplace=True)
+new_df['networkin_score']=new_df['networkin_score'].astype(float)
 new_df = new_df[new_df['networkin_score'] >= 0.00001]
 new_df['Iteration'] = 0
-print(df.head)
+
 print(new_df.head)
 
 new_df.to_csv(new_csv, index=False)

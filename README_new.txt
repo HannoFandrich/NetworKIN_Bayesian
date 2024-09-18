@@ -27,8 +27,9 @@ Running NetworKIN:
 	NOTES:
 	    - -b path_to_blastall may not be necessary. The default path in the script finds it from the environment
 	        just leave it out
-	    - You can store the output to a file by using UNIX output redirection (‘>’).
+	    - You can store the output (print commands, errors) to a file by using UNIX output redirection (‘>’).
 		    python3 networkin.py Organism FastaFile SitesFile &> OutputFile
+		- results are saved in results/
 
 The NetworKIN algorithm takes taxon code as organism (human: 9606, yeast: 4932). NetworKIN currently supports human and yeast, but can also be deployed on mouse data. To use NetworKIN for other organisms, see the help page of the web interface (kinomexplorer.info).
 
