@@ -11,7 +11,7 @@ df = df[pd.notna(df['Intermediate nodes'])].reset_index(drop=True)
 print(df.head)
 new_df = df[['Target STRING ID',
              'Position',
-             'Name',
+             'Kinase Name',
              'NetworKIN score',
              'Tree',
              'NetPhorest Group',
@@ -29,7 +29,7 @@ new_df.rename(columns={'NetworKIN score': 'networkin_score'}, inplace=True)
 new_df.rename(columns={'Tree': 'tree'}, inplace=True)
 new_df.rename(columns={'NetPhorest Group': 'netphorest_group'}, inplace=True)
 new_df.rename(columns={'NetPhorest probability': 'netphorest_score'}, inplace=True)
-new_df.rename(columns={'Kinase/Phosphatase/Phospho-binding domain STRING ID': 'string_identifier'}, inplace=True)
+new_df.rename(columns={'Kinase STRING ID': 'string_identifier'}, inplace=True)
 new_df.rename(columns={'STRING score': 'string_score'}, inplace=True)
 new_df.rename(columns={'Target Name': 'substrate_name'}, inplace=True)
 new_df.rename(columns={'Peptide sequence window': 'sequence'}, inplace=True)

@@ -1,5 +1,7 @@
 import gzip
 import csv
+import shutil
+import os
 ### Create .links file with in the same format as old bestpath.v9
 ### needs to be executed everytime new data from string is added
 
@@ -58,4 +60,10 @@ with open(file_name, 'w', newline='') as file:
         except:
             continue
 
-print(c)
+# Gzip the file
+with open(file_name, 'rb') as f_in:
+    with gzip.open(file_name + '.gz', 'wb') as f_out:
+        shutil.copyfileobj(f_in, f_out)
+
+# Delete the original unzipped .tsv file
+os.remove(file_name)

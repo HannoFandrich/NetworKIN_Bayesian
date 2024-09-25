@@ -1,3 +1,7 @@
+###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 test.fas test.tsv
+###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 cured_morpho_seqs_v2.fa phospho.tsv
+
+
 This is the distribution of NetworKIN 3.0. November, 2013
 
 Basic information:
@@ -32,6 +36,23 @@ Running NetworKIN:
 		- results are saved in results/
 
 The NetworKIN algorithm takes taxon code as organism (human: 9606, yeast: 4932). NetworKIN currently supports human and yeast, but can also be deployed on mouse data. To use NetworKIN for other organisms, see the help page of the web interface (kinomexplorer.info).
+
+More Notes:
+- NetworKin partially runs on data from STRING (https://string-db.org/)
+    -files from string are in the data/ and data/string/ directory
+    -files include (as of writing v12.0):
+        -9606.protein.info.v12.0.txt.gz (Names and descriptions)
+        -9606.protein.links.v12.0.txt.gz (the network)
+        -9606.protein.sequences.v12.0.fa (protein sequences)
+        -9606.protein.aliases.v12.0.txt.gz (Names)
+    -protein.sequences is used to build the database for ncbi blast (which is used for mapping)
+    -protein.links is the STRING network. it is used and transformed into
+        9606.links.v12.0.tsv
+     by string_network_filter.py in the data/string/ dir. (important for NetworKin.py)
+- NetworKin also utilises Netphorest
+    -the netphorest binary is located in the netphorest/ dir.
+    -the binary has to be compiled using the files in the dir. (if added anew)
+    -current version of netphorest is outdated, work to update the pipeline and get it running again is being undertaken
 
 
 Input format:

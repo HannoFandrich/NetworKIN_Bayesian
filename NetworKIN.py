@@ -30,8 +30,7 @@ in the given sequences.
 # 03.02.14: Several minor bug fixes. blast sorting bug fix (k12nr -> k12gr)
 #
 
-###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 test.fas test.tsv
-###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 cured_morpho_seqs_v2.fa phospho.tsv
+
 ###   python3 NetworKIN.py -n netphorest/netphorest -b /mnt/c/Program Files/NCBI/blast-2.16.0+/bin/blastp.exe -d data 9606 test1.fas test1.tsv
 ###   mv /home/fandrich/projekte/networkin_bayesian/results/KinomeXplorer_all_predictions_v2.csv /home/basar/Signaling_Group/
 ###   mv /home/fandrich/projekte/networkin_bayesian/results/cured_morpho_seqs_v2.fa.result.csv /home/basar/Signaling_Group/
@@ -433,16 +432,13 @@ def readAliasFiles(organism, datadir):
     # Read alias db (protein.aliases.v12.0):
     try:
         alias_db = myPopen('gzip -cd %s/%s.protein.aliases.v12.0.txt.gz' % (datadir, organism))
-
         alias_db = alias_db.split('\n')
-        # print(alias_db)
         for line in alias_db:
-
             if line.startswith('#'):
                 continue
             (seqID, alias, source) = line.split('\t')
-            # print((taxID, seqID, alias))
-            alias_hash[seqID[5:]] = alias
+            if source == ('Ensembl_HGNC'):
+                alias_hash[seqID[5:]] = alias
     except:
         sys.stderr.write("No aliases available for organism: '%s'\n" % organism)
 
@@ -708,73 +704,6 @@ def WriteString(fname, s):
     f.close()
 
 
-# Map incoming peptides to STRING sequences
-'''
-def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, number_of_processes, datadir, fast = False, leave_intermediates = False):
-	sys.stderr.write("Mapping using blast\n")
-	incoming2string = {}
-	string2incoming = {}
-
-	# Speedup, only blast sequences with site specified
-	blast_tmpfile = tempfile.NamedTemporaryFile()
-	if id_pos_res == {}:
-		for id in id_seq:
-			blast_tmpfile.write('>'+id+'\n'+id_seq[id]+'\n')
-	else:
-		for id in id_pos_res:
-			try:
-				blast_tmpfile.write('>'+id+'\n'+id_seq[id]+'\n')
-			except:
-				sys.stderr.write("No sequence available for '%s'\n"%id)
-	blast_tmpfile.flush()
-
-	blastDB = os.path.join(datadir, "%s.protein.sequences.fa"%(organism)).replace(' ', '\\ ')
-
-	# Check if blast database is actually initialized, if not: do it
-	if not os.path.isfile(blastDB+'.pin'):
-		command = "%s/formatdb -i %s"%(blastDir.rsplit("/", 1)[0], blastDB)
-		sys.stderr.write("Looks like blast database is not initialized, trying to run:\n%s\n"%command)
-		myPopen(command)
-
-	command = "%s -F F -a %s -p blastp -e 1e-10 -m 8 -d %s -i %s | sort -k12gr"%(blastDir, number_of_processes, blastDB, blast_tmpfile.name)
-
-	# to save time - jhkim
-	if fast and os.path.isfile(fn_blast_output):
-		blast_out = ReadLines(fn_blast_output)
-	else:
-		blast_out = myPopen(command)
-		if leave_intermediates:
-			WriteString(fn_blast_output, "".join(blast_out))
-
-	for line in blast_out:
-		tokens = line.split('\t')
-		incoming = tokens[0]
-		if incoming not in incoming2string:
-			# get rid of organism prefix
-			string = tokens[1].replace("%s."%organism, "")
-			identity = float(tokens[2])
-			evalue = float(tokens[-2])
-
-			if string in string2incoming:
-				sys.stderr.write('Best hit for '+incoming+' is not reciprocal\n')
-			if identity < 90:
-				sys.stderr.write('Best hit for '+incoming+' has only '+format(identity, '.2f')+' %identity\n')
-			if evalue > 1e-40:
-				sys.stderr.write('Best hit for '+incoming+' has high E-value '+format(evalue, '.2e')+' \n')
-			if incoming in incoming2string:
-				incoming2string[incoming][string] = True
-			else:
-				incoming2string[incoming] = { string: True }
-			if string in string2incoming:
-				string2incoming[string][incoming] = True
-			else:
-				string2incoming[string] = { incoming: True }
-		else:
-			pass
-	return incoming2string, string2incoming
-'''
-
-
 ### my mapPeptidestoString:
 
 def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, number_of_processes, datadir):
@@ -782,9 +711,7 @@ def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, nu
     incoming2string = {}
     string2incoming = {}
 
-    # Speedup, only blast sequences with site specified
     with open('tmp/blast_tmpfile.txt', 'w') as blast_tmpfile:
-        # blast_tmpfile = tempfile.NamedTemporaryFile()
         if id_pos_res == {}:
             for id in id_seq:
                 blast_tmpfile.write('>' + id + '\n' + id_seq[id] + '\n')
@@ -799,13 +726,11 @@ def mapPeptides2STRING(blastDir, organism, fastafilename, id_pos_res, id_seq, nu
         blastDB = "%s/%s.protein.sequences.v12.0.fa" % (datadir, organism)
 
     # Check if blast database is actually initialized, if not: do it
-    # if not os.path.isfile(blastDB+'.pin'):
-    #	command = "%s/formatdb -i %s"%(blastDir.rsplit("/", 1)[0], blastDB)
-    #	sys.stderr.write("Looks like blast database is not initialized, trying to run:\n%s\n"%command)
-    #	myPopen(command)
+    if not os.path.isfile(blastDB+'.pin'):
+        command = f"{blastDir.rsplit('/', 1)[0]}/makeblastdb -in {blastDB} -out {blastDB} -parse_seqids -dbtype prot"
+        sys.stderr.write(f"Looks like blast database is not initialized, trying to run:\n{command}\n")
+        myPopen(command)
 
-    # command = "%s -a %s -p blastp -e 1e-10 -m 8 -d %s -i %s | sort -k12nr"%(blastDir, number_of_processes, blastDB, blast_tmpfile.name)
-    # command = 'blastp -evalue 1e-10 -outfmt 6 -db NetworKIN_CODE_v3.0/data/9606.protein.sequences.fa -query tmp/tmpvkhu68f5 | sort -k12nr'
     if platform.system() == 'Windows':
         sys.stderr.write('WINDOWS\n')
         # Wrap the command to run in a Unix-like shell using WSL
@@ -1061,22 +986,22 @@ def printResult(id_pos_tree_pred, tree_pred_string_data, incoming2string, string
     csv_filename = os.path.join(res_dir, f'{fas.name}.result.csv')
     with open(csv_filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
-        writer.writerow(['Name'
-                            , 'Position'
-                            , 'Tree'
-                            , 'NetPhorest Group'
-                            , 'Kinase/Phosphatase/Phospho-binding domain'
-                            , 'NetworKIN score'
-                            , 'NetPhorest probability'
-                            , 'STRING score'
-                            , 'Target STRING ID'
-                            , 'Kinase STRING ID'
-                            , 'Target Name'
-                            , 'Kinase Name'
-                            , 'Target description'
-                            , 'Kinase description'
-                            , 'Peptide sequence window'
-                            , 'Intermediate nodes'])
+        writer.writerow([ 'Name'
+                        , 'Position'
+                        , 'Tree'
+                        , 'NetPhorest Group'
+                        , 'Kinase/Phosphatase/Phospho-binding domain'
+                        , 'NetworKIN score'
+                        , 'NetPhorest probability'
+                        , 'STRING score'
+                        , 'Target STRING ID'
+                        , 'Kinase STRING ID'
+                        , 'Target Name'
+                        , 'Kinase Name'
+                        , 'Target description'
+                        , 'Kinase description'
+                        , 'Peptide sequence window'
+                        , 'Intermediate nodes'])
 
         dLRConvTbl = {}
         for fname in glob.glob(os.path.join(dir_likelihood_conversion_tbl, "conversion_tbl_*_smooth*")):
