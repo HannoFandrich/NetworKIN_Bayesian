@@ -1,0 +1,549 @@
+Name,Position,Tree,NetPhorest Group,Kinase/Phosphatase/Phospho-binding domain,NetworKIN score,NetPhorest probability,STRING score,Target STRING ID,Kinase STRING ID,Target Name,Kinase Name,Target description,Kinase description,Peptide sequence window,Intermediate nodes
+3798,ENSP00000286301,TYRO3,CSF1R,TYRO3 protein tyrosine kinase,colony stimulating factor 1 receptor,TFVALyDYESR,"notdef
+"
+SRC,Y128,KIN,KDR_FLT1_group,KDR,0.0001,0.0338,0.2030,ENSP00000263798,ENSP00000263923,TYRO3,KDR,TYRO3 protein tyrosine kinase,kinase insert domain receptor (a type III receptor tyrosine kinase),TFVALyDYESR,"notdef
+"
+SRC,Y128,KIN,KDR_FLT1_group,FLT1,0.1638,0.0338,0.1710,ENSP00000263798,ENSP00000282397,TYRO3,FLT1,TYRO3 protein tyrosine kinase,fms-related tyrosine kinase 1 (vascular endothelial growth factor/vascular permeability factor receptor),TFVALyDYESR,"notdef
+"
+SRC,Y128,KIN,MAP2K_group,MAP2K5,0.3496,0.1611,0.2130,ENSP00000263798,ENSP00000178640,TYRO3,MAP2K5,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 5,TFVALyDYESR,"notdef
+"
+SRC,Y128,KIN,MAP2K_group,MAP2K2,0.3526,0.1611,0.2360,ENSP00000263798,ENSP00000262948,TYRO3,MAP2K2,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 2,TFVALyDYESR,"notdef
+"
+SRC,Y128,KIN,MAP2K_group,MAP2K1,0.3591,0.1611,0.2580,ENSP00000263798,ENSP00000302486,TYRO3,MAP2K1,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 1,TFVALyDYESR,"notdef
+"
+SRC,Y128,KIN,EGFR_group,EGFR,0.1562,0.0197,0.2520,ENSP00000263798,ENSP00000275493,TYRO3,EGFR,TYRO3 protein tyrosine kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",TFVALyDYESR,"notdef
+"
+SRC,Y128,PTP,NT2_group,PTPN6,0.0001,0.0319,0.1700,ENSP00000263798,ENSP00000391592,TYRO3,PTPN6,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, non-receptor type 6",TFVALyDYESR,"notdef
+"
+SRC,Y128,PTP,NT2_group,PTPN11,0.2084,0.0319,0.2330,ENSP00000263798,ENSP00000489597,TYRO3,PTPN11,TYRO3 protein tyrosine kinase,,TFVALyDYESR,"notdef
+"
+SRC,Y128,PTP,R2A_group,PTPRF,0.2194,0.0390,0.3590,ENSP00000263798,ENSP00000353030,TYRO3,PTPRF,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, receptor type, F",TFVALyDYESR,"notdef
+"
+SRC,Y128,SH2,CBL_group,CBL,1.0288,0.0865,0.2590,ENSP00000263798,ENSP00000264033,TYRO3,CBL,TYRO3 protein tyrosine kinase,Cas-Br-M (murine) ecotropic retroviral transforming sequence,TFVALyDYESR,"notdef
+"
+SRC,Y128,SH2,CBL_group,CBLC,1.0288,0.0865,0.1710,ENSP00000263798,ENSP00000494162,TYRO3,CBLC,TYRO3 protein tyrosine kinase,,TFVALyDYESR,"notdef
+"
+SRC,Y128,SH2,CBL_group,CBLB,1.0288,0.0865,0.2770,ENSP00000263798,ENSP00000499037,TYRO3,CBLB,TYRO3 protein tyrosine kinase,,TFVALyDYESR,"notdef
+"
+SRC,Y128,SH2,CRK,CRK,0.0000,0.0123,0.2360,ENSP00000263798,ENSP00000300574,TYRO3,CRK,TYRO3 protein tyrosine kinase,v-crk sarcoma virus CT10 oncogene homolog (avian),TFVALyDYESR,"notdef
+"
+SRC,Y128,SH2,GRB2_group,GRB2,0.4234,0.0086,0.4020,ENSP00000263798,ENSP00000376345,TYRO3,GRB2,TYRO3 protein tyrosine kinase,,TFVALyDYESR,"notdef
+"
+SRC,Y128,SH2,SHC1,SHC1,0.4531,0.0159,0.1940,ENSP00000263798,ENSP00000401303,TYRO3,SHC1,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,TFVALyDYESR,"notdef
+"
+SRC,Y128,SH2,SOCS5_SOCS4_SOCS6_CISH_group,CISH,0.8457,0.0475,0.4020,ENSP00000263798,ENSP00000409346,TYRO3,CISH,TYRO3 protein tyrosine kinase,cytokine inducible SH2-containing protein,TFVALyDYESR,"notdef
+"
+SRC,Y128,SH2,VAV1_VAV3_group,VAV1,0.4234,0.0066,0.2060,ENSP00000263798,ENSP00000472929,TYRO3,VAV1,TYRO3 protein tyrosine kinase,,TFVALyDYESR,"notdef
+"
+SRC,Y128,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4234,0.0009,0.1940,ENSP00000263798,ENSP00000401303,TYRO3,SHC1,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,TFVALyDYESR,"notdef
+"
+SRC,Y130,KIN,FLT3_CSF1R_Kit_PDGFR_group,FLT3,0.0813,0.0165,0.2210,ENSP00000263798,ENSP00000241453,TYRO3,FLT3,TYRO3 protein tyrosine kinase,fms-related tyrosine kinase 3,VALYDyESRTE,"notdef
+"
+SRC,Y130,KIN,FLT3_CSF1R_Kit_PDGFR_group,CSF1R,0.0001,0.0165,0.1870,ENSP00000263798,ENSP00000286301,TYRO3,CSF1R,TYRO3 protein tyrosine kinase,colony stimulating factor 1 receptor,VALYDyESRTE,"notdef
+"
+SRC,Y130,KIN,KDR_FLT1_group,KDR,0.0002,0.0402,0.2030,ENSP00000263798,ENSP00000263923,TYRO3,KDR,TYRO3 protein tyrosine kinase,kinase insert domain receptor (a type III receptor tyrosine kinase),VALYDyESRTE,"notdef
+"
+SRC,Y130,KIN,KDR_FLT1_group,FLT1,0.1641,0.0402,0.1710,ENSP00000263798,ENSP00000282397,TYRO3,FLT1,TYRO3 protein tyrosine kinase,fms-related tyrosine kinase 1 (vascular endothelial growth factor/vascular permeability factor receptor),VALYDyESRTE,"notdef
+"
+SRC,Y130,KIN,MAP2K_group,MAP2K5,0.1406,0.0204,0.2130,ENSP00000263798,ENSP00000178640,TYRO3,MAP2K5,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 5,VALYDyESRTE,"notdef
+"
+SRC,Y130,KIN,MAP2K_group,MAP2K2,0.1418,0.0204,0.2360,ENSP00000263798,ENSP00000262948,TYRO3,MAP2K2,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 2,VALYDyESRTE,"notdef
+"
+SRC,Y130,KIN,MAP2K_group,MAP2K1,0.1444,0.0204,0.2580,ENSP00000263798,ENSP00000302486,TYRO3,MAP2K1,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 1,VALYDyESRTE,"notdef
+"
+SRC,Y130,KIN,EGFR_group,EGFR,0.1562,0.0197,0.2520,ENSP00000263798,ENSP00000275493,TYRO3,EGFR,TYRO3 protein tyrosine kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",VALYDyESRTE,"notdef
+"
+SRC,Y130,PTP,NT2_group,PTPN6,0.0001,0.0291,0.1700,ENSP00000263798,ENSP00000391592,TYRO3,PTPN6,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, non-receptor type 6",VALYDyESRTE,"notdef
+"
+SRC,Y130,PTP,NT2_group,PTPN11,0.2050,0.0291,0.2330,ENSP00000263798,ENSP00000489597,TYRO3,PTPN11,TYRO3 protein tyrosine kinase,,VALYDyESRTE,"notdef
+"
+SRC,Y130,PTP,R2A_group,PTPRF,0.2096,0.0285,0.3590,ENSP00000263798,ENSP00000353030,TYRO3,PTPRF,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, receptor type, F",VALYDyESRTE,"notdef
+"
+SRC,Y130,SH2,CBL_group,CBL,1.0492,0.0955,0.2590,ENSP00000263798,ENSP00000264033,TYRO3,CBL,TYRO3 protein tyrosine kinase,Cas-Br-M (murine) ecotropic retroviral transforming sequence,VALYDyESRTE,"notdef
+"
+SRC,Y130,SH2,CBL_group,CBLC,1.0492,0.0955,0.1710,ENSP00000263798,ENSP00000494162,TYRO3,CBLC,TYRO3 protein tyrosine kinase,,VALYDyESRTE,"notdef
+"
+SRC,Y130,SH2,CBL_group,CBLB,1.0492,0.0955,0.2770,ENSP00000263798,ENSP00000499037,TYRO3,CBLB,TYRO3 protein tyrosine kinase,,VALYDyESRTE,"notdef
+"
+SRC,Y130,SH2,CRK,CRK,0.0000,0.0069,0.2360,ENSP00000263798,ENSP00000300574,TYRO3,CRK,TYRO3 protein tyrosine kinase,v-crk sarcoma virus CT10 oncogene homolog (avian),VALYDyESRTE,"notdef
+"
+SRC,Y130,SH2,GRB2_group,GRB2,0.4234,0.0034,0.4020,ENSP00000263798,ENSP00000376345,TYRO3,GRB2,TYRO3 protein tyrosine kinase,,VALYDyESRTE,"notdef
+"
+SRC,Y130,SH2,SHC1,SHC1,0.4403,0.0140,0.1940,ENSP00000263798,ENSP00000401303,TYRO3,SHC1,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,VALYDyESRTE,"notdef
+"
+SRC,Y130,SH2,SOCS5_SOCS4_SOCS6_CISH_group,CISH,1.4056,0.1488,0.4020,ENSP00000263798,ENSP00000409346,TYRO3,CISH,TYRO3 protein tyrosine kinase,cytokine inducible SH2-containing protein,VALYDyESRTE,"notdef
+"
+SRC,Y130,SH2,VAV1_VAV3_group,VAV1,0.4234,0.0066,0.2060,ENSP00000263798,ENSP00000472929,TYRO3,VAV1,TYRO3 protein tyrosine kinase,,VALYDyESRTE,"notdef
+"
+SRC,Y130,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4348,0.0132,0.1940,ENSP00000263798,ENSP00000401303,TYRO3,SHC1,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,VALYDyESRTE,"notdef
+"
+SRC,Y169,KIN,FLT3_CSF1R_Kit_PDGFR_group,FLT3,0.1652,0.0298,0.2210,ENSP00000263798,ENSP00000241453,TYRO3,FLT3,TYRO3 protein tyrosine kinase,fms-related tyrosine kinase 3,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,KIN,FLT3_CSF1R_Kit_PDGFR_group,CSF1R,0.0001,0.0298,0.1870,ENSP00000263798,ENSP00000286301,TYRO3,CSF1R,TYRO3 protein tyrosine kinase,colony stimulating factor 1 receptor,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,KIN,KDR_FLT1_group,KDR,0.0001,0.0289,0.2030,ENSP00000263798,ENSP00000263923,TYRO3,KDR,TYRO3 protein tyrosine kinase,kinase insert domain receptor (a type III receptor tyrosine kinase),TGQTGyIPSNY,"notdef
+"
+SRC,Y169,KIN,KDR_FLT1_group,FLT1,0.1636,0.0289,0.1710,ENSP00000263798,ENSP00000282397,TYRO3,FLT1,TYRO3 protein tyrosine kinase,fms-related tyrosine kinase 1 (vascular endothelial growth factor/vascular permeability factor receptor),TGQTGyIPSNY,"notdef
+"
+SRC,Y169,KIN,MAP2K_group,MAP2K5,0.3056,0.1187,0.2130,ENSP00000263798,ENSP00000178640,TYRO3,MAP2K5,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 5,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,KIN,MAP2K_group,MAP2K2,0.3083,0.1187,0.2360,ENSP00000263798,ENSP00000262948,TYRO3,MAP2K2,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 2,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,KIN,MAP2K_group,MAP2K1,0.3140,0.1187,0.2580,ENSP00000263798,ENSP00000302486,TYRO3,MAP2K1,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 1,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,KIN,EGFR_group,EGFR,0.1562,0.0197,0.2520,ENSP00000263798,ENSP00000275493,TYRO3,EGFR,TYRO3 protein tyrosine kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",TGQTGyIPSNY,"notdef
+"
+SRC,Y169,PTP,NT2_group,PTPN6,0.0001,0.0272,0.1700,ENSP00000263798,ENSP00000391592,TYRO3,PTPN6,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, non-receptor type 6",TGQTGyIPSNY,"notdef
+"
+SRC,Y169,PTP,NT2_group,PTPN11,0.2027,0.0272,0.2330,ENSP00000263798,ENSP00000489597,TYRO3,PTPN11,TYRO3 protein tyrosine kinase,,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,PTP,R2A_group,PTPRF,0.2086,0.0275,0.3590,ENSP00000263798,ENSP00000353030,TYRO3,PTPRF,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, receptor type, F",TGQTGyIPSNY,"notdef
+"
+SRC,Y169,SH2,CBL_group,CBL,0.9404,0.0397,0.2590,ENSP00000263798,ENSP00000264033,TYRO3,CBL,TYRO3 protein tyrosine kinase,Cas-Br-M (murine) ecotropic retroviral transforming sequence,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,SH2,CBL_group,CBLC,0.9404,0.0397,0.1710,ENSP00000263798,ENSP00000494162,TYRO3,CBLC,TYRO3 protein tyrosine kinase,,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,SH2,CBL_group,CBLB,0.9404,0.0397,0.2770,ENSP00000263798,ENSP00000499037,TYRO3,CBLB,TYRO3 protein tyrosine kinase,,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,SH2,CRK,CRK,0.0000,0.0077,0.2360,ENSP00000263798,ENSP00000300574,TYRO3,CRK,TYRO3 protein tyrosine kinase,v-crk sarcoma virus CT10 oncogene homolog (avian),TGQTGyIPSNY,"notdef
+"
+SRC,Y169,SH2,GRB2_group,GRB2,0.4811,0.0188,0.4020,ENSP00000263798,ENSP00000376345,TYRO3,GRB2,TYRO3 protein tyrosine kinase,,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,SH2,SHC1,SHC1,0.4369,0.0135,0.1940,ENSP00000263798,ENSP00000401303,TYRO3,SHC1,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,SH2,SOCS5_SOCS4_SOCS6_CISH_group,CISH,0.5706,0.0251,0.4020,ENSP00000263798,ENSP00000409346,TYRO3,CISH,TYRO3 protein tyrosine kinase,cytokine inducible SH2-containing protein,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,SH2,VAV1_VAV3_group,VAV1,0.4234,0.0066,0.2060,ENSP00000263798,ENSP00000472929,TYRO3,VAV1,TYRO3 protein tyrosine kinase,,TGQTGyIPSNY,"notdef
+"
+SRC,Y169,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4234,0.0029,0.1940,ENSP00000263798,ENSP00000401303,TYRO3,SHC1,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,TGQTGyIPSNY,"notdef
+"
+SRC,Y174,KIN,FLT3_CSF1R_Kit_PDGFR_group,FLT3,0.2434,0.1013,0.2210,ENSP00000263798,ENSP00000241453,TYRO3,FLT3,TYRO3 protein tyrosine kinase,fms-related tyrosine kinase 3,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,KIN,FLT3_CSF1R_Kit_PDGFR_group,CSF1R,0.0001,0.1013,0.1870,ENSP00000263798,ENSP00000286301,TYRO3,CSF1R,TYRO3 protein tyrosine kinase,colony stimulating factor 1 receptor,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,KIN,KDR_FLT1_group,KDR,0.0001,0.0216,0.2030,ENSP00000263798,ENSP00000263923,TYRO3,KDR,TYRO3 protein tyrosine kinase,kinase insert domain receptor (a type III receptor tyrosine kinase),YIPSNyVAPSD,"notdef
+"
+SRC,Y174,KIN,KDR_FLT1_group,FLT1,0.1534,0.0216,0.1710,ENSP00000263798,ENSP00000282397,TYRO3,FLT1,TYRO3 protein tyrosine kinase,fms-related tyrosine kinase 1 (vascular endothelial growth factor/vascular permeability factor receptor),YIPSNyVAPSD,"notdef
+"
+SRC,Y174,KIN,MAP2K_group,MAP2K5,0.1651,0.0383,0.2130,ENSP00000263798,ENSP00000178640,TYRO3,MAP2K5,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 5,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,KIN,MAP2K_group,MAP2K2,0.1665,0.0383,0.2360,ENSP00000263798,ENSP00000262948,TYRO3,MAP2K2,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 2,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,KIN,MAP2K_group,MAP2K1,0.1696,0.0383,0.2580,ENSP00000263798,ENSP00000302486,TYRO3,MAP2K1,TYRO3 protein tyrosine kinase,mitogen-activated protein kinase kinase 1,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,KIN,EGFR_group,EGFR,0.3113,0.0793,0.2520,ENSP00000263798,ENSP00000275493,TYRO3,EGFR,TYRO3 protein tyrosine kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",YIPSNyVAPSD,"notdef
+"
+SRC,Y174,PTP,NT2_group,PTPN6,0.0001,0.0262,0.1700,ENSP00000263798,ENSP00000391592,TYRO3,PTPN6,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, non-receptor type 6",YIPSNyVAPSD,"notdef
+"
+SRC,Y174,PTP,NT2_group,PTPN11,0.2020,0.0262,0.2330,ENSP00000263798,ENSP00000489597,TYRO3,PTPN11,TYRO3 protein tyrosine kinase,,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,PTP,R2A_group,PTPRF,0.2094,0.0282,0.3590,ENSP00000263798,ENSP00000353030,TYRO3,PTPRF,TYRO3 protein tyrosine kinase,"protein tyrosine phosphatase, receptor type, F",YIPSNyVAPSD,"notdef
+"
+SRC,Y174,SH2,CBL_group,CBL,0.9179,0.0256,0.2590,ENSP00000263798,ENSP00000264033,TYRO3,CBL,TYRO3 protein tyrosine kinase,Cas-Br-M (murine) ecotropic retroviral transforming sequence,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,SH2,CBL_group,CBLC,0.9179,0.0256,0.1710,ENSP00000263798,ENSP00000494162,TYRO3,CBLC,TYRO3 protein tyrosine kinase,,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,SH2,CBL_group,CBLB,0.9179,0.0256,0.2770,ENSP00000263798,ENSP00000499037,TYRO3,CBLB,TYRO3 protein tyrosine kinase,,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,SH2,CRK,CRK,0.0001,0.0673,0.2360,ENSP00000263798,ENSP00000300574,TYRO3,CRK,TYRO3 protein tyrosine kinase,v-crk sarcoma virus CT10 oncogene homolog (avian),YIPSNyVAPSD,"notdef
+"
+SRC,Y174,SH2,GRB2_group,GRB2,0.9757,0.0618,0.4020,ENSP00000263798,ENSP00000376345,TYRO3,GRB2,TYRO3 protein tyrosine kinase,,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,SH2,SHC1,SHC1,0.4360,0.0133,0.1940,ENSP00000263798,ENSP00000401303,TYRO3,SHC1,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,SH2,SOCS5_SOCS4_SOCS6_CISH_group,CISH,0.5706,0.0251,0.4020,ENSP00000263798,ENSP00000409346,TYRO3,CISH,TYRO3 protein tyrosine kinase,cytokine inducible SH2-containing protein,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,SH2,VAV1_VAV3_group,VAV1,0.4234,0.0066,0.2060,ENSP00000263798,ENSP00000472929,TYRO3,VAV1,TYRO3 protein tyrosine kinase,,YIPSNyVAPSD,"notdef
+"
+SRC,Y174,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4234,0.0016,0.1940,ENSP00000263798,ENSP00000401303,TYRO3,SHC1,TYRO3 protein tyrosine kinase,SHC (Src homology 2 domain containing) transforming protein 1,YIPSNyVAPSD,"notdef
+"
+O00418,S18,KIN,ATM_ATR_group,ATM,0.0000,0.0012,0.1670,ENSP00000263026,ENSP00000278616,EEF2K,ATM,eukaryotic elongation factor-2 kinase,ataxia telangiectasia mutated,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,CDK4_CDK6_group,CDK4,0.0001,0.0445,0.2640,ENSP00000263026,ENSP00000257904,EEF2K,CDK4,eukaryotic elongation factor-2 kinase,cyclin-dependent kinase 4,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,CDK4_CDK6_group,CDK6,0.1667,0.0445,0.2220,ENSP00000263026,ENSP00000265734,EEF2K,CDK6,eukaryotic elongation factor-2 kinase,cyclin-dependent kinase 6,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,EIF2AK2,EIF2AK2,0.0000,0.0126,0.1760,ENSP00000263026,ENSP00000233057,EEF2K,EIF2AK2,eukaryotic elongation factor-2 kinase,eukaryotic translation initiation factor 2-alpha kinase 2,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,JNK_group,MAPK8,0.5322,0.1358,0.3680,ENSP00000263026,ENSP00000378974,EEF2K,MAPK8,eukaryotic elongation factor-2 kinase,,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,JNK_group,MAPK9,0.0003,0.1358,0.3410,ENSP00000263026,ENSP00000394560,EEF2K,MAPK9,eukaryotic elongation factor-2 kinase,,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,MAP2K_group,MAP2K1,0.0370,0.0127,0.1650,ENSP00000263026,ENSP00000302486,EEF2K,MAP2K1,eukaryotic elongation factor-2 kinase,mitogen-activated protein kinase kinase 1,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,SGK_group,SGK1,0.0416,0.0131,0.2600,ENSP00000263026,ENSP00000356832,EEF2K,SGK1,eukaryotic elongation factor-2 kinase,serum/glucocorticoid regulated kinase 1,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,CDK2_CDK3_CDK1_CDK5_group,CDK2,0.3699,0.2248,0.2760,ENSP00000263026,ENSP00000266970,EEF2K,CDK2,eukaryotic elongation factor-2 kinase,cyclin-dependent kinase 2,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,CDK2_CDK3_CDK1_CDK5_group,CDK1,6.1051,0.2248,0.5030,ENSP00000263026,ENSP00000378699,EEF2K,CDK1,eukaryotic elongation factor-2 kinase,,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,p38_group,MAPK13,0.3543,0.1482,0.2570,ENSP00000263026,ENSP00000211287,EEF2K,MAPK13,eukaryotic elongation factor-2 kinase,mitogen-activated protein kinase 13,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,p38_group,MAPK12,0.3471,0.1482,0.2020,ENSP00000263026,ENSP00000215659,EEF2K,MAPK12,eukaryotic elongation factor-2 kinase,mitogen-activated protein kinase 12,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,p38_group,MAPK14,0.0001,0.1482,0.1810,ENSP00000263026,ENSP00000229795,EEF2K,MAPK14,eukaryotic elongation factor-2 kinase,,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,p38_group,MAPK11,0.3463,0.1482,0.1810,ENSP00000263026,ENSP00000333685,EEF2K,MAPK11,eukaryotic elongation factor-2 kinase,mitogen-activated protein kinase 11,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,MAPK3_MAPK1_MAPK7_NLK_group,MAPK1,0.3611,0.1229,0.2010,ENSP00000263026,ENSP00000215832,EEF2K,MAPK1,eukaryotic elongation factor-2 kinase,mitogen-activated protein kinase 1,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,MAPK3_MAPK1_MAPK7_NLK_group,MAPK3,0.9355,0.1229,0.2650,ENSP00000263026,ENSP00000263025,EEF2K,MAPK3,eukaryotic elongation factor-2 kinase,mitogen-activated protein kinase 3,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,PAK_group,PAK2,0.0275,0.0105,0.1640,ENSP00000263026,ENSP00000314067,EEF2K,PAK2,eukaryotic elongation factor-2 kinase,p21 protein (Cdc42/Rac)-activated kinase 2,VDGGQsPRAGH,"notdef
+"
+O00418,S18,KIN,NEK1_NEK5_NEK3_NEK4_NEK11_NEK2_group,NEK2,0.1637,0.0313,0.1640,ENSP00000263026,ENSP00000355966,EEF2K,NEK2,eukaryotic elongation factor-2 kinase,NIMA (never in mitosis gene a)-related kinase 2,VDGGQsPRAGH,"notdef
+"
+O00418,Y236,KIN,KDR_FLT1_group,KDR,0.0001,0.0230,0.1690,ENSP00000263026,ENSP00000263923,EEF2K,KDR,eukaryotic elongation factor-2 kinase,kinase insert domain receptor (a type III receptor tyrosine kinase),YIEGKyIKYNS,"notdef
+"
+O00418,Y236,KIN,MAP2K_group,MAP2K1,0.1635,0.0251,0.1650,ENSP00000263026,ENSP00000302486,EEF2K,MAP2K1,eukaryotic elongation factor-2 kinase,mitogen-activated protein kinase kinase 1,YIEGKyIKYNS,"notdef
+"
+O00418,Y236,KIN,EGFR_group,EGFR,0.2759,0.0694,0.2290,ENSP00000263026,ENSP00000275493,EEF2K,EGFR,eukaryotic elongation factor-2 kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",YIEGKyIKYNS,"notdef
+"
+O00418,Y236,PTP,R4_group,PTPRA,0.1689,0.0244,0.1630,ENSP00000263026,ENSP00000369756,EEF2K,PTPRA,eukaryotic elongation factor-2 kinase,"protein tyrosine phosphatase, receptor type, A",YIEGKyIKYNS,"notdef
+"
+O00418,Y236,SH2,SHC1,SHC1,0.4363,0.0134,0.1620,ENSP00000263026,ENSP00000401303,EEF2K,SHC1,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 1,YIEGKyIKYNS,"notdef
+"
+O00418,Y236,SH2,SOCS5_SOCS4_SOCS6_CISH_group,CISH,0.3233,0.0252,0.3530,ENSP00000263026,ENSP00000409346,EEF2K,CISH,eukaryotic elongation factor-2 kinase,cytokine inducible SH2-containing protein,YIEGKyIKYNS,"notdef
+"
+O00418,Y236,SH2,SHC2_SHC3_group,SHC3,0.8472,0.0250,0.1640,ENSP00000263026,ENSP00000364995,EEF2K,SHC3,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 3,YIEGKyIKYNS,"notdef
+"
+O00418,Y236,PTB,SHC1_SHC2_SHC3_group,SHC3,0.4234,0.0078,0.1640,ENSP00000263026,ENSP00000364995,EEF2K,SHC3,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 3,YIEGKyIKYNS,"notdef
+"
+O00418,Y236,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4234,0.0078,0.1620,ENSP00000263026,ENSP00000401303,EEF2K,SHC1,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 1,YIEGKyIKYNS,"notdef
+"
+O00418,Y641,KIN,KDR_FLT1_group,KDR,0.0001,0.0338,0.1690,ENSP00000263026,ENSP00000263923,EEF2K,KDR,eukaryotic elongation factor-2 kinase,kinase insert domain receptor (a type III receptor tyrosine kinase),EALHWyNTALE,"notdef
+"
+O00418,Y641,KIN,MAP2K_group,MAP2K1,0.2245,0.0752,0.1650,ENSP00000263026,ENSP00000302486,EEF2K,MAP2K1,eukaryotic elongation factor-2 kinase,mitogen-activated protein kinase kinase 1,EALHWyNTALE,"notdef
+"
+O00418,Y641,KIN,EGFR_group,EGFR,0.1562,0.0197,0.2290,ENSP00000263026,ENSP00000275493,EEF2K,EGFR,eukaryotic elongation factor-2 kinase,"epidermal growth factor receptor (erythroblastic leukemia viral (v-erb-b) oncogene homolog, avian)",EALHWyNTALE,"notdef
+"
+O00418,Y641,PTP,R4_group,PTPRA,0.1781,0.0365,0.1630,ENSP00000263026,ENSP00000369756,EEF2K,PTPRA,eukaryotic elongation factor-2 kinase,"protein tyrosine phosphatase, receptor type, A",EALHWyNTALE,"notdef
+"
+O00418,Y641,SH2,SHC1,SHC1,0.9326,0.0348,0.1620,ENSP00000263026,ENSP00000401303,EEF2K,SHC1,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 1,EALHWyNTALE,"notdef
+"
+O00418,Y641,SH2,SOCS5_SOCS4_SOCS6_CISH_group,CISH,0.3707,0.0272,0.3530,ENSP00000263026,ENSP00000409346,EEF2K,CISH,eukaryotic elongation factor-2 kinase,cytokine inducible SH2-containing protein,EALHWyNTALE,"notdef
+"
+O00418,Y641,SH2,SHC2_SHC3_group,SHC3,0.6481,0.0208,0.1640,ENSP00000263026,ENSP00000364995,EEF2K,SHC3,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 3,EALHWyNTALE,"notdef
+"
+O00418,Y641,PTB,SHC1_SHC2_SHC3_group,SHC3,0.4234,0.0001,0.1640,ENSP00000263026,ENSP00000364995,EEF2K,SHC3,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 3,EALHWyNTALE,"notdef
+"
+O00418,Y641,PTB,SHC1_SHC2_SHC3_group,SHC1,0.4234,0.0001,0.1620,ENSP00000263026,ENSP00000401303,EEF2K,SHC1,eukaryotic elongation factor-2 kinase,SHC (Src homology 2 domain containing) transforming protein 1,EALHWyNTALE,"notdef
+"
+P55196,S1155,KIN,JNK_group,MAPK8,0.0284,0.0060,0.2210,ENSP00000355771,ENSP00000378974,AFDN,MAPK8,,,RADHRsSPNVA,"notdef
+"
+P55196,S1155,KIN,MAP2K_group,MAP2K1,0.0398,0.0131,0.1530,ENSP00000355771,ENSP00000302486,AFDN,MAP2K1,,mitogen-activated protein kinase kinase 1,RADHRsSPNVA,"notdef
+"
+P55196,S1155,KIN,ROCK_group,ROCK2,0.1614,0.0224,0.2230,ENSP00000355771,ENSP00000317985,AFDN,ROCK2,,"Rho-associated, coiled-coil containing protein kinase 2",RADHRsSPNVA,"notdef
+"
+P55196,S1155,KIN,ROCK_group,ROCK1,0.0001,0.0224,0.2910,ENSP00000355771,ENSP00000382697,AFDN,ROCK1,,"Rho-associated, coiled-coil containing protein kinase 1",RADHRsSPNVA,"notdef
+"
+P55196,S1155,KIN,MAPK3_MAPK1_MAPK7_NLK_group,MAPK3,0.0177,0.0053,0.2020,ENSP00000355771,ENSP00000263025,AFDN,MAPK3,,mitogen-activated protein kinase 3,RADHRsSPNVA,"notdef
+"
+P55196,S1155,KIN,PAK_group,PAK5,0.3303,0.1360,0.1860,ENSP00000355771,ENSP00000367686,AFDN,PAK5,,,RADHRsSPNVA,"notdef
+"
+P55196,S1155,KIN,PAK_group,PAK6,0.3560,0.1360,0.2750,ENSP00000355771,ENSP00000453858,AFDN,PAK6,,,RADHRsSPNVA,"notdef
+"
+P55196,S1155,KIN,PAK_group,PAK4,0.3917,0.1360,0.3170,ENSP00000355771,ENSP00000469413,AFDN,PAK4,,,RADHRsSPNVA,"notdef
+"
+P55196,S1156,KIN,JNK_group,MAPK8,0.2381,0.0916,0.2210,ENSP00000355771,ENSP00000378974,AFDN,MAPK8,,,ADHRSsPNVAN,"notdef
+"
+P55196,S1156,KIN,MAP2K_group,MAP2K1,0.0357,0.0126,0.1530,ENSP00000355771,ENSP00000302486,AFDN,MAP2K1,,mitogen-activated protein kinase kinase 1,ADHRSsPNVAN,"notdef
+"
+P55196,S1156,KIN,ROCK_group,ROCK2,0.1311,0.0194,0.2230,ENSP00000355771,ENSP00000317985,AFDN,ROCK2,,"Rho-associated, coiled-coil containing protein kinase 2",ADHRSsPNVAN,"notdef
+"
+P55196,S1156,KIN,ROCK_group,ROCK1,0.0001,0.0194,0.2910,ENSP00000355771,ENSP00000382697,AFDN,ROCK1,,"Rho-associated, coiled-coil containing protein kinase 1",ADHRSsPNVAN,"notdef
+"
+P55196,S1156,KIN,MAPK3_MAPK1_MAPK7_NLK_group,MAPK3,0.4695,0.0936,0.2020,ENSP00000355771,ENSP00000263025,AFDN,MAPK3,,mitogen-activated protein kinase 3,ADHRSsPNVAN,"notdef
+"
+P55196,S1156,KIN,PAK_group,PAK5,0.1639,0.0353,0.1860,ENSP00000355771,ENSP00000367686,AFDN,PAK5,,,ADHRSsPNVAN,"notdef
+"
+P55196,S1156,KIN,PAK_group,PAK6,0.1766,0.0353,0.2750,ENSP00000355771,ENSP00000453858,AFDN,PAK6,,,ADHRSsPNVAN,"notdef
+"
+P55196,S1156,KIN,PAK_group,PAK4,0.1944,0.0353,0.3170,ENSP00000355771,ENSP00000469413,AFDN,PAK4,,,ADHRSsPNVAN,"notdef
+"
+P55196,S1165,KIN,JNK_group,MAPK8,0.2603,0.1222,0.2210,ENSP00000355771,ENSP00000378974,AFDN,MAPK8,,,ANQPPsPGGKS,"notdef
+"
+P55196,S1165,KIN,MAP2K_group,MAP2K1,0.0348,0.0125,0.1530,ENSP00000355771,ENSP00000302486,AFDN,MAP2K1,,mitogen-activated protein kinase kinase 1,ANQPPsPGGKS,"notdef
+"
+P55196,S1165,KIN,ROCK_group,ROCK2,0.1020,0.0181,0.2230,ENSP00000355771,ENSP00000317985,AFDN,ROCK2,,"Rho-associated, coiled-coil containing protein kinase 2",ANQPPsPGGKS,"notdef
+"
+P55196,S1165,KIN,ROCK_group,ROCK1,0.0001,0.0181,0.2910,ENSP00000355771,ENSP00000382697,AFDN,ROCK1,,"Rho-associated, coiled-coil containing protein kinase 1",ANQPPsPGGKS,"notdef
+"
+P55196,S1165,KIN,MAPK3_MAPK1_MAPK7_NLK_group,MAPK3,1.6461,0.2304,0.2020,ENSP00000355771,ENSP00000263025,AFDN,MAPK3,,mitogen-activated protein kinase 3,ANQPPsPGGKS,"notdef
+"
+P55196,S1165,KIN,PAK_group,PAK5,0.0275,0.0105,0.1860,ENSP00000355771,ENSP00000367686,AFDN,PAK5,,,ANQPPsPGGKS,"notdef
+"
+P55196,S1165,KIN,PAK_group,PAK6,0.0297,0.0105,0.2750,ENSP00000355771,ENSP00000453858,AFDN,PAK6,,,ANQPPsPGGKS,"notdef
+"
+P55196,S1165,KIN,PAK_group,PAK4,0.0327,0.0105,0.3170,ENSP00000355771,ENSP00000469413,AFDN,PAK4,,,ANQPPsPGGKS,"notdef
+"
+Q9Z2H5,S546,KIN,CDK4_CDK6_group,CDK4,0.0000,0.0029,0.3640,ENSP00000337168,ENSP00000257904,EPB41L1,CDK4,erythrocyte membrane protein band 4.1-like 1,cyclin-dependent kinase 4,SPASPsPKGTP,"notdef
+"
+Q9Z2H5,S546,KIN,GRK_group,GRK6,0.0499,0.0129,0.3340,ENSP00000337168,ENSP00000347655,EPB41L1,GRK6,erythrocyte membrane protein band 4.1-like 1,,SPASPsPKGTP,"notdef
+"
+Q9Z2H5,S546,KIN,GRK_group,GRK5,0.0464,0.0129,0.3250,ENSP00000337168,ENSP00000376609,EPB41L1,GRK5,erythrocyte membrane protein band 4.1-like 1,G protein-coupled receptor kinase 5,SPASPsPKGTP,"notdef
+"
+Q9Z2H5,S546,KIN,GRK_group,GRK4,0.0568,0.0129,0.3510,ENSP00000337168,ENSP00000381129,EPB41L1,GRK4,erythrocyte membrane protein band 4.1-like 1,G protein-coupled receptor kinase 4,SPASPsPKGTP,"notdef
+"
+Q9Z2H5,S546,KIN,CLK_group,CLK2,0.3293,0.1345,0.2060,ENSP00000337168,ENSP00000357345,EPB41L1,CLK2,erythrocyte membrane protein band 4.1-like 1,,SPASPsPKGTP,"notdef
+"
+Q9Z2H5,T550,KIN,CDK4_CDK6_group,CDK4,0.0000,0.0036,0.3640,ENSP00000337168,ENSP00000257904,EPB41L1,CDK4,erythrocyte membrane protein band 4.1-like 1,cyclin-dependent kinase 4,PSPKGtPEKAS,"notdef
+"
+Q9Z2H5,T550,KIN,GRK_group,GRK6,0.0499,0.0129,0.3340,ENSP00000337168,ENSP00000347655,EPB41L1,GRK6,erythrocyte membrane protein band 4.1-like 1,,PSPKGtPEKAS,"notdef
+"
+Q9Z2H5,T550,KIN,GRK_group,GRK5,0.0463,0.0129,0.3250,ENSP00000337168,ENSP00000376609,EPB41L1,GRK5,erythrocyte membrane protein band 4.1-like 1,G protein-coupled receptor kinase 5,PSPKGtPEKAS,"notdef
+"
+Q9Z2H5,T550,KIN,GRK_group,GRK4,0.0568,0.0129,0.3510,ENSP00000337168,ENSP00000381129,EPB41L1,GRK4,erythrocyte membrane protein band 4.1-like 1,G protein-coupled receptor kinase 4,PSPKGtPEKAS,"notdef
+"
+Q9Z2H5,T550,KIN,CLK_group,CLK2,0.3207,0.1290,0.2060,ENSP00000337168,ENSP00000357345,EPB41L1,CLK2,erythrocyte membrane protein band 4.1-like 1,,PSPKGtPEKAS,"notdef
+"
+Q9Z2H5,S650,KIN,CDK4_CDK6_group,CDK4,0.0000,0.0026,0.3640,ENSP00000337168,ENSP00000257904,EPB41L1,CDK4,erythrocyte membrane protein band 4.1-like 1,cyclin-dependent kinase 4,RDKSDsETEGL,"notdef
+"
+Q9Z2H5,S650,KIN,GRK_group,GRK6,0.3823,0.1128,0.3340,ENSP00000337168,ENSP00000347655,EPB41L1,GRK6,erythrocyte membrane protein band 4.1-like 1,,RDKSDsETEGL,"notdef
+"
+Q9Z2H5,S650,KIN,GRK_group,GRK5,0.3554,0.1128,0.3250,ENSP00000337168,ENSP00000376609,EPB41L1,GRK5,erythrocyte membrane protein band 4.1-like 1,G protein-coupled receptor kinase 5,RDKSDsETEGL,"notdef
+"
+Q9Z2H5,S650,KIN,GRK_group,GRK4,0.4356,0.1128,0.3510,ENSP00000337168,ENSP00000381129,EPB41L1,GRK4,erythrocyte membrane protein band 4.1-like 1,G protein-coupled receptor kinase 4,RDKSDsETEGL,"notdef
+"
+Q9Z2H5,S650,KIN,CLK_group,CLK2,0.1668,0.0497,0.2060,ENSP00000337168,ENSP00000357345,EPB41L1,CLK2,erythrocyte membrane protein band 4.1-like 1,,RDKSDsETEGL,"notdef
+"
+Q9Z2H5,T685,KIN,CDK4_CDK6_group,CDK4,0.0001,0.0401,0.3640,ENSP00000337168,ENSP00000257904,EPB41L1,CDK4,erythrocyte membrane protein band 4.1-like 1,cyclin-dependent kinase 4,RGACStPEMPQ,"notdef
+"
+Q9Z2H5,T685,KIN,GRK_group,GRK6,0.0544,0.0133,0.3340,ENSP00000337168,ENSP00000347655,EPB41L1,GRK6,erythrocyte membrane protein band 4.1-like 1,,RGACStPEMPQ,"notdef
+"
+Q9Z2H5,T685,KIN,GRK_group,GRK5,0.0506,0.0133,0.3250,ENSP00000337168,ENSP00000376609,EPB41L1,GRK5,erythrocyte membrane protein band 4.1-like 1,G protein-coupled receptor kinase 5,RGACStPEMPQ,"notdef
+"
+Q9Z2H5,T685,KIN,GRK_group,GRK4,0.0620,0.0133,0.3510,ENSP00000337168,ENSP00000381129,EPB41L1,GRK4,erythrocyte membrane protein band 4.1-like 1,G protein-coupled receptor kinase 4,RGACStPEMPQ,"notdef
+"
+Q9Z2H5,T685,KIN,CLK_group,CLK2,0.3485,0.1597,0.2060,ENSP00000337168,ENSP00000357345,EPB41L1,CLK2,erythrocyte membrane protein band 4.1-like 1,,RGACStPEMPQ,"notdef
+"
+Q9Z2K4,Y75,KIN,Syk_group,ZAP70,0.1307,0.0169,0.5180,ENSP00000005587,ENSP00000264972,SKAP2,ZAP70,src kinase associated phosphoprotein 2,zeta-chain (TCR) associated protein kinase 70kDa,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,KIN,Tec_group,ITK,0.1648,0.0247,0.2170,ENSP00000005587,ENSP00000398655,SKAP2,ITK,src kinase associated phosphoprotein 2,IL2-inducible T-cell kinase,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,KIN,Tec_group,BTK,0.0000,0.0247,0.2800,ENSP00000005587,ENSP00000483570,SKAP2,BTK,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,KIN,Src_group,BLK,0.3754,0.1225,0.3260,ENSP00000005587,ENSP00000259089,SKAP2,BLK,src kinase associated phosphoprotein 2,B lymphoid tyrosine kinase,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,KIN,Src_group,HCK,0.3216,0.1225,0.5940,ENSP00000005587,ENSP00000365012,SKAP2,HCK,src kinase associated phosphoprotein 2,hemopoietic cell kinase,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,KIN,Src_group,FRK,0.3280,0.1225,0.2680,ENSP00000005587,ENSP00000476145,SKAP2,FRK,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,PTP,NT1_group,PTPN2,0.1171,0.0187,0.2710,ENSP00000005587,ENSP00000311857,SKAP2,PTPN2,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 2",EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,PTP,NT2_group,PTPN6,0.0001,0.0766,0.3100,ENSP00000005587,ENSP00000391592,SKAP2,PTPN6,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 6",EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,PTP,NT2_group,PTPN11,0.2885,0.0766,0.3060,ENSP00000005587,ENSP00000489597,SKAP2,PTPN11,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,PTP,NT4_group,PTPN18,0.1791,0.0378,0.2370,ENSP00000005587,ENSP00000175756,SKAP2,PTPN18,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 18 (brain-derived)",EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,PTP,NT4_group,PTPN12,0.1791,0.0378,0.2020,ENSP00000005587,ENSP00000248594,SKAP2,PTPN12,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 12",EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,PTP,NT4_group,PTPN22,1.7972,0.0378,0.6310,ENSP00000005587,ENSP00000352833,SKAP2,PTPN22,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 22 (lymphoid)",EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,CBL_group,CBL,0.9252,0.0302,0.2130,ENSP00000005587,ENSP00000264033,SKAP2,CBL,src kinase associated phosphoprotein 2,Cas-Br-M (murine) ecotropic retroviral transforming sequence,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,CRKL,CRKL,0.0002,0.2272,0.1590,ENSP00000005587,ENSP00000346300,SKAP2,CRKL,src kinase associated phosphoprotein 2,v-crk sarcoma virus CT10 oncogene homolog (avian)-like,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,DAPP1,DAPP1,0.4821,0.0172,0.5570,ENSP00000005587,ENSP00000423602,SKAP2,DAPP1,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,FRK,FRK,0.4552,0.0162,0.2680,ENSP00000005587,ENSP00000476145,SKAP2,FRK,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,GRB2_group,GRAP2,0.4234,0.0066,0.2630,ENSP00000005587,ENSP00000339186,SKAP2,GRAP2,src kinase associated phosphoprotein 2,GRB2-related adaptor protein 2,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,GRB2_group,GRB2,0.4234,0.0066,0.3530,ENSP00000005587,ENSP00000376345,SKAP2,GRB2,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,INPPL1,INPPL1,0.4234,0.0107,0.1810,ENSP00000005587,ENSP00000298229,SKAP2,INPPL1,src kinase associated phosphoprotein 2,inositol polyphosphate phosphatase-like 1,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,MIST_LCP2_BLNK_SH2D6_group,LCP2,1.9287,0.2347,0.8510,ENSP00000005587,ENSP00000046794,SKAP2,LCP2,src kinase associated phosphoprotein 2,lymphocyte cytosolic protein 2 (SH2 domain containing leukocyte protein of 76kDa),EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,MIST_LCP2_BLNK_SH2D6_group,BLNK,1.6622,0.2347,0.4310,ENSP00000005587,ENSP00000224337,SKAP2,BLNK,src kinase associated phosphoprotein 2,B-cell linker,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,NCK_group,NCK2,1.1803,0.1309,0.6060,ENSP00000005587,ENSP00000233154,SKAP2,NCK2,src kinase associated phosphoprotein 2,NCK adaptor protein 2,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,NCK_group,NCK1,0.0002,0.1309,0.2430,ENSP00000005587,ENSP00000417273,SKAP2,NCK1,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,SH2B_group,SH2B3,1.0365,0.0899,0.2530,ENSP00000005587,ENSP00000345492,SKAP2,SH2B3,src kinase associated phosphoprotein 2,SH2B adaptor protein 3,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,SOCS5_SOCS4_SOCS6_CISH_group,SOCS4,0.9194,0.0266,0.1500,ENSP00000005587,ENSP00000452522,SKAP2,SOCS4,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,Src_group,BLK,1.0487,0.0952,0.3260,ENSP00000005587,ENSP00000259089,SKAP2,BLK,src kinase associated phosphoprotein 2,B lymphoid tyrosine kinase,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,Src_group,HCK,1.0890,0.0952,0.5940,ENSP00000005587,ENSP00000365012,SKAP2,HCK,src kinase associated phosphoprotein 2,hemopoietic cell kinase,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,Tec_group,ITK,1.1612,0.1443,0.2170,ENSP00000005587,ENSP00000398655,SKAP2,ITK,src kinase associated phosphoprotein 2,IL2-inducible T-cell kinase,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,Tec_group,BTK,1.1612,0.1443,0.2800,ENSP00000005587,ENSP00000483570,SKAP2,BTK,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,VAV1_VAV3_group,VAV3,0.4234,0.0067,0.1770,ENSP00000005587,ENSP00000359073,SKAP2,VAV3,src kinase associated phosphoprotein 2,vav 3 guanine nucleotide exchange factor,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y75,SH2,VAV1_VAV3_group,VAV1,0.4371,0.0067,0.5810,ENSP00000005587,ENSP00000472929,SKAP2,VAV1,src kinase associated phosphoprotein 2,,EDGDEyDDPFA,"notdef
+"
+Q9Z2K4,Y197,KIN,Syk_group,ZAP70,0.1307,0.0161,0.5180,ENSP00000005587,ENSP00000264972,SKAP2,ZAP70,src kinase associated phosphoprotein 2,zeta-chain (TCR) associated protein kinase 70kDa,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,KIN,Tec_group,ITK,0.1637,0.0228,0.2170,ENSP00000005587,ENSP00000398655,SKAP2,ITK,src kinase associated phosphoprotein 2,IL2-inducible T-cell kinase,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,KIN,Tec_group,BTK,0.0000,0.0228,0.2800,ENSP00000005587,ENSP00000483570,SKAP2,BTK,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,KIN,Src_group,BLK,0.1989,0.0388,0.3260,ENSP00000005587,ENSP00000259089,SKAP2,BLK,src kinase associated phosphoprotein 2,B lymphoid tyrosine kinase,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,KIN,Src_group,HCK,0.3216,0.0388,0.5940,ENSP00000005587,ENSP00000365012,SKAP2,HCK,src kinase associated phosphoprotein 2,hemopoietic cell kinase,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,KIN,Src_group,FRK,0.1738,0.0388,0.2680,ENSP00000005587,ENSP00000476145,SKAP2,FRK,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,PTP,NT1_group,PTPN2,0.3289,0.1103,0.2710,ENSP00000005587,ENSP00000311857,SKAP2,PTPN2,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 2",PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,PTP,NT2_group,PTPN6,0.0001,0.0267,0.3100,ENSP00000005587,ENSP00000391592,SKAP2,PTPN6,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 6",PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,PTP,NT2_group,PTPN11,0.2021,0.0267,0.3060,ENSP00000005587,ENSP00000489597,SKAP2,PTPN11,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,PTP,NT4_group,PTPN18,0.1758,0.0335,0.2370,ENSP00000005587,ENSP00000175756,SKAP2,PTPN18,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 18 (brain-derived)",PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,PTP,NT4_group,PTPN12,0.1758,0.0335,0.2020,ENSP00000005587,ENSP00000248594,SKAP2,PTPN12,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 12",PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,PTP,NT4_group,PTPN22,1.7638,0.0335,0.6310,ENSP00000005587,ENSP00000352833,SKAP2,PTPN22,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 22 (lymphoid)",PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,CBL_group,CBL,0.8057,0.0244,0.2130,ENSP00000005587,ENSP00000264033,SKAP2,CBL,src kinase associated phosphoprotein 2,Cas-Br-M (murine) ecotropic retroviral transforming sequence,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,CRKL,CRKL,0.0001,0.0074,0.1590,ENSP00000005587,ENSP00000346300,SKAP2,CRKL,src kinase associated phosphoprotein 2,v-crk sarcoma virus CT10 oncogene homolog (avian)-like,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,DAPP1,DAPP1,0.4821,0.0172,0.5570,ENSP00000005587,ENSP00000423602,SKAP2,DAPP1,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,FRK,FRK,0.4590,0.0169,0.2680,ENSP00000005587,ENSP00000476145,SKAP2,FRK,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,GRB2_group,GRAP2,0.4234,0.0062,0.2630,ENSP00000005587,ENSP00000339186,SKAP2,GRAP2,src kinase associated phosphoprotein 2,GRB2-related adaptor protein 2,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,GRB2_group,GRB2,0.4234,0.0062,0.3530,ENSP00000005587,ENSP00000376345,SKAP2,GRB2,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,INPPL1,INPPL1,0.4234,0.0104,0.1810,ENSP00000005587,ENSP00000298229,SKAP2,INPPL1,src kinase associated phosphoprotein 2,inositol polyphosphate phosphatase-like 1,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,MIST_LCP2_BLNK_SH2D6_group,LCP2,1.0702,0.0284,0.8510,ENSP00000005587,ENSP00000046794,SKAP2,LCP2,src kinase associated phosphoprotein 2,lymphocyte cytosolic protein 2 (SH2 domain containing leukocyte protein of 76kDa),PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,MIST_LCP2_BLNK_SH2D6_group,BLNK,0.9223,0.0284,0.4310,ENSP00000005587,ENSP00000224337,SKAP2,BLNK,src kinase associated phosphoprotein 2,B-cell linker,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,NCK_group,NCK2,0.4488,0.0124,0.6060,ENSP00000005587,ENSP00000233154,SKAP2,NCK2,src kinase associated phosphoprotein 2,NCK adaptor protein 2,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,NCK_group,NCK1,0.0000,0.0124,0.2430,ENSP00000005587,ENSP00000417273,SKAP2,NCK1,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,SH2B_group,SH2B3,0.6089,0.0206,0.2530,ENSP00000005587,ENSP00000345492,SKAP2,SH2B3,src kinase associated phosphoprotein 2,SH2B adaptor protein 3,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,SOCS5_SOCS4_SOCS6_CISH_group,SOCS4,0.8853,0.0250,0.1500,ENSP00000005587,ENSP00000452522,SKAP2,SOCS4,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,Src_group,BLK,0.9300,0.0332,0.3260,ENSP00000005587,ENSP00000259089,SKAP2,BLK,src kinase associated phosphoprotein 2,B lymphoid tyrosine kinase,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,Src_group,HCK,0.9658,0.0332,0.5940,ENSP00000005587,ENSP00000365012,SKAP2,HCK,src kinase associated phosphoprotein 2,hemopoietic cell kinase,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,Tec_group,ITK,0.7703,0.0218,0.2170,ENSP00000005587,ENSP00000398655,SKAP2,ITK,src kinase associated phosphoprotein 2,IL2-inducible T-cell kinase,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,Tec_group,BTK,0.7703,0.0218,0.2800,ENSP00000005587,ENSP00000483570,SKAP2,BTK,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,VAV1_VAV3_group,VAV3,0.4234,0.0066,0.1770,ENSP00000005587,ENSP00000359073,SKAP2,VAV3,src kinase associated phosphoprotein 2,vav 3 guanine nucleotide exchange factor,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y197,SH2,VAV1_VAV3_group,VAV1,0.4371,0.0066,0.5810,ENSP00000005587,ENSP00000472929,SKAP2,VAV1,src kinase associated phosphoprotein 2,,PDKRIyQFTAA,"notdef
+"
+Q9Z2K4,Y260,KIN,Syk_group,ZAP70,0.3677,0.0759,0.5180,ENSP00000005587,ENSP00000264972,SKAP2,ZAP70,src kinase associated phosphoprotein 2,zeta-chain (TCR) associated protein kinase 70kDa,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,KIN,Tec_group,ITK,0.1648,0.0268,0.2170,ENSP00000005587,ENSP00000398655,SKAP2,ITK,src kinase associated phosphoprotein 2,IL2-inducible T-cell kinase,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,KIN,Tec_group,BTK,0.0000,0.0268,0.2800,ENSP00000005587,ENSP00000483570,SKAP2,BTK,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,KIN,Src_group,BLK,0.4203,0.1516,0.3260,ENSP00000005587,ENSP00000259089,SKAP2,BLK,src kinase associated phosphoprotein 2,B lymphoid tyrosine kinase,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,KIN,Src_group,HCK,0.3216,0.1516,0.5940,ENSP00000005587,ENSP00000365012,SKAP2,HCK,src kinase associated phosphoprotein 2,hemopoietic cell kinase,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,KIN,Src_group,FRK,0.3673,0.1516,0.2680,ENSP00000005587,ENSP00000476145,SKAP2,FRK,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,PTP,NT1_group,PTPN2,0.1171,0.0245,0.2710,ENSP00000005587,ENSP00000311857,SKAP2,PTPN2,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 2",IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,PTP,NT2_group,PTPN6,0.0001,0.0788,0.3100,ENSP00000005587,ENSP00000391592,SKAP2,PTPN6,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 6",IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,PTP,NT2_group,PTPN11,0.2885,0.0788,0.3060,ENSP00000005587,ENSP00000489597,SKAP2,PTPN11,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,PTP,NT4_group,PTPN18,0.2055,0.1456,0.2370,ENSP00000005587,ENSP00000175756,SKAP2,PTPN18,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 18 (brain-derived)",IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,PTP,NT4_group,PTPN12,0.2055,0.1456,0.2020,ENSP00000005587,ENSP00000248594,SKAP2,PTPN12,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 12",IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,PTP,NT4_group,PTPN22,2.0614,0.1456,0.6310,ENSP00000005587,ENSP00000352833,SKAP2,PTPN22,src kinase associated phosphoprotein 2,"protein tyrosine phosphatase, non-receptor type 22 (lymphoid)",IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,CBL_group,CBL,1.0298,0.0870,0.2130,ENSP00000005587,ENSP00000264033,SKAP2,CBL,src kinase associated phosphoprotein 2,Cas-Br-M (murine) ecotropic retroviral transforming sequence,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,CRKL,CRKL,0.0001,0.0053,0.1590,ENSP00000005587,ENSP00000346300,SKAP2,CRKL,src kinase associated phosphoprotein 2,v-crk sarcoma virus CT10 oncogene homolog (avian)-like,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,DAPP1,DAPP1,0.9666,0.0437,0.5570,ENSP00000005587,ENSP00000423602,SKAP2,DAPP1,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,FRK,FRK,1.0976,0.1166,0.2680,ENSP00000005587,ENSP00000476145,SKAP2,FRK,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,GRB2_group,GRAP2,0.4234,0.0105,0.2630,ENSP00000005587,ENSP00000339186,SKAP2,GRAP2,src kinase associated phosphoprotein 2,GRB2-related adaptor protein 2,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,GRB2_group,GRB2,0.4234,0.0105,0.3530,ENSP00000005587,ENSP00000376345,SKAP2,GRB2,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,INPPL1,INPPL1,0.9253,0.0303,0.1810,ENSP00000005587,ENSP00000298229,SKAP2,INPPL1,src kinase associated phosphoprotein 2,inositol polyphosphate phosphatase-like 1,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,MIST_LCP2_BLNK_SH2D6_group,LCP2,1.0845,0.0361,0.8510,ENSP00000005587,ENSP00000046794,SKAP2,LCP2,src kinase associated phosphoprotein 2,lymphocyte cytosolic protein 2 (SH2 domain containing leukocyte protein of 76kDa),IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,MIST_LCP2_BLNK_SH2D6_group,BLNK,0.9346,0.0361,0.4310,ENSP00000005587,ENSP00000224337,SKAP2,BLNK,src kinase associated phosphoprotein 2,B-cell linker,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,NCK_group,NCK2,1.1767,0.1294,0.6060,ENSP00000005587,ENSP00000233154,SKAP2,NCK2,src kinase associated phosphoprotein 2,NCK adaptor protein 2,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,NCK_group,NCK1,0.0002,0.1294,0.2430,ENSP00000005587,ENSP00000417273,SKAP2,NCK1,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,SH2B_group,SH2B3,1.5479,0.1901,0.2530,ENSP00000005587,ENSP00000345492,SKAP2,SH2B3,src kinase associated phosphoprotein 2,SH2B adaptor protein 3,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,SOCS5_SOCS4_SOCS6_CISH_group,SOCS4,1.0080,0.0775,0.1500,ENSP00000005587,ENSP00000452522,SKAP2,SOCS4,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,Src_group,BLK,1.6622,0.2531,0.3260,ENSP00000005587,ENSP00000259089,SKAP2,BLK,src kinase associated phosphoprotein 2,B lymphoid tyrosine kinase,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,Src_group,HCK,1.7261,0.2531,0.5940,ENSP00000005587,ENSP00000365012,SKAP2,HCK,src kinase associated phosphoprotein 2,hemopoietic cell kinase,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,Tec_group,ITK,1.4204,0.1764,0.2170,ENSP00000005587,ENSP00000398655,SKAP2,ITK,src kinase associated phosphoprotein 2,IL2-inducible T-cell kinase,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,Tec_group,BTK,1.4204,0.1764,0.2800,ENSP00000005587,ENSP00000483570,SKAP2,BTK,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,VAV1_VAV3_group,VAV3,0.4234,0.0066,0.1770,ENSP00000005587,ENSP00000359073,SKAP2,VAV3,src kinase associated phosphoprotein 2,vav 3 guanine nucleotide exchange factor,IDDEIyEELPE,"notdef
+"
+Q9Z2K4,Y260,SH2,VAV1_VAV3_group,VAV1,0.4371,0.0066,0.5810,ENSP00000005587,ENSP00000472929,SKAP2,VAV1,src kinase associated phosphoprotein 2,,IDDEIyEELPE,"notdef
+"
+Q9Z2Q6,S305,KIN,CDK4_CDK6_group,CDK6,0.4575,0.0955,0.3930,ENSP00000391311,ENSP00000265734,SEPTIN5,CDK6,septin 5,cyclin-dependent kinase 6,DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,S305,KIN,ROCK_group,ROCK2,0.1014,0.0182,0.1720,ENSP00000391311,ENSP00000317985,SEPTIN5,ROCK2,septin 5,"Rho-associated, coiled-coil containing protein kinase 2",DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,S305,KIN,CDK2_CDK3_CDK1_CDK5_group,CDK1,0.2501,0.1263,0.1650,ENSP00000391311,ENSP00000378699,SEPTIN5,CDK1,septin 5,,DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,S305,KIN,CDK2_CDK3_CDK1_CDK5_group,CDK5,0.0597,0.1263,0.3290,ENSP00000391311,ENSP00000419782,SEPTIN5,CDK5,septin 5,,DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,S305,KIN,p38_group,MAPK11,0.3463,0.1482,0.1730,ENSP00000391311,ENSP00000333685,SEPTIN5,MAPK11,septin 5,mitogen-activated protein kinase 11,DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,S305,KIN,PAK_group,PAK1,0.1199,0.0110,0.1530,ENSP00000391311,ENSP00000278568,SEPTIN5,PAK1,septin 5,p21 protein (Cdc42/Rac)-activated kinase 1,DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,S305,KIN,PAK_group,PAK2,0.0276,0.0110,0.1530,ENSP00000391311,ENSP00000314067,SEPTIN5,PAK2,septin 5,p21 protein (Cdc42/Rac)-activated kinase 2,DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,S305,KIN,PAK_group,PAK3,0.0276,0.0110,0.1530,ENSP00000391311,ENSP00000353864,SEPTIN5,PAK3,septin 5,p21 protein (Cdc42/Rac)-activated kinase 3,DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,S305,KIN,PAK_group,PAK5,0.0276,0.0110,0.1530,ENSP00000391311,ENSP00000367686,SEPTIN5,PAK5,septin 5,,DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,S305,KIN,PAK_group,PAK6,0.0276,0.0110,0.1680,ENSP00000391311,ENSP00000453858,SEPTIN5,PAK6,septin 5,,DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,S305,KIN,PAK_group,PAK4,0.0276,0.0110,0.1600,ENSP00000391311,ENSP00000469413,SEPTIN5,PAK4,septin 5,,DSRMEsPIPIL,"notdef
+"
+Q9Z2Q6,T314,KIN,CDK4_CDK6_group,CDK6,0.0128,0.0029,0.3930,ENSP00000391311,ENSP00000265734,SEPTIN5,CDK6,septin 5,cyclin-dependent kinase 6,ILPLPtPDAET,"notdef
+"
+Q9Z2Q6,T314,KIN,ROCK_group,ROCK2,0.1273,0.0186,0.1720,ENSP00000391311,ENSP00000317985,SEPTIN5,ROCK2,septin 5,"Rho-associated, coiled-coil containing protein kinase 2",ILPLPtPDAET,"notdef
+"
+Q9Z2Q6,T314,KIN,CDK2_CDK3_CDK1_CDK5_group,CDK1,0.2450,0.1138,0.1650,ENSP00000391311,ENSP00000378699,SEPTIN5,CDK1,septin 5,,ILPLPtPDAET,"notdef
+"
+Q9Z2Q6,T314,KIN,CDK2_CDK3_CDK1_CDK5_group,CDK5,0.0526,0.1138,0.3290,ENSP00000391311,ENSP00000419782,SEPTIN5,CDK5,septin 5,,ILPLPtPDAET,"notdef
+"
+Q9Z2Q6,T314,KIN,p38_group,MAPK11,0.3463,0.1482,0.1730,ENSP00000391311,ENSP00000333685,SEPTIN5,MAPK11,septin 5,mitogen-activated protein kinase 11,ILPLPtPDAET,"notdef
+"
+Q9Z2Q6,T314,KIN,PAK_group,PAK1,0.1094,0.0105,0.1530,ENSP00000391311,ENSP00000278568,SEPTIN5,PAK1,septin 5,p21 protein (Cdc42/Rac)-activated kinase 1,ILPLPtPDAET,"notdef
+"
+Q9Z2Q6,T314,KIN,PAK_group,PAK2,0.0275,0.0105,0.1530,ENSP00000391311,ENSP00000314067,SEPTIN5,PAK2,septin 5,p21 protein (Cdc42/Rac)-activated kinase 2,ILPLPtPDAET,"notdef
+"
+Q9Z2Q6,T314,KIN,PAK_group,PAK3,0.0275,0.0105,0.1530,ENSP00000391311,ENSP00000353864,SEPTIN5,PAK3,septin 5,p21 protein (Cdc42/Rac)-activated kinase 3,ILPLPtPDAET,"notdef
+"
+Q9Z2Q6,T314,KIN,PAK_group,PAK5,0.0275,0.0105,0.1530,ENSP00000391311,ENSP00000367686,SEPTIN5,PAK5,septin 5,,ILPLPtPDAET,"notdef
+"
+Q9Z2Q6,T314,KIN,PAK_group,PAK6,0.0275,0.0105,0.1680,ENSP00000391311,ENSP00000453858,SEPTIN5,PAK6,septin 5,,ILPLPtPDAET,"notdef
+"
+Q9Z2Q6,T314,KIN,PAK_group,PAK4,0.0275,0.0105,0.1600,ENSP00000391311,ENSP00000469413,SEPTIN5,PAK4,septin 5,,ILPLPtPDAET,"notdef
+"
