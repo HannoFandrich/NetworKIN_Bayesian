@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Read the CSV file
-old_csv="cured_morpho_seqs_v2.fa.result.csv"
+old_csv="cured_morpho_seqs_v2.fa.result_old.csv"
 new_csv='KinomeXplorer_all_predictions_v3.csv'
 #new_csv='KinomeXplorer_all_predictions_v2.csv'
 df = pd.read_csv(old_csv)
@@ -24,7 +24,7 @@ new_df = df[['Target STRING ID',
 
 new_df.rename(columns={'Target STRING ID': '#substrate'}, inplace=True)
 new_df.rename(columns={'Position': 'position'}, inplace=True)
-new_df.rename(columns={'Name': 'id'}, inplace=True)
+new_df.rename(columns={'Kinase Name': 'id'}, inplace=True)
 new_df.rename(columns={'NetworKIN score': 'networkin_score'}, inplace=True)
 new_df.rename(columns={'Tree': 'tree'}, inplace=True)
 new_df.rename(columns={'NetPhorest Group': 'netphorest_group'}, inplace=True)

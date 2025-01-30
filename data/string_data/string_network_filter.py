@@ -15,7 +15,7 @@ for line in lines:
     columns = line.split(' ')
     interaction_list.append(columns)
 
-print(len(interaction_list))
+og_len=len(interaction_list)
 
 
 # Get Protein names from .info file
@@ -59,7 +59,10 @@ with open(file_name, 'w', newline='') as file:
                 c+=1
         except:
             continue
-
+print('OG links:')
+print(og_len)
+print('after filter:')
+print(c)
 # Gzip the file
 with open(file_name, 'rb') as f_in:
     with gzip.open(file_name + '.gz', 'wb') as f_out:

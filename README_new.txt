@@ -1,6 +1,11 @@
 ###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 test.fas test.tsv
 ###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 cured_morpho_seqs_v2.fa phospho.tsv
+###   python3 NetworKIN.py -n netphorest/netphorest -d data 9606 data42_data1-3_step15_GenFasta.fa phospho_peptides.csv
 
+
+### check old string network
+### check old seqs also maybe
+### check calculations of kin_scores
 
 This is the distribution of NetworKIN 3.0. November, 2013
 
@@ -45,14 +50,30 @@ More Notes:
         -9606.protein.links.v12.0.txt.gz (the network)
         -9606.protein.sequences.v12.0.fa (protein sequences)
         -9606.protein.aliases.v12.0.txt.gz (Names)
-    -protein.sequences is used to build the database for ncbi blast (which is used for mapping)
-    -protein.links is the STRING network. it is used and transformed into
-        9606.links.v12.0.tsv
-     by string_network_filter.py in the data/string/ dir. (important for NetworKin.py)
+    -protein.sequences is used to build the database for ncbi blast (which is used for mapping sequences to ENSPs)
 - NetworKin also utilises Netphorest
     -the netphorest binary is located in the netphorest/ dir.
     -the binary has to be compiled using the files in the dir. (if added anew)
     -current version of netphorest is outdated, work to update the pipeline and get it running again is being undertaken
+
+-- my changes to the script:
+    - changes were made to get the new string network (V12.0) into NetworKIN
+    - some changes were also made to accompany latest python version
+    - some changes to the reading of the input to accompany new data (CheckInputType, readPhosphosite)
+		- Rune sent an updated phosphosites file (phospho.tsv), wrote a read function for that
+    - some changes to printResults for correct writing and debugging (the c counters)
+    - most changes to loadStringData, ReadGroup2DomainMap
+        - (created a script to map old Kinase/Protein names from group_human_protein_name_map.tsv to new aliases.v12.0 (some are missing, sources for names are in script)
+        - there is a check in print results for this dict
+
+    - main Problem: less results with new STRING version that with old one
+       - the netphorest binary works as expected
+       - less corresponding string connections are found
+       - (for every possible netphorest connection NetworKIN checks if there is a string connection)
+       - I think the check in print results against groupnamemap is the main bottleneck for getting the string data
+       - that's why I created the new mapping script, some kinases are also missing from latest v12 of string (MAPK10, Tyk2b, SACM1L)
+       - v9.0 of string works just fine, just v12 is strange
+       - I checked everything that came to mind, maybe you find the mistake, good luck! :)
 
 
 Input format:
